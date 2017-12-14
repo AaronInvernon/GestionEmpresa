@@ -1,0 +1,43 @@
+/*
+    DEMO STYLE
+*/
+
+
+
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    padding-top: 20px;
+    padding-right: 15px;
+    min-width: 250px;
+    max-width: 250px;
+    background: #2F1348;
+    color: #fff;
+    transition: all 0.3s;
+    border-right: 1px solid white;
+}
+
+#sidebar.active {
+    margin-left: -270px;
+}
+
+
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+    #sidebar.active {
+        margin-left: 0;
+    }
+    #sidebarCollapse span {
+        display: none;
+    }
+}
