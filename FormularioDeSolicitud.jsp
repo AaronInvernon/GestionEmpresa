@@ -1,8 +1,3 @@
-<%-- 
-    Document   : formulario
-    Created on : 11-dic-2017, 17:32:53
-    Author     : Kevin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
