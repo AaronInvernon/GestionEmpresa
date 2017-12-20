@@ -33,12 +33,25 @@ public class baseDeDatos {
         
     }
     
+    public void finConectar(){
+        try {
+            
+            conn.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(baseDeDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void crearStatement() throws Exception{
         stmt = conn.createStatement(); 
     }
     
     public void crearPreparedStatement(String consultaSQL) throws Exception{
         prepSt = conn.prepareStatement(consultaSQL);
+    }
+    public void ejUpdatePrepStat() throws Exception{
+        prepSt.executeUpdate();
     }
     
     public ResultSet crearResultSet(String consultaSQL) throws Exception{
