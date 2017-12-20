@@ -7,13 +7,15 @@ function main() {
     myForm.txtApe1.addEventListener("blur", validarApellido1, false);
     myForm.txtApe2.addEventListener("blur", validarApellido2, false);
     myForm.txtEmail.addEventListener("blur", validarEmail, false);
+    myForm.txtNss.addEventListener("blur", validarNss, false);
+    myForm.txtId.addEventListener("blur",validarDNI, false);
 
 
 
     function validarNombre(cadena) {
         cadena.target.nextElementSibling.className = "ok";
         var error = document.getElementById("errorNombre");
-        if (cadena.target.value.trim().match(/^([A-ZÑÁÉÍÓÚa-zñáéíóú]+[\s]?)+$/) == null) {
+        if (cadena.target.value.trim().match(/^([A-ZÑÁÉÍÓÚa-zñáéíóú]+[\s]?){2,25}$/) == null) {
             error.className = "error";
             error.style.visibility = "visible";
             return false;
@@ -64,4 +66,31 @@ function main() {
         }
         return true;
     }
+    
+    function validarDNI(cadena){
+     var error = document.getElementById("errorDNI");
+        if (cadena.target.value.trim().match(/^([A-Za-z0-9][\s]?){9}$/) == null) {
+            error.className = "error";
+            error.style.visibility = "visible"; 
+            return false;
+        } else {
+            error.style.visibility = "hidden";
+        }
+        
+        return true;
+    }
+    
+    function validarNss(numero){
+        var error = document.getElementById("errorNss");
+        if (numero.target.value.trim().match(/^([0-9][\s]?){12}$/) == null) {
+            error.className = "error";
+            error.style.visibility = "visible"; 
+            return false;
+        } else {
+            error.style.visibility = "hidden";
+        }
+        
+        return true;
+    }
+    
 }

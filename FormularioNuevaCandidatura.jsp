@@ -1,5 +1,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,8 +31,7 @@
                         <div class="form-group">
                                 <label>Nombre:</label>
                                 <input type="text" class="form-control" name="txtNombre" id="txtNombre"/>
-                                <span id="errorNombre">Introduce un nombre correcto</span> 
-                               
+                                <span id="errorNombre">Introduce un nombre correcto</span>    
                         </div>
                         
 
@@ -51,7 +51,6 @@
                             </div>
                         </div>
                     
-
                     <br/>
                     <br/>
                     <div class="form-inline">
@@ -63,6 +62,7 @@
                                     <input type="radio" name="id" value="txtNie" id="txtNie"/>NIE
                                 </label>
                                 <input type="text" class="form-control col-lg-2" name="txtId" id="txtId"/>
+                                <span id="errorDNI">Introduce el formato correcto</span>
                             </div>
                         </div> 
 
@@ -70,6 +70,7 @@
                             <div class="input-group">
                                 <label class="input-group-addon">NSS</label>
                                 <input type="text" class="form-control" name="txtNss" id="txtNss"/>
+                                <span id="errorNss">Solo se admiten 12 digitos</span>
                             </div>
                         </div>
 
@@ -100,7 +101,6 @@
                     </div>
 
 
-
                     <br/>
                     <br/>
                     <hr/>
@@ -127,18 +127,19 @@
 
                     <div class="form-inline">
 
-                        <div class="form-group col-lg-4">    
-                            <div class="input-group">
-                                <label class="input-group-addon">Nacimiento:</label>
-                                <input type="date" class="form-control" name="txtFechaNac" id="txtFechaNac"/>
-                            </div>
-                        </div>
-
                         <div class="form-group col-lg-6">    
                             <div class="input-group">
                                 <label class="input-group-addon">Email:</label>
                                 <input type="text" class="form-control" name="txtEmail" id="txtEmail"/>
                                 <span id="errorMail">Introduce un formato de mail correcto</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-lg-4">    
+                            <div class="input-group">
+                                <label class="input-group-addon">Teléfono: </label>
+                                <input type="text" class="form-control" name="txtTlfno" id="txtTlfno"/>
+                                <span id="errorNss">Solo se admiten digitos</span>
                             </div>
                         </div>
 
@@ -176,6 +177,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group col-lg-5">    
+                            <div class="input-group">
+                                <label class="input-group-addon">Disponibilidad:</label>
+                                <select class="form-control" name="txtExp" id="txtExp">
+                                    <option>Inmediata</option>
+                                    <option>Una semana</option>
+                                    <option>15 días</option>
+                                </select>
+                            </div>
+                        </div>
 
                     </div>
                     
@@ -201,7 +212,7 @@
 
                         <div class="form-group col-lg-3">    
                             <div class="input-group">
-                                <input type="submit" class="form-control" value="Enviar"/>
+                                <input type="submit" class="form-control btn btn-primary" value="Enviar"/>
                             </div>
                         </div>
 
