@@ -7,7 +7,15 @@
         <link href="src/css/ATIclass.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
-        
+        <script src="src/js/validacionRegistroBlur.js" type="text/javascript"></script>
+        <style>
+            span{
+                visibility: hidden;
+            }
+            .error{
+                color:red;
+            }
+        </style>
         <title>Trabaja con nosotros</title>
     </head>
     <body>
@@ -15,50 +23,52 @@
             <form action="" class="" name="formularioRegistro" method="post" id="myForm">
                 <h3 style=" color: #46b8da">Trabaja con Nosotros</h3>
                 <hr/>
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <strong>Datos personales</strong><br/><br/>
-                    <div class="form-inline">
+                    
 
-                        <div class="form-group col-lg-4">
-                            <div class="input-group">
-                                <span class="input-group-addon">Nombre:</span>
+                        <div class="form-group">
+                                <label>Nombre:</label>
                                 <input type="text" class="form-control" name="txtNombre" id="txtNombre"/>
-                            </div>
+                                <span id="errorNombre">Introduce un nombre correcto</span> 
+                               
                         </div>
+                        
 
                         <div class="form-group col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-addon">Apellido1:</span>
+                                <label class="input-group-addon">Apellido1:</label>
                                 <input type="text" class="form-control" name="txtApe1" id="txtApe1"/>
+                                <span id="errorApe1">Introduce un apellido correcto</span> 
                             </div>
                         </div> 
 
                         <div class="form-group col-lg-4">    
                             <div class="input-group">
-                                <span class="input-group-addon">Apellido2:</span>
+                                <label class="input-group-addon">Apellido2:</label>
                                 <input type="text" class="form-control" name="txtApe2" id="txtApe2"/>
+                                <span id="errorApe2">Introduce un apellido correcto</span> 
                             </div>
                         </div>
-                    </div>
+                    
 
                     <br/>
                     <br/>
-
                     <div class="form-inline">
 
                         <div class="form-group col-lg-4">
                             <div class="input-group">
-                                <span class="input-group-addon">
+                                <label class="input-group-addon">
                                     <input type="radio" name="id" value="txtDni" id="txtDni"/>DNI   
                                     <input type="radio" name="id" value="txtNie" id="txtNie"/>NIE
-                                </span>
+                                </label>
                                 <input type="text" class="form-control col-lg-2" name="txtId" id="txtId"/>
                             </div>
                         </div> 
 
                         <div class="form-group col-lg-4">    
                             <div class="input-group">
-                                <span class="input-group-addon">NSS</span>
+                                <label class="input-group-addon">NSS</label>
                                 <input type="text" class="form-control" name="txtNss" id="txtNss"/>
                             </div>
                         </div>
@@ -72,14 +82,14 @@
 
                         <div class="form-group col-lg-4">    
                             <div class="input-group">
-                                <span class="input-group-addon">Nacim:</span>
+                                <label class="input-group-addon">Nacim:</label>
                                 <input type="date" class="form-control" name="txtFechaNac" id="txtFechaNac"/>
                             </div>
                         </div>
 
                         <div class="form-group col-lg-4">    
                             <div class="input-group">
-                                <span class="input-group-addon">Sexo:</span>
+                                <label class="input-group-addon">Sexo:</label>
                                 <select class="form-control" name="txtsexo" id="txtsexo">
                                     <option>Hombre</option>
                                     <option>Mujer</option>
@@ -99,7 +109,7 @@
 
                         <div class="form-group col-lg-5">    
                             <div class="input-group">
-                                <span class="input-group-addon">Dirección</span>
+                                <label class="input-group-addon">Dirección</label>
                                 <input type="text" class="form-control" name="txtCalle" id="txtCalle" placeholder="Calle/Avenida/Paseo"/>
                             </div>
                         </div>
@@ -119,15 +129,16 @@
 
                         <div class="form-group col-lg-4">    
                             <div class="input-group">
-                                <span class="input-group-addon">Nacimiento:</span>
+                                <label class="input-group-addon">Nacimiento:</label>
                                 <input type="date" class="form-control" name="txtFechaNac" id="txtFechaNac"/>
                             </div>
                         </div>
 
                         <div class="form-group col-lg-6">    
                             <div class="input-group">
-                                <span class="input-group-addon">Email:</span>
+                                <label class="input-group-addon">Email:</label>
                                 <input type="text" class="form-control" name="txtEmail" id="txtEmail"/>
+                                <span id="errorMail">Introduce un formato de mail correcto</span>
                             </div>
                         </div>
 
@@ -140,7 +151,7 @@
 
                         <div class="form-group col-lg-5">    
                             <div class="input-group">
-                                <span class="input-group-addon">Estudios:</span>
+                                <label class="input-group-addon">Estudios:</label>
                                 <select class="form-control" name="txtEstudios" id="txtEstudios">
                                     <option>E.S.O.</option>
                                     <option>Bachiller</option>
@@ -155,7 +166,7 @@
 
                         <div class="form-group col-lg-5">    
                             <div class="input-group">
-                                <span class="input-group-addon">Experiencia:</span>
+                                <label class="input-group-addon">Experiencia:</label>
                                 <select class="form-control" name="txtExp" id="txtExp">
                                     <option>Menos de 6 meses</option>
                                     <option>Menos de 1 año</option>
@@ -175,7 +186,7 @@
 
                         <div class="form-group col-lg-6">    
                             <div class="input-group">
-                                <span class="input-group-addon">Introduce tu CV:</span>
+                                <label class="input-group-addon">Introduce tu CV:</label>
                                 <input type="file" class="form-control" name="txtCV" id="txtCV"/>
                             </div>
                         </div>
@@ -203,55 +214,6 @@
         </div>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
-        <script src="js/jquery.validate.js"></script><script>
-  $(document).ready(function(){
-    $("#myform").validate({
-    rules: {
-        txtNombre:{
-            required:true,
-        minlength:2,
-        maxlength:25
-        },
-        txtApellidos:{
-            required:true
-        },
-        txtEdad:{
-            required:true,
-            digits:true
-        },
-        txtDireccion:{
-            required:true
-        },
-        txtCP:{
-            required:true,
-            digits:true,
-            minlength:5,
-            maxlength:5
-        },    
-        txtCorreo:{
-            email:true,
-            required:true
-        },
-        txtPagina:{
-            url:true,
-            required:true
-        },
-        txtPassword:{
-            required:true
-        minlength:5,
-        maxlength:5
-        },
-        txtPasswordb:{
-            required:true,
-            equalTo: "#idPassword"
-        },
-  
-    },
-    submitHandler: function(){
-            alert("rqr");
-    }
-    });
-  });
-</script>
+      
     </body>
 </html>
