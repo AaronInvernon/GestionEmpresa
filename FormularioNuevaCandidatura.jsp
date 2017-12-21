@@ -30,7 +30,7 @@
     </head>
     <body>
         <div class="container">
-            <form action="" class="" name="formularioRegistro" method="post" id="myForm">
+            <form  class="" name="formularioRegistro" method="post" id="myForm">
                 <h3 style=" color: #46b8da">Trabaja con Nosotros</h3>
                 <hr/>
                 <div class="col-lg-12">
@@ -98,7 +98,7 @@
                         <div class="form-group ">    
                             
                                 <label>Sexo:</label>
-                                <select class="form-control" name="txtsexo" id="txtsexo">
+                                <select class="form-control" name="txtSexo" id="txtSexo">
                                     <option>Hombre</option>
                                     <option>Mujer</option>
                                 </select>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="form-group ">    
                                 <label>Disponibilidad:</label>
-                                <select class="form-control" name="txtExp" id="txtExp">
+                                <select class="form-control" name="txtDisp" id="txtDisp">
                                     <option>Inmediata</option>
                                     <option>Una semana</option>
                                     <option>15 días</option>
@@ -209,9 +209,10 @@
                  
 
 
-                        <div class="form-group ">    
-                                <input type="submit" class="form-control btn btn-primary" value="Enviar"/>
+                        <div class="form-group ">
                             
+                            <input type="button"  class=" btn btn-primary" value="Enviar" id="Enviar"></input>
+                                <input type="reset" class=" btn btn-danger" value="Limpiar"/>
                         </div>
 
                    
