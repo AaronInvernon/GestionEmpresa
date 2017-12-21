@@ -99,8 +99,8 @@
                             
                                 <label>Sexo:</label>
                                 <select class="form-control" name="txtSexo" id="txtSexo">
-                                    <option>Hombre</option>
-                                    <option>Mujer</option>
+                                    <option value="H">Hombre</option>
+                                    <option value="M">Mujer</option>
                                 </select>
                             
                         </div>
@@ -156,13 +156,13 @@
                         <div class="form-group ">    
                                 <label>Estudios:</label>
                                 <select class="form-control" name="txtEstudios" id="txtEstudios">
-                                    <option>E.S.O.</option>
-                                    <option>Bachiller</option>
-                                    <option>Ciclo Formativo Grado Medio</option>
-                                    <option>Ciclo Formativo Grado Superior</option>
-                                    <option>Licenciatura</option>
-                                    <option>Grado</option>
-                                    <option>Master/Doctorado</option>
+                                    <option value="E.S.O.">E.S.O.</option>
+                                    <option value="Bachiller">Bachiller</option>
+                                    <option value="FP-1">Ciclo Formativo Grado Medio</option>
+                                    <option value="FP-2">Ciclo Formativo Grado Superior</option>
+                                    <option value="Licenciatura">Licenciatura</option>
+                                    <option value="Grado">Grado</option>
+                                    <option value="Master/Doctorado">Master/Doctorado</option>
                                 </select>
                            
                         </div>
@@ -170,20 +170,20 @@
                         <div class="form-group ">    
                                 <label>Experiencia:</label>
                                 <select class="form-control" name="txtExp" id="txtExp">
-                                    <option>Menos de 6 meses</option>
-                                    <option>Menos de 1 año</option>
-                                    <option>Entre 1-2 años</option>
-                                    <option>Entre 2-5 años </option>
-                                    <option>Más de 5 años </option>
+                                    <option value="menos de 6 meses">Menos de 6 meses</option>
+                                    <option value="menos de 1 año">Menos de 1 año</option>
+                                    <option value="1-2 años">Entre 1-2 años</option>
+                                    <option value="2-5 años">Entre 2-5 años </option>
+                                    <option value="mas de 5 años">Más de 5 años </option>
                                 </select>
                             
                         </div>
                         <div class="form-group ">    
                                 <label>Disponibilidad:</label>
                                 <select class="form-control" name="txtDisp" id="txtDisp">
-                                    <option>Inmediata</option>
-                                    <option>Una semana</option>
-                                    <option>15 días</option>
+                                    <option value="inmediata">Inmediata</option>
+                                    <option value="una semana">Una semana</option>
+                                    <option value="15 dias">15 días</option>
                                 </select>
                             
                         </div>
@@ -221,6 +221,40 @@
 
                 </div>
             </form>
+            <%
+            if(request.getParameter("txtNombre")!=null){
+
+                String user = "ceo"; // HAY QUE CAMBIAR EL USUARIO POR EL DE SESSION (CREAR UN USUARIO EN LA BASE DE DATOS)
+                String pass = "1234";
+  
+                String dato = request.getParameter("txtFechaNac");
+                String[] datoArray = dato.split("-");
+                String resultado="";
+                    for(int j=2; j>=0 ; j--){
+                        resultado = resultado +"/"+ datoArray[j];
+                    }
+                String fecha = resultado.substring(1, resultado.length());
+ 
+                String vacante = "JEFE DE MANTENIMIENTO";
+                String dniNie = request.getParameter("txtId").toUpperCase();
+                String nombre = request.getParameter("txtNombre");
+                String apellidos = request.getParameter("txtApe1") +" "+ request.getParameter("txtApe2");
+                String sexo = request.getParameter("txtSexo");
+                String nss = request.getParameter("txtNss");
+                String direccion = request.getParameter("txtCalle") + " " + request.getParameter("txtNumCalle");
+                String experiencia = request.getParameter("txtExp");
+                String disponibilidad = request.getParameter("txtDisp");
+                String estudios = request.getParameter("txtEstudios");
+                String telefono = request.getParameter("txtTlfno");
+                String mail = request.getParameter("txtEmail");
+                basico.Conectar(user, pass);
+                String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA')";
+                basico.crearPreparedStatement(cadena);
+                basico.ejUpdatePrepStat();
+                basico.finConectar();
+		response.sendRedirect("candidaturaCorrecta.html");
+                } 
+            %>
         </div>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
         <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
