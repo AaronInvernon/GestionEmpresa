@@ -73,7 +73,7 @@ header label {
     transition: all 0.3s;
     height: 100%;
     z-index: 0;
-    
+
 }
 
 
@@ -83,7 +83,7 @@ header label {
     padding: 15px 10px 15px 10px;
     color: #fff;
     text-decoration: none;
-    
+
 }
 
 /*ESTE ES EL HOVER DEL SIDE BAR*/
@@ -134,7 +134,7 @@ header label {
 
 
 @media (max-width:768px){
-    
+
     .navbar-brand {
         position: fixed;
         padding: 15px 20px 15px 20px;
@@ -146,7 +146,7 @@ header label {
     .menu ul li ul {
         padding-top: 0px;
         position: static;
-        left: -250px;
+        left: -100%;
         height: auto;
     }
 
@@ -162,13 +162,15 @@ header label {
     }
 
     .menu {
+        display:none;
+        z-index: -1;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        margin-top:  -150%;
-
+        margin-top:  -200%;
     }
+
     .menu ul {
         flex-direction: column;
         background:#240F3A;
@@ -184,7 +186,7 @@ header label {
         position: static;
         left: 0;
     }
-    
+
     .menu ul li:hover ul {
         display: none;
     }
@@ -202,13 +204,8 @@ header label {
         margin-top:  0%;
         margin-top:50px;
         z-index: 2;
-        
+        display:block;
     }
-    
-    #btn-menu:unchecked ~ .content{
-        background-color: red;
-    }
-
 
     .sidebar-item-content {
         padding-top:5px;
@@ -227,7 +224,7 @@ header label {
     }
 
     .myhour {
-    padding-right: 5px;
+        padding-right: 5px;
     }
 
 }
