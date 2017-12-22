@@ -232,14 +232,15 @@
                 String estudios = request.getParameter("txtEstudios");
                 String telefono = request.getParameter("txtTlfno");
                 String mail = request.getParameter("txtEmail");
+                
+                String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA',to_char(sysdate,'HH:MM:SS'))";
                 basico.Conectar(user, pass);
-                String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA')";
                 basico.crearPreparedStatement(cadena);
                 basico.ejUpdatePrepStat();
                 basico.crearCallableStatement("{call system.P_ATEAM_CANDI_EDAD('"+dniNie+"')}");
                 basico.ejCallableStatement();
-                    
                 basico.finConectar();
+                
 		response.sendRedirect("candidaturaCorrecta.html");
                 } 
             %>
