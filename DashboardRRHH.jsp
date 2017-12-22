@@ -25,11 +25,11 @@
             <nav class="menu">
 
                 <ul>
-                    <li><a href="#">Empleados</a></li>
-                    <li><a href="#">Candidaturas</a></li>
-                    <li><a href="#">Calendario</a></li>
-                    <li><a href="#">Estadísticas</a></li>
-                    <li><a href="#">Agenda</a></li>
+                    <li class="boton"><a href="#">Empleados</a></li>
+                    <li class="boton"><a href="#">Candidaturas</a></li>
+                    <li class="boton"><a href="#">Calendario</a></li>
+                    <li class="boton"><a href="#">Estadísticas</a></li>
+                    <li class="boton"><a href="#">Agenda</a></li>
                     <li class="submenu"><a href="#">Notificaciones</a>
                         <ul>
                             <li>
@@ -85,7 +85,7 @@
                                 </div>
                             </li>
                         </ul>
-                    <li>
+                    <li class="boton">
                         <a id="userbox" href="#" class="dropdown-toggle grandbtn" data-toggle="dropdown">
                             Usuario
                         </a>
@@ -105,33 +105,23 @@
 
         <script>
             
+            $(document).ready (function (){
+                $("#btn-menu").attr('checked', false);
+            });
+            
             $(".submenu").click(function () {
-                //if($(this).children("ul").is(':hidden')){
                 $(this).children("ul").slideToggle();
                 $(this).children("ul").toggleClass('active');
-                //}else{
-                  //$(this).children("ul").slideToggle();  
                 });
-                
-              // INTENTO  
-            // $('#btn-menu').click(function () {
-               // if($('#btn-menu').Attr(':checked')){
-                    
-              //      $(".submenu").children("ul").toggleClass('default');
-               // }
             
-           // });
-           // 
-           // INTENTO
-            //$( '.mybtn' ).click(function() {
-            //if( $(this).is(':checked') ){
-        // Hacer algo si el checkbox ha sido seleccionado
-        //alert("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
-    //} else {
-        // Hacer algo si el checkbox ha sido deseleccionado
-      //  alert("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
-    //}
-//});
+            $(".boton").click(function () {
+                $("#btn-menu").attr('checked', false);
+            });
+            
+            $(".submenu").children("ul").click(function () {
+                $("#btn-menu").attr('checked', false);
+            });
+            
         </script>
     </body>
 </html>
