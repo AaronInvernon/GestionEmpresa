@@ -1,4 +1,5 @@
 
+<%@page import="java.sql.CallableStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
 <!DOCTYPE html>
@@ -9,23 +10,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
         <script src="src/js/validacionRegistroBlur.js" type="text/javascript"></script>
-        <style>
-            span{
-                visibility: hidden;
-            }
-            .error{
-                color:red;
-            }
-            .errorInput{
-                background: rgba(255, 99, 71, 0.5);
-                border:red 1px solid;
-            }
-            
-            .okInput{
-                background: rgba(160, 242, 130, 0.1);
-                border:green 1px solid;
-            }
-        </style>
+        <link rel="stylesheet" href="src/css/formulario.css" type="text/css"/>
         <title>Trabaja con nosotros</title>
     </head>
     <body>
@@ -251,6 +236,9 @@
                 String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA')";
                 basico.crearPreparedStatement(cadena);
                 basico.ejUpdatePrepStat();
+                basico.crearCallableStatement("{call system.P_ATEAM_CANDI_EDAD('"+dniNie+"')}");
+                basico.ejCallableStatement();
+                    
                 basico.finConectar();
 		response.sendRedirect("candidaturaCorrecta.html");
                 } 

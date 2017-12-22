@@ -14,9 +14,10 @@ public class baseDeDatos {
     java.sql.Statement stmt = null;
     java.sql.PreparedStatement prepSt = null;
     
+    
     ResultSet rset = null;
     ResultSetMetaData meta=null;
-    
+    CallableStatement stan=null;
     //final String usuario = "system";
     //final String password = "javaoracle";
     final String cadenaconexion = "jdbc:oracle:thin:@localhost:1521:XE";
@@ -53,7 +54,12 @@ public class baseDeDatos {
     public void ejUpdatePrepStat() throws Exception{
         prepSt.executeUpdate();
     }
-    
+    public void crearCallableStatement(String cadena) throws Exception{
+        stan = conn.prepareCall(cadena);
+    }
+    public void ejCallableStatement() throws Exception{
+        stan.executeUpdate();
+    }
     public ResultSet crearResultSet(String consultaSQL) throws Exception{
         
         rset = stmt.executeQuery(consultaSQL);
