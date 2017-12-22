@@ -1,0 +1,17 @@
+span{
+    visibility: hidden;
+}
+
+.error{
+    color:red;
+}
+
+.errorInput{
+    background: rgba(255, 99, 71, 0.5);
+    border:red 1px solid;
+}
+
+.okInput{
+    background: rgba(160, 242, 130, 0.1);
+    border:green 1px solid;
+}
