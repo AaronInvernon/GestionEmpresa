@@ -18,7 +18,7 @@
             <form  class="" name="formularioRegistro" method="post" id="myForm">
                 <h3 style=" color: #46b8da">Trabaja con Nosotros</h3>
                 <hr/>
-                <div class="col-lg-12">
+                <div>
                     <strong>Datos personales</strong><br/><br/>
                     
 
