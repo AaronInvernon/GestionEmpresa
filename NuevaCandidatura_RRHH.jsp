@@ -5,17 +5,31 @@
     <head>
         <title> Nueva Candidatura </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="src/css/ATIclass.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
+        <script>
+            function aceptado(){
+            alert("El candidato ha sido ACEPTADO");}
+            
+            function rechazado(){
+            alert("El candidato ha sido RECHAZADO");}
+        
+            function errorPass(){
+            alert("La contraseña introducida no es correcta");}
+            
+        </script>
     </head>
                     <%
+                    String dniCandi=request.getParameter("dni");
+                        
+                        if(dniCandi!=null){
                     ResultSet candidato =null;
                     ResultSetMetaData meta =null;
-                    String dniCandi = "71307312K";
+                    session.setAttribute("DNI", dniCandi);
                     basico.Conectar("ceo", "1234");
                     basico.crearStatement();
-                    candidato = basico.crearResultSet("select puesto_sol, dni, cnombre, capellidos, sexo, nss, to_char(fecha_nac,'DD/MM/YYYY'), edad, initcap(experiencia), disponibilidad, initcap(estudios), telefono, lower(email), initcap(direccion) from ateam_candi where dni='"+dniCandi+"'");
+                    candidato = basico.crearResultSet("select puesto_sol, dni, cnombre, capellidos, sexo, nss, to_char(fecha_nac,'DD/MM/YYYY'), edad, initcap(experiencia), disponibilidad, initcap(estudios), telefono, lower(email), initcap(direccion) from ateam_candi where dni='"+(String)session.getAttribute("DNI")+"'");
                     candidato.next();
                     String varPuesto = candidato.getString(1);
                     String varDniNie = candidato.getString(2);
@@ -32,6 +46,7 @@
                     String varEmail = candidato.getString(13);
                     String varDir = candidato.getString(14);
                     basico.finConectar();
+                        
                 %>
     <body>
         <div class="container" style="width: 400px">
@@ -76,6 +91,8 @@
                             </div>
                     </form>
                     <%
+                            }
+                        
                         if(request.getParameter("pass")!=null){
                             String usuario = "ceo"; // HAY QUE SUSTITUIR ESTA VARIABLE POR LA DE SESSION CON EL NOMBRE DEL USUARIO session.getAttribute("usuario");
                             basico.Conectar("system", "javaoracle");
@@ -90,29 +107,30 @@
                                 if(request.getParameter("elSub").equals("Aceptar")){
 
                                     basico.Conectar(usuario, request.getParameter("pass")); // la pass es 1234
-                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='ACEPTADO' where dni='"+varDniNie+"'");
+                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='ACEPTADO' where dni='"+(String)session.getAttribute("DNI")+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
                                     %>
-                                    <div class='bg-success'> <h5>El candidato ha sido aceptado</h5> </div>
+                                    <jsp:forward page="DashboardRRHH.jsp"/>
                                     <%
                                 }else if(request.getParameter("elSub").equals("Rechazar")){
 
                                     basico.Conectar(usuario, request.getParameter("pass"));
-                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='RECHAZADO' where dni='"+varDniNie+"'");
+                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='RECHAZADO' where dni='"+(String)session.getAttribute("DNI")+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
                                    %>
-                                   <div class='bg-success'> <h5>El candidato ha sido rechazado</h5> </div>
+                                   <jsp:forward page="DashboardRRHH.jsp"/>  
                                    <%
                               }
 
                             } else{
                                     %>
-                                    <div class='bg-danger'> <h5>La contraseña introducida no es correcta</h5> </div>
+                                   <jsp:forward page="DashboardRRHH.jsp"/>
                                     <%
                                     }
                         }
+   
                     %>
                 </div>
             </div>
