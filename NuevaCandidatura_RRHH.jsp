@@ -8,17 +8,6 @@
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
-        <script>
-            function aceptado(){
-            alert("El candidato ha sido ACEPTADO");}
-            
-            function rechazado(){
-            alert("El candidato ha sido RECHAZADO");}
-        
-            function errorPass(){
-            alert("La contraseña introducida no es correcta");}
-            
-        </script>
     </head>
                     <%
                     String dniCandi=request.getParameter("dni");
