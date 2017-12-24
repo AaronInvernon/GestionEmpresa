@@ -11,6 +11,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/formulario.css" rel="stylesheet" type="text/css"/>
+        <script src="src/js/validacionSala.js" type="text/javascript"></script>
     </head>
     <body>
         <form id="formReserva" method="post">
@@ -29,7 +30,7 @@
 
                 <label>Nombre Reunión: </label>
                 <input type="text" class="form-control" name="txtNombre" id="txtNombre"/>
-                <span id="errorNombre">Introduce un nombre correcto</span>    
+                <span id="errorNombre">Introduce un nombre entre 5 y 25 caracteres</span>    
 
             </div>
 
@@ -89,9 +90,9 @@
 
             <div class="form-group ">
 
-                <input type="button"  class=" btn btn-warning" value="Comprobar Disponibilidad" id="Comprobar"/>
-                <input type="submit"  class=" btn btn-primary" value="Enviar" id="Enviar"/>
-                <input type="reset" class=" btn btn-danger" value="Limpiar"/>
+                <input type="button"  class=" btn btn-warning" value="Comprobar Disponibilidad" id="Comprobar" name="submit"/>
+                <input type="button"  class=" btn btn-primary" value="Enviar" id="Enviar" name="submit"/>
+                <input type="reset" class=" btn btn-danger" value="Limpiar" id="reset"/>
             </div>
         </form>
         <%
@@ -113,7 +114,8 @@
                 String cadena = "insert into ateam_reservasala values('" + nomReunion + "','" + sala + "',to_date('" + fecha + "','dd/mm/yyyy')," + horaInicio + "," + nHoras + ")";
                 basico.crearPreparedStatement(cadena);
                 basico.ejUpdatePrepStat();
-
+                
+                
             }
         %>
     </body>
