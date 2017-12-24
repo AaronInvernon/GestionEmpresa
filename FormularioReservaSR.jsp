@@ -14,13 +14,14 @@
         <script src="src/js/validacionSala.js" type="text/javascript"></script>
     </head>
     <body>
+        <div style="display:flex; justify-content: center;">
         <form id="formReserva" method="post">
             <%
                 String user = "ceo"; // HAY QUE CAMBIAR EL USUARIO POR EL DE SESSION (CREAR UN USUARIO EN LA BASE DE DATOS)
                 String pass = "1234";
                 String codigoSala = "";
+                
                 basico.Conectar(user, pass);
-
                 basico.crearStatement();
                 ResultSet resultadoSala = basico.crearResultSet("select cod_sala from ateam_salasreu");
 
@@ -45,6 +46,7 @@
                     <option value="<%=codigoSala%>"><%=codigoSala%></option>
                     <%       
                         }
+                    basico.finConectar();
                     %>
                 </select>
 
@@ -90,32 +92,81 @@
 
             <div class="form-group ">
 
-                <input type="button"  class=" btn btn-warning" value="Comprobar Disponibilidad" id="Comprobar" name="submit"/>
-                <input type="button"  class=" btn btn-primary" value="Enviar" id="Enviar" name="submit"/>
+                <input type="submit"  class=" btn btn-warning" value="Comprobar Disponibilidad" id="Comprobar" name="submit"/>
+                <input type="submit"  class=" btn btn-primary" value="Enviar" id="Enviar" name="submit"/>
                 <input type="reset" class=" btn btn-danger" value="Limpiar" id="reset"/>
             </div>
-        </form>
+            <br/>
         <%
-            if (request.getParameter("txtNombre") != null) {
-
+            if (request.getParameter("txtNombre") != null && request.getParameter("txtNombre")!=""){
+                
                 String nomReunion = request.getParameter("txtNombre");
                 String sala = request.getParameter("slctSala");
-                String dato = request.getParameter("txtFechaRes");
                 int horaInicio = Integer.parseInt(request.getParameter("slctHoraInicio"));
                 int nHoras = Integer.parseInt(request.getParameter("slctHoras"));
-
+                
+                String dato = request.getParameter("txtFechaRes");
                 String[] datoArray = dato.split("-");
                 String resultado = "";
                 for (int j = 2; j >= 0; j--) {
                     resultado = resultado + "/" + datoArray[j];
                 }
                 String fecha = resultado.substring(1, resultado.length());
+                
+                if(request.getParameter("submit").equals("Enviar")){
 
-                String cadena = "insert into ateam_reservasala values('" + nomReunion + "','" + sala + "',to_date('" + fecha + "','dd/mm/yyyy')," + horaInicio + "," + nHoras + ")";
-                basico.crearPreparedStatement(cadena);
-                basico.ejUpdatePrepStat();
-                
-                
+                    basico.Conectar(user, pass);
+                    String cadena = "insert into ateam_reservasala values('" + nomReunion + "','" + sala + "',to_date('" + fecha + "','dd/mm/yyyy')," + horaInicio + "," + nHoras + ")";
+                    basico.crearPreparedStatement(cadena);
+                    basico.ejUpdatePrepStat();
+                    basico.finConectar();
+                    
+                } else if(request.getParameter("submit").equals("Comprobar Disponibilidad")){
+                    
+                    basico.Conectar(user, pass);
+                    String cadena = "select * from ateam_reservasala where cod_sala='"+sala+"' and fecha=to_date('" + fecha + "','dd/mm/yyyy') and hora_inicio between "+horaInicio+" and "+(horaInicio+nHoras)+""; 
+                    System.out.println(cadena);
+                    basico.crearStatement();
+                    ResultSet check = basico.crearResultSet(cadena);
+                    
+                    if (check.next()){
+                            int Inicio = check.getInt(4);
+                            int Horas = check.getInt(5);
+                            int Fin = Inicio + Horas;
+                            System.out.println(Inicio);
+                            System.out.println(Fin);
+                                if(horaInicio == Inicio){
+                                    //sala no disponible
+                                    %>
+                                    <h4 align="center">La sala <%=sala%> no está disponible entre las <%=Inicio%>:00 y las <%=Fin%>:00 del <%=fecha%> </h4>
+                                    <%
+                                }else if (horaInicio+nHoras == Inicio){
+                                    //sala no disponible
+                                    %>
+                                    <h4 align="center">La sala <%=sala%> está disponible</h4>
+                                    <%
+                                }else if (horaInicio < Inicio && horaInicio+nHoras <= Fin){ 
+                                    //sala disponible
+                                    %>
+                                    <h4 align="center">La sala <%=sala%> no está disponible entre las <%=Inicio%>:00 y las <%=Fin%>:00 del <%=fecha%> </h4>
+                                    <%
+                                }else if (horaInicio+nHoras >= Fin){
+                                    //sala disponible
+                                    %>
+                                    <h4 align="center">La sala <%=sala%> está disponible</h4>
+                                    <%
+                                }
+                    }else{
+                                %>
+                                <h4 align="center">La sala está disponible</h4>
+                                <%
+                    }
+                    basico.finConectar();
+                }
+        %>
+        </form>
+        </div>
+        <%
             }
         %>
     </body>
