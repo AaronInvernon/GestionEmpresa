@@ -20,6 +20,7 @@
 
                 <label>Nombre Reunión: </label>
                 <%
+                    
                     if(request.getParameter("txtNombre")!=null){
                 %>
                 <input type="text" class="form-control" value="<%=request.getParameter("txtNombre")%>" name="txtNombre" id="txtNombre"/>
@@ -347,7 +348,9 @@
             <div class="form-group ">
 
                 <input type="submit"  class=" btn btn-warning" value="Comprobar Disponibilidad" id="Comprobar" name="submit"/>
-                <input type="submit"  class=" btn btn-primary" value="Enviar" id="Enviar" name="submit"/>
+
+                <input type="submit"  class=" btn btn-primary" value="Enviar" id="Enviar" name="submit" disabled/>
+   
                 <input type="reset" class=" btn btn-danger" value="Limpiar" id="reset"/>
             </div>
             <br/>
@@ -405,18 +408,21 @@
                             }       
                     } 
                     if (lastTest==1){
+                        
                         %>
+                        <script type="text/javascript">
+                            $('#Enviar').removeAttr('disabled');
+                        </script>
                         <h4 align="center">La sala <%=sala%> está disponible</h4> <br/><br/>
-                        <%
+                        <% 
                     }else if (lastTest==0){
+                        
                         %>
                         <h4 align="center">La sala <%=sala%> no está disponible entre las horas consultadas del <%=fecha%> </h4> <br/><br/>
                         <%
                     }
-
                 }
                     basico.finConectar();
-                
         %>
         </form>
         </div>
