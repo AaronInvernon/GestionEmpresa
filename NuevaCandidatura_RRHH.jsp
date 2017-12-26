@@ -8,6 +8,19 @@
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function(){
+                $("#elSub").click(prueba);
+            });
+            function prueba(){
+                if(request.getParameter("elSub").equals("Aceptar")){
+                    alert("El candidato ha sido aceptado");
+                }else if(request.getParameter("elSub").equals("Rechazar")){
+                    alert("El candidato ha sido rechazado");
+                }
+            }
+        </script>
     </head>
                     <%
                     String dniCandi=request.getParameter("dni");
@@ -74,8 +87,8 @@
                         </div>
                         <hr/>
                             <div style="display:flex; justify-content: space-around;">
-                                <input class="btn btn-primary" type="submit" value="Aceptar" name="elSub" />
-                                <input class="btn btn-primary" type="submit" value="Rechazar" name="elSub"/>
+                                <input class="btn btn-primary" type="submit" value="Aceptar" name="elSub" id="elSub"/>
+                                <input class="btn btn-primary" type="submit" value="Rechazar" name="elSub" id="elSub"/>
                                 
                             </div>
                     </form>
@@ -99,23 +112,24 @@
                                     basico.crearPreparedStatement("update ateam_candi set estado_candidatura='ACEPTADO' where dni='"+(String)session.getAttribute("DNI")+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
-                                    %>
-                                    <jsp:forward page="DashboardRRHH.jsp"/>
-                                    <%
+                                    boolean Acept = true;
+                                    session.setAttribute("CandiEstado", Acept);
+                                    response.sendRedirect("DashboardRRHH.jsp");
+
                                 }else if(request.getParameter("elSub").equals("Rechazar")){
 
                                     basico.Conectar(usuario, request.getParameter("pass"));
                                     basico.crearPreparedStatement("update ateam_candi set estado_candidatura='RECHAZADO' where dni='"+(String)session.getAttribute("DNI")+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
-                                   %>
-                                   <jsp:forward page="DashboardRRHH.jsp"/>  
-                                   <%
+                                    boolean Acept = false;
+                                    session.setAttribute("CandiEstado", Acept);
+                                    response.sendRedirect("DashboardRRHH.jsp");
                               }
 
                             } else{
                                     %>
-                                   <jsp:forward page="DashboardRRHH.jsp"/>
+                                    <jsp:forward page="DashboardRRHH.jsp"/>
                                     <%
                                     }
                         }
