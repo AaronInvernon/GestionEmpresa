@@ -54,12 +54,14 @@
                             <%
                             }
                             basico.finConectar();
+                            String reun = null;
                             %>
                         </ul>
                     </li>
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
-                    <li class="boton"><a href="#">Agenda</a></li>
+                    <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Agenda</a></li>
+
                     <li class="submenu"><a href="#">Notificaciones</a>
                         <ul>
                             <li>
@@ -150,6 +152,10 @@
             if(request.getParameter("dni")!=null){
                 %>
             <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
+            <%
+            }else if(request.getParameter("reun")!=null){
+            %>
+            <jsp:include page="FormularioReservaSR.jsp"/>    
             <%
             }
             %>
