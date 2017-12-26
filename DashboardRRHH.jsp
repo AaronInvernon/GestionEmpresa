@@ -128,13 +128,30 @@
         </header>
         
         <div class="content container">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, sit, iste, totam nobis voluptatem beatae culpa voluptas eligendi soluta aliquam atque quidem eaque possimus. Excepturi, magni nostrum aut praesentium id!</p>
-            
-            <% if(request.getParameter("dni")!=null){
+            <%
+            if(session.getAttribute("CandiEstado")!=null){
+                   if((boolean)session.getAttribute("CandiEstado")==true){
+                %>
+                <h4 align="center"> El candidato ha sido aceptado. </h4>     
+                <% 
+                    session.setAttribute("CandiEstado", null);
+                   } else if((boolean)session.getAttribute("CandiEstado")==false){
+                %>
+                <h4 align="center"> El candidato ha sido rechazado. </h4>
+                <%
+                    session.setAttribute("CandiEstado", null);
+                   }
+            }else{
+                %>
+                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, sit, iste, totam nobis voluptatem beatae culpa voluptas eligendi soluta aliquam atque quidem eaque possimus. Excepturi, magni nostrum aut praesentium id!</p>
+                <%   
+            }
+
+            if(request.getParameter("dni")!=null){
                 %>
             <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
             <%
-                }
+            }
             %>
         </div>
 
