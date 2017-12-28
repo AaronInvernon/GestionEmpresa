@@ -36,6 +36,7 @@
         int HorasTotales = 0;
         String HoraTotal = "";
         String extra = "";
+        String Tarde = ""; 
 
         while (rset.next()) {
             HorasTotales = 8;
@@ -44,14 +45,33 @@
             fecha = fecha + "'" + CapturarFecha + "', ";
             String CapturarHoraEntrada = rset.getString(2);
             entrada = entrada + "'" + CapturarHoraEntrada + "',";
-            String Substraer1 = CapturarHoraEntrada.substring(0, 2);
-            entradabar = entradabar + Substraer1 + ", ";
+            String SubsHoraEntrada = CapturarHoraEntrada.substring(0, 2);
+            
+            
+            if (Integer.parseInt(SubsHoraEntrada)>10){
+                int s = Integer.parseInt(SubsHoraEntrada) - 10;
+                Tarde = Tarde + Integer.toString(s) + ",";
+                entradabar = entradabar + 10 + ", ";
+            }else{
+                Tarde = Tarde + 0 + ",";
+                entradabar = entradabar + SubsHoraEntrada + ", ";
+            }
+            
+            
             if (Actual.equals(fecha2)) {
                 String FechaMin = rset.getString(5);
                 fechaminima = fechaminima + "'" + FechaMin + "',";
                 String CapturarHcomida = rset.getString(4);
+                int k = HorasTotales - (Integer.parseInt(SubsHoraEntrada) - 10); //8 - (17-10) = 1
+                if (k > 8) {
+                    HorasTotales = 8;
+                } else if (k < 0) {
+                    HorasTotales = 0;
+                } else {
+                    HorasTotales = k;
+                }
                 if (CapturarHcomida == null) {
-                    int x = Integer.parseInt(HoraActual.substring(0, 2)) - Integer.parseInt(Substraer1);
+                    int x = Integer.parseInt(HoraActual.substring(0, 2)) - Integer.parseInt(SubsHoraEntrada);
                     HorasTotales = HorasTotales - x;
                     if (HorasTotales <= 0) {
                         conteo1 = conteo1 + 8 + ",";
@@ -62,52 +82,88 @@
                     comida = comida + 0 + ",";
                     conteo2 = conteo2 + 0 + ",";
                     if (HorasTotales == 0) {
-                        int y = Integer.parseInt(Substraer1) + 9 - Integer.parseInt(HoraActual.substring(0, 2));
+                        int y = 0;
+                        if (Integer.parseInt(HoraActual.substring(0, 2)) > 19) {
+                            y = Integer.parseInt(HoraActual.substring(0, 2)) - 19;
+                        } else {
+                            y = 19 - Integer.parseInt(HoraActual.substring(0, 2));
+                        }
                         extra = extra + Integer.toString(y) + ",";
                     } else {
                         extra = extra + 0 + ",";
                     }
                     HoraTotal = HoraTotal + Integer.toString(HorasTotales) + ",";
                 } else {
-                    int x = Integer.parseInt(CapturarHcomida.substring(0, 2)) - Integer.parseInt(Substraer1);
-                    HorasTotales = HorasTotales - x;
-                    conteo1 = conteo1 + Integer.toString(x) + ",";
-                    comida = comida + 1 + ",";
-                    int y = Integer.parseInt(HoraActual.substring(0, 2)) - (Integer.parseInt(CapturarHcomida.substring(0, 2)) + 1);
-
-                    if ((HorasTotales - y) <= 0) {
-                        conteo2 = conteo2 + HorasTotales + ",";
+                    int x = Integer.parseInt(CapturarHcomida.substring(0, 2)) - Integer.parseInt(SubsHoraEntrada); // 19 - 17 =  2
+                    HorasTotales = HorasTotales - x; //1 - 2 = -1
+                    conteo1 = conteo1 + Integer.toString(x) + ","; // conteo1 = 2
+                    int y = 0;
+                    if (HorasTotales <= 0) {
+                        comida = comida + 0 + ",";
+                        y = Integer.parseInt(HoraActual.substring(0, 2)) - (Integer.parseInt(CapturarHcomida.substring(0, 2))); //22 - 19 = 3
                         HorasTotales = 0;
                     } else {
-                        conteo2 = conteo2 + Integer.toString(y) + ",";
+                        comida = comida + 1 + ",";
+                        y = Integer.parseInt(HoraActual.substring(0, 2)) - (Integer.parseInt(CapturarHcomida.substring(0, 2)) + 1);
+                    }
+                    if ((HorasTotales - y) <= 0) { // 0 - 3 = -3
+                        conteo2 = conteo2 + HorasTotales + ","; //no aplica
+                        HorasTotales = 0;//no aplica
+                    } else {
+                        conteo2 = conteo2 + Integer.toString(y) + ","; //6
                         HorasTotales = HorasTotales - y;
                     }
-                    if (HorasTotales == 0) {
-                        int z = Integer.parseInt(Substraer1) + 9 - Integer.parseInt(HoraActual.substring(0, 2));
-                        extra = extra + Integer.toString(z) + ",";
-                    } else {
-                        extra = extra + 0 + ",";
-                    }
-                    HoraTotal = HoraTotal + Integer.toString(HorasTotales) + ",";
                     String CapturarHoraSalida = rset.getString(3);
                     if (CapturarHoraSalida == null) {
+                        if (HorasTotales == 0) {
+                            int z = 0;
+                            if (Integer.parseInt(HoraActual.substring(0, 2)) > 19) {
+                                z = Integer.parseInt(HoraActual.substring(0, 2)) - 19;
+                            } else {
+                                z = 19 - Integer.parseInt(HoraActual.substring(0, 2));
+                            }
+                            extra = extra + Integer.toString(z) + ",";
+                        } else {
+                            extra = extra + 0 + ",";
+                        }
+                        HoraTotal = HoraTotal + Integer.toString(HorasTotales) + ",";
                         salida = salida + 0 + ", ";
                         salidabar = salidabar + 0 + ", ";
+
                     } else {
-                        String Substraer3 = CapturarHoraSalida.substring(0, 2);
+                        if (HorasTotales == 0) {
+                            int z = 0;
+                            if (Integer.parseInt(CapturarHoraSalida.substring(0, 2)) > 19) {
+                                z = Integer.parseInt(CapturarHoraSalida.substring(0, 2)) - 19;
+                            } else {
+                                z = 19 - Integer.parseInt(CapturarHoraSalida.substring(0, 2));
+                            }
+                            extra = extra + Integer.toString(z) + ",";
+                        } else {
+                            extra = extra + 0 + ",";
+                        }
+                        String SubsHoraSalida = CapturarHoraSalida.substring(0, 2);
                         salida = salida + CapturarHoraSalida + ", ";
-                        salidabar = salidabar + Substraer3 + ", ";
+                        salidabar = salidabar + SubsHoraSalida + ", ";
                     }
                 }
             } else {
-                String CapturarHcomida = rset.getString(4);
-                String Substract2="";
-                if(CapturarHcomida==null){
-                Substract2 = "00";
-                }else{
-                Substract2 = CapturarHcomida.substring(0, 2);
+                int k = HorasTotales - (Integer.parseInt(SubsHoraEntrada) - 10); //AQUI CALCULO EL LARGO DE HORAS TOTALES -- HTotales = 8 - (19:00 - 10:00 = 9) = 7
+                if (k > 8) {
+                    HorasTotales = 8;
+                } else if (k < 0) {
+                    HorasTotales = 0;
+                } else {
+                    HorasTotales = k;
                 }
-                int x = Integer.parseInt(Substraer1);
+                String CapturarHcomida = rset.getString(4);
+                String Substract2 = "";
+                if (CapturarHcomida == null) {
+                    Substract2 = "00";
+                } else {
+                    Substract2 = CapturarHcomida.substring(0, 2);
+                }
+                int x = Integer.parseInt(SubsHoraEntrada);
                 int y = Integer.parseInt(Substract2);
                 int resta1 = y - x;
                 HorasTotales = HorasTotales - resta1;
@@ -118,11 +174,11 @@
                 }
                 conteo1 = conteo1 + Integer.toString(resta1) + ",";
                 String CapturarHoraSalida = rset.getString(3);
-                String Substraer3 ="";
-                if (CapturarHoraSalida==null){
-                Substraer3 = "00";
-                }else{
-                Substraer3 = CapturarHoraSalida.substring(0, 2);
+                String Substraer3 = "";
+                if (CapturarHoraSalida == null) {
+                    Substraer3 = "00";
+                } else {
+                    Substraer3 = CapturarHoraSalida.substring(0, 2);
                 }
                 int a = Integer.parseInt(Substract2) + 1; //IF 15:00 THEN +1 = 16:00
                 int b = Integer.parseInt(Substraer3); // 22:00
@@ -186,13 +242,13 @@
             Un array con la hora de entrada: <%=entradabar%>
         </li>
         <li>
-            Un array que cuenta las horas entre la hora de entrada y la comida: <%=conteo1%>
+            Conteo1: <%=conteo1%>
         </li>
         <li>
             Un array de 1hora de comida: <%=comida%>
         </li>
         <li>
-            Un array que cuenta las horas entre la hora de comida y el limite de trabajo (8horas total de trabajo limite): <%=conteo2%>
+            Conteo2: <%=conteo2%>
         </li>
         <li>
             Este es el contador de las (8horas total de trabajo limite) que ahora esta en 0 porque se culminó el horario laboral completo<%=HoraTotal%>
@@ -212,6 +268,9 @@
         <li>
             FechaCapturada: <%=fecha2%>
         </li>
+        <li>
+        Horas Tarde: <%=Tarde%>
+        </li> 
     </ul>
 
     <div class="myChart-container" >
@@ -220,6 +279,7 @@
 
     <script type="text/javascript">
         Chart.defaults.global.tooltips.enabled = false;
+        var HorasTarde = [<%=Tarde%>];
         var HoraEntrada = [<%=entradabar%>];
         var ConteoHoras1 = [<%=conteo1%>];
         var comida = [<%=comida%>];
@@ -238,6 +298,12 @@
                     borderColor: "#F48FB1"
 
                 }, {
+                    label: 'Hras no trabajadas',
+                    data: HorasTarde,
+                    backgroundColor: 'rgba(226, 16, 16, 0.3)',
+                    borderColor: "#F48FB1"
+
+                },{
                     label: 'Conteo de horas1',
                     data: ConteoHoras1,
                     backgroundColor: "#6629A5",
