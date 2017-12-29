@@ -51,7 +51,7 @@
                         
                         while (resultadoSala.next()) {
                              codigoSala = resultadoSala.getString(1);
-                             if(request.getParameter("slctSala")!=null){
+                             if(request.getParameter("slctSala")!=null && request.getParameter("slctSala").equals(codigoSala)){
                                  %>
                         <option value="<%=codigoSala%>" selected><%=codigoSala%></option>
                                  <%
@@ -355,7 +355,7 @@
             </div>
             <br/>
         <%
-            if (request.getParameter("txtNombre") != null && request.getParameter("txtNombre")!=""){
+            if (request.getParameter("txtNombre") != null && request.getParameter("txtFechaRes")!=""){
                 
                 String nomReunion = request.getParameter("txtNombre");
                 String sala = request.getParameter("slctSala");

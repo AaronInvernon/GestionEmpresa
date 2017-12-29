@@ -60,7 +60,7 @@
                     </li>
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
-                    <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Agenda</a></li>
+                    <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
 
                     <li class="submenu"><a href="#">Notificaciones</a>
                         <ul>
@@ -143,7 +143,11 @@
                 <%
                     session.setAttribute("CandiEstado", null);
                    }
-            }else{
+            }else if (request.getParameter("reun")!=null){
+                %>
+                <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
+                <%
+            }else{   
                 %>
                 <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, sit, iste, totam nobis voluptatem beatae culpa voluptas eligendi soluta aliquam atque quidem eaque possimus. Excepturi, magni nostrum aut praesentium id!</p>
                 <%   
