@@ -1,4 +1,5 @@
 
+<%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.CallableStatement"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
@@ -18,9 +19,37 @@
             <form  class="" name="formularioRegistro" method="post" id="myForm">
                 <h3 style=" color: #46b8da">Trabaja con Nosotros</h3>
                 <hr/>
-                <div>
-                    <strong>Datos personales</strong><br/><br/>
+                <div class="col-lg-12">
+                    <%
+                        
+                    String user = "ceo"; // HAY QUE CAMBIAR EL USUARIO POR EL DE SESSION (CREAR UN USUARIO EN LA BASE DE DATOS)
+                    String pass = "1234";
                     
+                    ResultSet rset= null;
+                    basico.Conectar(user, pass);
+                    basico.crearStatement();
+                    rset = basico.crearResultSet("select initcap(puesto) as puesto from ateam_vacant");
+                    %>
+                    <strong>Puestos vacantes:</strong><br/><br/>
+                    <%
+                    if (rset.isBeforeFirst()==true){
+                        while(rset.next()){
+                            String puesto = rset.getString(1).toUpperCase();
+                    %>
+                        <input type="radio" name="rdbPuesto" value="<%=puesto%>"/><%=puesto%> <br/>
+                    <%
+                        }
+                    }else if (rset.isBeforeFirst()==false){
+                    %>
+                        Lo sentimos, pero en estos momentos no existen puestos vacantes. <br/>
+                    <%
+                    }
+                    basico.finConectar();
+                    %>
+                    
+                    <hr/>
+                    <br/><strong>Datos personales:</strong><br/><br/>
+                    <br/>
 
                         <div class="form-group">
                                 <label>Nombre:</label>
@@ -30,7 +59,7 @@
                         
 
                         <div class="form-group ">
-                                <label>Apellido1:</label>
+                            <label>1º Apellido:</label>
                                 <input type="text" class="form-control" name="txtApe1" id="txtApe1"/>
                                 <span id="errorApe1">Introduce un apellido correcto</span> 
                             
@@ -38,7 +67,7 @@
 
                         <div class="form-group ">    
                             
-                                <label>Apellido2:</label>
+                                <label>2º Apellido:</label>
                                 <input type="text" class="form-control" name="txtApe2" id="txtApe2"/>
                                 <span id="errorApe2">Introduce un apellido correcto</span> 
                             
@@ -66,12 +95,8 @@
                             
                         </div>
 
-                    
-
                     <br/>
                     <br/>
-
-                   
 
                         <div class="form-group ">    
                             
@@ -90,14 +115,11 @@
                             
                         </div>
 
-                    
-
-
-                    <br/>
                     <br/>
                     <hr/>
-
-
+                    <strong>Datos de contacto:</strong><br/><br/>
+                    <br/>
+                    
                         <div class="form-group ">    
                             
                                 <label>Dirección</label>
@@ -111,11 +133,8 @@
                             
                         </div>
 
-                   
-
                     <br/>
                     <br/>
-
 
                         <div class="form-group ">    
                                 <label>Email:</label>
@@ -131,12 +150,10 @@
                             
                         </div>
 
-                  
-
                     <br/>
+                    <hr/>
+                    <strong>Sitiación Actual:</strong><br/><br/>
                     <br/>
-
-                  
 
                         <div class="form-group ">    
                                 <label>Estudios:</label>
@@ -173,27 +190,18 @@
                             
                         </div>
 
-                    
-                    
                     <br/>
                     <br/>
                     
-                   
-
                         <div class="form-group ">    
                                 <label>Introduce tu CV:</label>
                                 <input type="file" class="form-control" name="txtCV" id="txtCV"/>
                            
                         </div>
-
-              
-                    
+ 
                     <br/>
                     <br/>
                     
-                 
-
-
                         <div class="form-group ">
                             
                             <input type="button"  class=" btn btn-primary" value="Enviar" id="Enviar"></input>
@@ -202,16 +210,11 @@
 
                    
                 </div>
-                <div class="">
-
-                </div>
+                <div class=""></div>
             </form>
             <%
-            if(request.getParameter("txtNombre")!=null){
+            if(request.getParameter("txtNombre")!=null && request.getParameter("rdbPuesto")!=null){
 
-                String user = "ceo"; // HAY QUE CAMBIAR EL USUARIO POR EL DE SESSION (CREAR UN USUARIO EN LA BASE DE DATOS)
-                String pass = "1234";
-  
                 String dato = request.getParameter("txtFechaNac");
                 String[] datoArray = dato.split("-");
                 String resultado="";
@@ -219,8 +222,8 @@
                         resultado = resultado +"/"+ datoArray[j];
                     }
                 String fecha = resultado.substring(1, resultado.length());
- 
-                String vacante = "JEFE DE MANTENIMIENTO";
+                
+                String vacante = request.getParameter("rdbPuesto");
                 String dniNie = request.getParameter("txtId").toUpperCase();
                 String nombre = request.getParameter("txtNombre");
                 String apellidos = request.getParameter("txtApe1") +" "+ request.getParameter("txtApe2");
@@ -233,7 +236,7 @@
                 String telefono = request.getParameter("txtTlfno");
                 String mail = request.getParameter("txtEmail");
                 
-                String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA',to_char(sysdate,'HH:MM:SS'))";
+                String cadena="insert into ateam_candi values('"+vacante+"','"+dniNie+"',initcap('"+nombre+"'),initcap('"+apellidos+"'),'"+sexo+"','"+nss+"',to_date('"+fecha+"','dd/mm/yyyy'),'',initcap('"+direccion+"'),upper('"+experiencia+"'),upper('"+disponibilidad+"'),upper('"+estudios+"'),'"+telefono+"','"+mail+"','EN ESPERA',to_char(sysdate,'HH24:MI:SS'))";
                 basico.Conectar(user, pass);
                 basico.crearPreparedStatement(cadena);
                 basico.ejUpdatePrepStat();
@@ -242,7 +245,11 @@
                 basico.finConectar();
                 
 		response.sendRedirect("candidaturaCorrecta.html");
-                } 
+                }else{
+                %>
+                <h5> Por favor, antes de enviar los datos comprueba que todos los campos han sido rellenados correctamente y que se ha seleccionado un puesto vacante.</h5>
+                <%
+            } 
             %>
         </div>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>

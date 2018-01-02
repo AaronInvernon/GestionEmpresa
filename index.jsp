@@ -159,8 +159,9 @@
                 <p>
 
                     Esto es una prueba para que trabajes con Nosotros
+                <br/><br/>Si estás interesado en trabajar con nosotros, consulta los puestos vacantes en este momento y envía tu candidatura:
                 </p>
-                <a class="boton_personalizado" href=""><input type="submit" value="ACCEDE"/></a>
+                <input type="button" value="ACCEDE" onclick="window.open('http://localhost:8084/AteamProyect/FormularioNuevaCandidatura.jsp','_blank','toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600', false);" style="color:black;"/>
             </div>
         </div> 
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
