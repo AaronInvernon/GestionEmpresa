@@ -12,13 +12,20 @@
     <meta charset="utf-8">
     <title>Bar chart stacked | chart.js</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
     <%DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "javaoracle");
-        PreparedStatement stmt = conn.prepareStatement("select TO_CHAR(ENTRADA,'dd-mm-yyyy') as FECHA, TO_CHAR(ROUND (ENTRADA, 'hh24'),'hh24:mi') as ENTRADA, TO_CHAR(ROUND (SALIDA, 'hh24'),'hh24:mi') as SALIDA, TO_CHAR(ROUND (H_COMIDA, 'hh24'),'hh24:mi') as COMIDA, TO_CHAR(ENTRADA,'dy dd','nls_date_language = Spanish') as FECHA2 from ATEAM_ENTRASALE where USUARIO = 'ENRIQUE' ");
+        PreparedStatement stmt = conn.prepareStatement("select TO_CHAR(ENTRADA,'dd-mm-yyyy') as FECHA, TO_CHAR(ROUND (ENTRADA, 'hh24'),'hh24:mi') as ENTRADA, TO_CHAR(ROUND (SALIDA, 'hh24'),'hh24:mi') as SALIDA, TO_CHAR(ROUND (H_COMIDA, 'hh24'),'hh24:mi') as COMIDA, TO_CHAR(ENTRADA,'dy dd','nls_date_language = Spanish') as FECHA2 from ATEAM_ENTRASALE where N_EMP = 10");
         PreparedStatement stmt2 = conn.prepareStatement("select TO_CHAR(ROUND(SYSDATE,'hh24'),'hh24:mi'),TO_CHAR(SYSDATE,'dd-mm-yyyy') from DUAL");
+        PreparedStatement stmt3 = conn.prepareStatement("select * from ATEAM_EMP where N_EMP = 10");
         ResultSet rset = stmt.executeQuery();
         ResultSet n = stmt2.executeQuery();
+        ResultSet f = stmt3.executeQuery();
         n.next();
+        f.next();
+
+        //VARIABLES PARA PRIMER Y SEGUNDO STATEMENT
         String fecha = "";
         String fecha2 = "";
         String entrada = "";
@@ -36,8 +43,17 @@
         int HorasTotales = 0;
         String HoraTotal = "";
         String extra = "";
-        String Tarde = ""; 
-
+        String Tarde = "";
+        int resta3 = 0;
+        //Variables 3er Statement
+        String NombCompleto = f.getString(1) + " " + f.getString(2);
+        String Puesto = f.getString(5);
+        String Departamento = f.getString(4);
+        String Inc = f.getString(7);
+        String Incorp = Inc.substring(0, 10);
+        String Salario = f.getString(8) + " €";
+        int ExtrasAcum = 0;
+        int Deuda=0;
         while (rset.next()) {
             HorasTotales = 8;
             String CapturarFecha = rset.getString(1);
@@ -46,18 +62,18 @@
             String CapturarHoraEntrada = rset.getString(2);
             entrada = entrada + "'" + CapturarHoraEntrada + "',";
             String SubsHoraEntrada = CapturarHoraEntrada.substring(0, 2);
-            
-            
-            if (Integer.parseInt(SubsHoraEntrada)>10){
+
+            if (Integer.parseInt(SubsHoraEntrada) > 10) {
                 int s = Integer.parseInt(SubsHoraEntrada) - 10;
                 Tarde = Tarde + Integer.toString(s) + ",";
                 entradabar = entradabar + 10 + ", ";
-            }else{
+                Deuda = Deuda + s;
+            } else {
                 Tarde = Tarde + 0 + ",";
                 entradabar = entradabar + SubsHoraEntrada + ", ";
+                Deuda = Deuda + 0;
             }
-            
-            
+
             if (Actual.equals(fecha2)) {
                 String FechaMin = rset.getString(5);
                 fechaminima = fechaminima + "'" + FechaMin + "',";
@@ -71,6 +87,7 @@
                     HorasTotales = k;
                 }
                 if (CapturarHcomida == null) {
+                    HorasTotales = HorasTotales + 1;
                     int x = Integer.parseInt(HoraActual.substring(0, 2)) - Integer.parseInt(SubsHoraEntrada);
                     HorasTotales = HorasTotales - x;
                     if (HorasTotales <= 0) {
@@ -88,9 +105,17 @@
                         } else {
                             y = 19 - Integer.parseInt(HoraActual.substring(0, 2));
                         }
+
                         extra = extra + Integer.toString(y) + ",";
+                        if (y <= 0) {
+                            ExtrasAcum = ExtrasAcum + 0;
+                        } else {
+                            ExtrasAcum = ExtrasAcum + y;
+                        }
+
                     } else {
                         extra = extra + 0 + ",";
+                        ExtrasAcum = ExtrasAcum + 0;
                     }
                     HoraTotal = HoraTotal + Integer.toString(HorasTotales) + ",";
                 } else {
@@ -123,8 +148,14 @@
                                 z = 19 - Integer.parseInt(HoraActual.substring(0, 2));
                             }
                             extra = extra + Integer.toString(z) + ",";
+                            if (z <= 0) {
+                                ExtrasAcum = ExtrasAcum + 0;
+                            } else {
+                                ExtrasAcum = ExtrasAcum + z;
+                            }
                         } else {
                             extra = extra + 0 + ",";
+                            ExtrasAcum = ExtrasAcum + 0;
                         }
                         HoraTotal = HoraTotal + Integer.toString(HorasTotales) + ",";
                         salida = salida + 0 + ", ";
@@ -139,8 +170,14 @@
                                 z = 19 - Integer.parseInt(CapturarHoraSalida.substring(0, 2));
                             }
                             extra = extra + Integer.toString(z) + ",";
+                            if (z <= 0) {
+                                ExtrasAcum = ExtrasAcum + 0;
+                            } else {
+                                ExtrasAcum = ExtrasAcum + z;
+                            }
                         } else {
                             extra = extra + 0 + ",";
+                            ExtrasAcum = ExtrasAcum + 0;
                         }
                         String SubsHoraSalida = CapturarHoraSalida.substring(0, 2);
                         salida = salida + CapturarHoraSalida + ", ";
@@ -168,7 +205,12 @@
                 int resta1 = y - x;
                 HorasTotales = HorasTotales - resta1;
                 if (CapturarHcomida != null) {
-                    comida = comida + 1 + ",";
+                    if(HorasTotales<=0){
+                        comida = comida + 0 + ",";
+                    }else{
+                        comida = comida + 1 + ",";
+                    }
+                    
                 } else {
                     comida = comida + 0 + ",";
                 }
@@ -192,11 +234,24 @@
                 if (HorasTotales <= 0) {
                     HorasTotales = 0;
                 }
+                resta3 = b - 19;
                 if (HorasTotales == 0) {
-                    int resta3 = b - x - 9;
+                    
                     extra = extra + Integer.toString(resta3) + ",";
+                        ExtrasAcum = ExtrasAcum + resta3;
+                    
+                   /* if (resta3 <= 0) {
+                        resta3 = -(resta3);
+                        extra = extra + Integer.toString(resta3) + ",";
+                        ExtrasAcum = ExtrasAcum + 0;
+                    } else {
+                        extra = extra + Integer.toString(resta3) + ",";
+                        ExtrasAcum = ExtrasAcum + resta3;
+                    } */
                 } else {
-                    extra = extra + 0 + ",";
+                    
+                    extra = extra + Integer.toString(resta3) + ",";
+                    ExtrasAcum = ExtrasAcum + 0;
                 }
                 String FechaMin = rset.getString(5);
                 fechaminima = fechaminima + "'" + FechaMin + "',";
@@ -210,20 +265,38 @@
 
 
     <style media="screen">
-        .myChart-container{
-            position: relative;
-            margin: auto;
-            width: 700px;
-            height: 300px;
-            margin-top: 100px;
 
-        }
-        canvas{
-            padding:10px;
-            background-color: white;
-            margin: 10px;
-            border-radius: 5px
-        }
+
+
+        /*  .myChart-container{
+              position: relative;
+              margin-left:300px;
+              width: 600px;
+              height: 300px;
+              background-color: white;
+              border-radius: 5px;
+          } 
+          canvas{
+              padding:10px;
+              background-color: white;
+              border-radius: 5px;
+          }       
+          @media (max-width:550px){
+          
+         .myChart-container{
+              position: relative;
+              margin:auto;
+              height: 150px;
+              width: 320px;
+              
+          } 
+          canvas{
+              min-height: 150px;
+              min-width: 320px;
+              padding:10px;
+              background-color: white;
+              border-radius: 5px;
+          }}*/
     </style>
 </head>
 <body style="background-color: #2e1247">
@@ -235,7 +308,7 @@
       <p style="color:white"><%=salidabar%></p>
       <p style="color:white"><%=hora%></p>
       <p style="color:white"><%=fechaminima%></p>
-    -->
+    
     <p style="color:white">Para controlar las barras de la base de datos hice lo siguiente:</p>
     <ul style="color:white" >
         <li>
@@ -253,10 +326,11 @@
         <li>
             Este es el contador de las (8horas total de trabajo limite) que ahora esta en 0 porque se culminó el horario laboral completo<%=HoraTotal%>
         </li>
-        <li>
-            Un array con las horas extras uqe inicia cuando el contador queda en cero: <%=extra%>
-        </li>
-        <li>
+       --> 
+        <p> 
+            Un array con las horas extras uqe inicia cuando el contador queda en cero: <%=resta3%>
+        </p>
+       <!-- <li>
             Y esta es la fecha que se coloca debajo de las barras: <%=fechaminima%>
         </li>
         <li>
@@ -272,13 +346,42 @@
         Horas Tarde: <%=Tarde%>
         </li> 
     </ul>
+    -->
+    <br/>
+    <div class="container">
+        <div class="col-sm-4" style="color: white; border-radius: 5px; padding:5px">
+            <div class="sidebar-item"><a href="#">
+                    <div class="sidebar-item-pic"></div>
+                    <div class="sidebar-item-content">
 
-    <div class="myChart-container" >
-        <canvas id="myChart"></canvas>
+                        <strong><%=NombCompleto%></strong><br/>
+                        <span class="badge" style="background-color: orange"><%=Puesto%></span>
+                    </div> </a>  
+            </div><br/>
+            Departamento: <%=Departamento%><br/>
+            Incorporación: <%=Incorp%><br/>
+            Salario: <%=Salario%><br/>
+            Horas extras acumuladas: <%=ExtrasAcum%><br/>
+            Horas de vacaciones acumuladas: (Todavía en calculo)<br/>
+            Horas en deuda: <%=Deuda%><br/>
+
+
+        </div>
+        <div class="col-sm-6" style="background-color: white; border-radius: 5px; padding:5px">
+            <canvas id="myChart" ></canvas>
+        </div>
+        <div class="col-sm-2" style="color: white; border-radius: 5px; padding:10px">
+            Opciones:<br/>
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Ver CV</button><br/>
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Incentivo</button><br/>
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Aumento</button><br/>
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Sanción</button><br/>
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Despido</button>
+        </div>
     </div>
-
     <script type="text/javascript">
         Chart.defaults.global.tooltips.enabled = false;
+        Chart.defaults.global.responsive = false;
         var HorasTarde = [<%=Tarde%>];
         var HoraEntrada = [<%=entradabar%>];
         var ConteoHoras1 = [<%=conteo1%>];
@@ -303,7 +406,7 @@
                     backgroundColor: 'rgba(226, 16, 16, 0.3)',
                     borderColor: "#F48FB1"
 
-                },{
+                }, {
                     label: 'Conteo de horas1',
                     data: ConteoHoras1,
                     backgroundColor: "#6629A5",
@@ -363,15 +466,16 @@
             scales: {
                 yAxes: [{
                         //ESTE ES EL STACKED que monta barras sobre barras
+
                         stacked: true,
                         ticks: {
                             callback: function (value, index, values) {
                                 return  value + ':00';
                             },
                             display: true,
-                            min: 05,
+                            min: 06,
                             max: 24,
-                            stepSize: 1,
+                            stepSize: 2,
                             fontSize: 8
                         },
                         gridLines: {
@@ -380,12 +484,14 @@
                         }
                     }],
                 xAxes: [{
-
+                        ticks: {
+                            fontSize: 8
+                        },
                         stacked: true,
+
                         gridLines: {
                             display: true,
                             color: "rgba(0,0,0,0.1)"
-
                         }
                     }]
             }
@@ -397,6 +503,10 @@
             data: data,
             options: options
         });
+
+
     </script>
+    <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+    <script src="src/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
