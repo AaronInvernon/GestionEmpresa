@@ -1,11 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.ResultSet"%>
+<jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
 <!DOCTYPE html>
 <html>
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/ATIclass.css" rel="stylesheet" type="text/css"/>
-        <title>MAINPAGE</title>
+        <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/ATIclass.css" rel="stylesheet" type="text/css"/>
+        <title>INICIO</title>
 
     </head>
     <body class="purplebody"><!--Purple body esta en ATIclass.css, lo invente para hacerlo morado-->
@@ -52,24 +54,24 @@
                                     <div class="dropdown-menu" style="padding:15px ; width: 200px; border-radius: 5px ">
                                         <form class="px-4 py-3">
                                             <div class="form-group">
-                                                <label for="exampleDropdownFormEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                                                <label for="exampleDropdownFormEmail1">Usuario</label>
+                                                <input type="text" class="form-control" id="exampleDropdownFormEmail1"  name="txtUsuario" placeholder="Nombre">
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleDropdownFormPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password">
+                                                <label for="exampleDropdownFormPassword1">Contraseña</label>
+                                                <input type="password" class="form-control" id="exampleDropdownFormPassword1"  name="txtContraseña" placeholder="Contraseña">
                                             </div>
                                             <div class="form-check">
                                                 <label class="form-check-label">
                                                     <input type="checkbox" class="form-check-input">
-                                                    Remember me
+                                                    Recuérdame
                                                 </label>
                                             </div>
-                                            <button type="submit" class="btn btn-primary">Sign in</button>
+                                            <button type="submit" class="btn btn-primary">Entra</button>
                                         </form>
                                         <div class="divider"></div>
-                                        <a class="dropdown-item" href="#">New around here? Sign up</a><br/>
-                                        <a class="dropdown-item" href="#">Forgot password?</a>
+                                        <a class="dropdown-item" href="#">¿Eres nuevo? Regístrate</a><br/>
+                                        <a class="dropdown-item" href="#">No recuerdo mi contraseña</a>
 
                                     </div>
                                 </li>
@@ -153,7 +155,7 @@
                 </div>
             </div>
             <div class="plantilla" id="plantilla">
-              
+
                 <p>
 
                     Esto es una prueba para que trabajes con Nosotros
@@ -161,8 +163,8 @@
                 <a class="boton_personalizado" href=""><input type="submit" value="ACCEDE"/></a>
             </div>
         </div> 
-        <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
-        <script src="js/bootstrap.min.js" type="text/javascript"></script> 
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+        <script src="src/js/bootstrap.min.js" type="text/javascript"></script>
         <script>
             $(function () {
 
@@ -191,5 +193,56 @@
 
             });
         </script>
+        <%
+            if (request.getParameter("txtUsuario") != null) {
+
+                String nombre = request.getParameter("txtUsuario");
+                String contraseña = request.getParameter("txtContraseña");
+
+                session.setAttribute("Usuario", nombre);
+                session.setAttribute("Contraseña", contraseña);
+
+                /*Por ahora esta puesto ceo, una vez funcione la select, habra que introducirse 
+                con el usuario correspondiente, que se habra creado con anterioridad*/
+                String user = "ceo";
+                String pass = "1234";
+
+                String cadena = "select nombre, departamento from ateam_emp where nombre = upper('" + nombre + "') and password = '" + contraseña + "'";
+                ResultSet resultado = null;
+                basico.Conectar(user, pass);
+                basico.crearStatement();
+
+                resultado = basico.crearResultSet(cadena);
+                resultado.next();
+                String departamento = resultado.getString(2);
+
+                /*System.out.println(departamento);*/
+                if (departamento.equals("DIRECCION")) {
+                    /*Ir a la pagina de direccion*/
+                    response.sendRedirect("DashboardDireccion.jsp");
+
+                } else if (departamento.equals("DESARROLLO")) {
+
+                    response.sendRedirect("DashboardDesarrollo.jsp");
+
+                } else if (departamento.equals("RRHH")) {
+
+                    response.sendRedirect("DashboardRRHH.jsp");
+
+                } else if (departamento.equals("SECRETARIA")) {
+
+                    response.sendRedirect("DashboardSecretaria.jsp");
+
+                } else if (departamento.equals("MANTENIMIENTO")) {
+
+                    response.sendRedirect("DashboardMantenimiento.jsp");
+
+                } else if (departamento.equals("ADMINISTRACION")) {
+
+                    response.sendRedirect("DashboardAdmin.jsp");
+
+                }
+            }
+        %>
     </body>
 </html>
