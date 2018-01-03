@@ -30,35 +30,60 @@
                 <ul>
                     <li class="boton"><a href="#">Empleados</a></li>
                     <li class="submenu"><a href="#">Candidaturas</a>
+                        <%
+                        String user= "ceo";
+                        String pass= "1234";
+                        ResultSet vacantes=null;
+
+                        basico.Conectar(user, pass);
+                        basico.crearStatement();
+                        vacantes = basico.crearResultSet("select * from ateam_vacant");
+                        %>
                         <ul>
-                            <%
-                                String user = "ceo";
-                                String pass = "1234";
-                                ResultSet resultado = null;
-                                basico.Conectar(user, pass);
-                                basico.crearStatement();
-                                resultado = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi");
-                                while (resultado.next()) {
-                                    String dni = resultado.getString(1);
-                            %>
-
+                        <%
+                        while(vacantes.next()){
+                            String puesto = vacantes.getString(1);
+                            String departa = vacantes.getString(2);
+                            int plazas = vacantes.getInt(3);
+                        %>
                             <li>
-                                <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=<%=dni%>">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong><%=resultado.getString(2)%></strong><p class="myhour"><%=resultado.getString(3)%></p>
-                                            <div class="mypill">Nueva Candidato</div>
-                                        </div> </a>  
+                                <div class="sidebar-item">
+                                    
+                                    <div class="sidebar-item-content">
+                                         <%=puesto%> <p class="myhour"><%=departa%></p>
+                                        <div class="mypill">Nº plazas: <%=plazas%></div>
+                                    </div>
                                 </div>
-                            </li>
-                            <%
+                                <ul>
+                                <%
+                                ResultSet candidatos=null;
+                                basico.crearStatement();
+                                candidatos = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi where puesto_sol='"+puesto+"'");
+                                while(candidatos.next()){
+                                    String dni= candidatos.getString(1);
+                                %>
+                                <li>
+                                    <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=<%=dni%>">
+                                            <div class="sidebar-item-pic"></div>
+                                            <div class="sidebar-item-content">
+
+                                                <strong><%=candidatos.getString(2)%></strong><p class="myhour"><%=candidatos.getString(3)%></p>
+                                                <div class="mypill">Nueva Candidato</div>
+                                            </div> </a>  
+                                    </div>
+                                </li>
+                                <%
                                 }
-                                basico.finConectar();
-                                String reun = null;
-                            %>
+                                %> 
+                                </ul>
+                            </li>
+                        <%
+                        }
+                        basico.finConectar();
+                        String reun = null;
+                        %>
                         </ul>
-                    </li>
+                    </li> 
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
                     <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
