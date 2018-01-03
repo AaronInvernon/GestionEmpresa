@@ -8,29 +8,11 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/DashboardClass.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Mantenimiento</title>
-        <style>
-                        
-            body{
-                background: #40255b;
-            }
-            
-            #section{
-                width: 400px;
-                height: 200px;
-                margin: 5px auto;
-                background: orange;
-                color: white;
-                font-weight: bold;
-                font-size: 30px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border-radius: 20px;
-            }
-        </style>
+        
     </head>
     <body>
         <header>
@@ -112,8 +94,10 @@
             </nav>
         </header>
 
-        <section id="section">
-            Mantenimiento
+         <section id="section">
+            <h1>Mantenimiento</h1>
+
+            <p>Bienvenido <%=(String)session.getAttribute("Usuario")%></p>
         </section>
 
         <script>

@@ -1,0 +1,20 @@
+body{
+    background: #40255b;
+}
+
+#section{
+    width: 400px;
+    height: 200px;
+    margin: 15px auto;
+    background: orange;
+    color: white;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+}
+#section p{
+    font-size: 20px;
+}

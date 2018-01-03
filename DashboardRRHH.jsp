@@ -14,6 +14,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/DashboardClass.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Tablero</title>
@@ -23,24 +24,24 @@
             <a href="#" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
-            
+
             <nav class="menu">
 
                 <ul>
                     <li class="boton"><a href="#">Empleados</a></li>
                     <li class="submenu"><a href="#">Candidaturas</a>
                         <ul>
-                        <%
-                            String user= "ceo";
-                            String pass= "1234";
-                            ResultSet resultado=null;
-                            basico.Conectar(user, pass);
-                            basico.crearStatement();
-                            resultado = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi");
-                            while(resultado.next()){
-                                String dni= resultado.getString(1);
+                            <%
+                                String user = "ceo";
+                                String pass = "1234";
+                                ResultSet resultado = null;
+                                basico.Conectar(user, pass);
+                                basico.crearStatement();
+                                resultado = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi");
+                                while (resultado.next()) {
+                                    String dni = resultado.getString(1);
                             %>
-                            
+
                             <li>
                                 <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=<%=dni%>">
                                         <div class="sidebar-item-pic"></div>
@@ -52,9 +53,9 @@
                                 </div>
                             </li>
                             <%
-                            }
-                            basico.finConectar();
-                            String reun = null;
+                                }
+                                basico.finConectar();
+                                String reun = null;
                             %>
                         </ul>
                     </li>
@@ -128,62 +129,66 @@
                 </ul>
             </nav>
         </header>
-        
+
         <div class="content container">
             <%
-            if(session.getAttribute("CandiEstado")!=null){
-                   if((boolean)session.getAttribute("CandiEstado")==true){
-                %>
-                <h4 align="center"> El candidato ha sido aceptado. </h4>     
-                <% 
+                if (session.getAttribute("CandiEstado") != null) {
+                    if ((boolean) session.getAttribute("CandiEstado") == true) {
+            %>
+            <h4 align="center"> El candidato ha sido aceptado. </h4>     
+            <%
+                session.setAttribute("CandiEstado", null);
+            } else if ((boolean) session.getAttribute("CandiEstado") == false) {
+            %>
+            <h4 align="center"> El candidato ha sido rechazado. </h4>
+            <%
                     session.setAttribute("CandiEstado", null);
-                   } else if((boolean)session.getAttribute("CandiEstado")==false){
-                %>
-                <h4 align="center"> El candidato ha sido rechazado. </h4>
-                <%
-                    session.setAttribute("CandiEstado", null);
-                   }
-            }else if (request.getParameter("reun")!=null){
-                %>
-                <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
-                <%
-            }else{   
-                %>
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, sit, iste, totam nobis voluptatem beatae culpa voluptas eligendi soluta aliquam atque quidem eaque possimus. Excepturi, magni nostrum aut praesentium id!</p>
-                <%   
-            }
+                }
+            } else if (request.getParameter("reun") != null) {
+            %>
+            <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
+            <%
+            } else {
+            %>
+            <section id="section">
+                <h1>Recursos Humanos</h1>
 
-            if(request.getParameter("dni")!=null){
-                %>
+                <p>Bienvenido <%=(String) session.getAttribute("Usuario")%></p>
+            </section>
+            <%
+                }
+
+                if (request.getParameter("dni") != null) {
+            %>
             <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
             <%
-            }else if(request.getParameter("reun")!=null){
+            } else if (request.getParameter("reun") != null) {
             %>
             <jsp:include page="FormularioReservaSR.jsp"/>    
             <%
-            }
+                }
             %>
         </div>
 
         <script>
-            
-            $(document).ready (function (){
+
+            $(document).ready(function () {
                 $("#btn-menu").attr('checked', false);
             });
-            
+
             $(".submenu").click(function () {
                 $(this).children("ul").slideToggle();
                 $(this).children("ul").toggleClass('active');
-                });
-            
+            });
+
             $(".boton").click(function () {
                 $("#btn-menu").attr('checked', false);
             });
-            
+
             $(".submenu").children("ul").click(function () {
                 $("#btn-menu").attr('checked', false);
             });
-            
+
         </script>
     </body>
 </html>
