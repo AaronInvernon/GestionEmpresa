@@ -54,7 +54,7 @@
                                         <div class="mypill">Nº plazas: <%=plazas%></div>
                                     </div>
                                 </div>
-                                <ul>
+                                </ul>
                                 <%
                                 ResultSet candidatos=null;
                                 basico.crearStatement();
@@ -173,23 +173,21 @@
             %>
             <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
             <%
-            } else {
+            }else if(request.getParameter("dni") != null){
+            %>
+            <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
+            <%
+            }else if(request.getParameter("reun") != null) {
+            %>
+            <jsp:include page="FormularioReservaSR.jsp"/>  
+            <%
+            }else {
             %>
             <section id="section">
                 <h1>Recursos Humanos</h1>
 
                 <p>Bienvenido <%=(String) session.getAttribute("Usuario")%></p>
             </section>
-            <%
-                }
-
-                if (request.getParameter("dni") != null) {
-            %>
-            <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
-            <%
-            } else if (request.getParameter("reun") != null) {
-            %>
-            <jsp:include page="FormularioReservaSR.jsp"/>    
             <%
                 }
             %>
