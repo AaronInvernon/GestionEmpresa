@@ -30,6 +30,7 @@
                 <ul>
                     <li class="boton"><a href="#">Empleados</a></li>
                     <li class="submenu"><a href="#">Candidaturas</a>
+                        
                         <%
                         String user= "ceo";
                         String pass= "1234";
@@ -40,21 +41,23 @@
                         vacantes = basico.crearResultSet("select * from ateam_vacant");
                         %>
                         <ul>
+                            
                         <%
                         while(vacantes.next()){
                             String puesto = vacantes.getString(1);
                             String departa = vacantes.getString(2);
                             int plazas = vacantes.getInt(3);
                         %>
-                            <li>
-                                <div class="sidebar-item">
+                            <li class="submenu2">
+                                <div class="sidebar-puesto">
                                     
-                                    <div class="sidebar-item-content">
-                                         <%=puesto%> <p class="myhour"><%=departa%></p>
-                                        <div class="mypill">Nº plazas: <%=plazas%></div>
+                                    <div class="sidebar-puesto-content"><a>
+                                         <%=puesto%> <div class="plazaPill">Nº plazas: <%=plazas%></div>
+                                         <p class="opacoDept"><%=departa%></p></a>
+                                        
                                     </div>
                                 </div>
-                                </ul>
+                                    <ul>   
                                 <%
                                 ResultSet candidatos=null;
                                 basico.crearStatement();
@@ -68,7 +71,7 @@
                                             <div class="sidebar-item-content">
 
                                                 <strong><%=candidatos.getString(2)%></strong><p class="myhour"><%=candidatos.getString(3)%></p>
-                                                <div class="mypill">Nueva Candidato</div>
+                                                <div class="mypill">Nuevo Candidato</div>
                                             </div> </a>  
                                     </div>
                                 </li>
@@ -77,13 +80,35 @@
                                 %> 
                                 </ul>
                             </li>
+                            <li class="submenu2">
+                                <div class="sidebar-puesto">
+                                    
+                                    <div class="sidebar-puesto-content"><a>
+                                         Ejmplo2 <div class="plazaPill">Ejmplo2</div>
+                                         <p class="opacoDept">Ejmplo2</p></a>
+                                        
+                                    </div>
+                                </div>
+                                <ul>
+                                    <li>
+                                    <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=dni">
+                                            <div class="sidebar-item-pic"></div>
+                                            <div class="sidebar-item-content">
+
+                                                <strong>candidato</strong><p class="myhour">hora</p>
+                                                <div class="mypill">Nuevo Candidato</div>
+                                            </div> </a>  
+                                    </div>
+                                </li>
+                                </ul>
+                            </li>        
+                        </ul>
                         <%
                         }
                         basico.finConectar();
                         String reun = null;
                         %>
-                        </ul>
-                    </li> 
+                        
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
                     <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
@@ -200,7 +225,11 @@
             });
 
             $(".submenu").click(function () {
-                $(this).children("ul").slideToggle();
+                $(this).children("ul").slideToggle("slow").show();
+                $(this).children("ul").toggleClass('active');
+            });
+            
+            $(".submenu2").click(function () {
                 $(this).children("ul").toggleClass('active');
             });
 
