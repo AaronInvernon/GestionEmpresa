@@ -23,11 +23,7 @@
             <nav class="menu">
 
                 <ul>
-                    <%
-                        String emp = null;
-                    %>
-                    <li class="boton"><a href="DashboardDesarrollo.jsp?emp=jerarquia">Empleados</a></li>
-
+                   
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="DashboardDesarrollo.jsp?reun=1">Reservar Sala</a></li>
 
@@ -100,10 +96,7 @@
         } else if (request.getParameter("emp") != null) {
         %>
         <jsp:include page="jerarquia_1.jsp"/>  
-        <%
-        } else if (request.getParameter("n_emp") != null) {
-        %>
-        <jsp:include page="BarsInOut_2.jsp"/> 
+         
         <%
         } else {
 

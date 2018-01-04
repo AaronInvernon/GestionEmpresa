@@ -181,7 +181,7 @@
             <%
             } else if (request.getParameter("n_emp") != null) {
             %>
-            <jsp:include page="BarsInOut_2.jsp"/> 
+            <jsp:include page="BarsInOut.jsp"/> 
             <%
             } else {
                 ResultSet empleado = null;
