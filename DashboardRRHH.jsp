@@ -10,8 +10,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>       
         <link href="src/css/DashboardClass.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
@@ -57,7 +57,7 @@
                                         
                                     </div>
                                 </div>
-                                    <ul>   
+                                <ul>   
                                 <%
                                 ResultSet candidatos=null;
                                 basico.crearStatement();
@@ -80,35 +80,13 @@
                                 %> 
                                 </ul>
                             </li>
-                            <li class="submenu2">
-                                <div class="sidebar-puesto">
-                                    
-                                    <div class="sidebar-puesto-content"><a>
-                                         Ejmplo2 <div class="plazaPill">Ejmplo2</div>
-                                         <p class="opacoDept">Ejmplo2</p></a>
-                                        
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li>
-                                    <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=dni">
-                                            <div class="sidebar-item-pic"></div>
-                                            <div class="sidebar-item-content">
-
-                                                <strong>candidato</strong><p class="myhour">hora</p>
-                                                <div class="mypill">Nuevo Candidato</div>
-                                            </div> </a>  
-                                    </div>
-                                </li>
-                                </ul>
-                            </li>        
-                        </ul>
                         <%
                         }
                         basico.finConectar();
                         String reun = null;
                         %>
-                        
+                        </ul>
+                    </li>
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
                     <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
@@ -197,14 +175,11 @@
             } else if (request.getParameter("reun") != null) {
             %>
             <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
+            <jsp:include page="FormularioReservaSR.jsp"/>
             <%
             }else if(request.getParameter("dni") != null){
             %>
             <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
-            <%
-            }else if(request.getParameter("reun") != null) {
-            %>
-            <jsp:include page="FormularioReservaSR.jsp"/>  
             <%
             }else {
             %>
