@@ -21,70 +21,73 @@
     </head>
     <body>
         <header>
-            <a href="#" class="navbar-brand">[A_Team_Inc]</a>
+            <a href="DashboardRRHH.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
 
             <nav class="menu">
 
                 <ul>
-                    <li class="boton"><a href="#">Empleados</a></li>
+                    <%
+                        String emp = null;
+                    %>
+                    <li class="boton"><a href="DashboardRRHH.jsp?emp=jerarquia">Empleados</a></li>
                     <li class="submenu"><a href="#">Candidaturas</a>
-                        
-                        <%
-                        String user= "ceo";
-                        String pass= "1234";
-                        ResultSet vacantes=null;
 
-                        basico.Conectar(user, pass);
-                        basico.crearStatement();
-                        vacantes = basico.crearResultSet("select * from ateam_vacant");
+                        <%
+                            String user = "ceo";
+                            String pass = "1234";
+                            ResultSet vacantes = null;
+
+                            basico.Conectar(user, pass);
+                            basico.crearStatement();
+                            vacantes = basico.crearResultSet("select * from ateam_vacant");
                         %>
                         <ul>
-                            
-                        <%
-                        while(vacantes.next()){
-                            String puesto = vacantes.getString(1);
-                            String departa = vacantes.getString(2);
-                            int plazas = vacantes.getInt(3);
-                        %>
+
+                            <%
+                                while (vacantes.next()) {
+                                    String puesto = vacantes.getString(1);
+                                    String departa = vacantes.getString(2);
+                                    int plazas = vacantes.getInt(3);
+                            %>
                             <li class="submenu2">
                                 <div class="sidebar-puesto">
-                                    
+
                                     <div class="sidebar-puesto-content"><a>
-                                         <%=puesto%> <div class="plazaPill">Nº plazas: <%=plazas%></div>
-                                         <p class="opacoDept"><%=departa%></p></a>
-                                        
+                                            <%=puesto%> <div class="plazaPill">Nº plazas: <%=plazas%></div>
+                                            <p class="opacoDept"><%=departa%></p></a>
+
                                     </div>
                                 </div>
                                 <ul>   
-                                <%
-                                ResultSet candidatos=null;
-                                basico.crearStatement();
-                                candidatos = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi where puesto_sol='"+puesto+"'");
-                                while(candidatos.next()){
-                                    String dni= candidatos.getString(1);
-                                %>
-                                <li>
-                                    <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=<%=dni%>">
-                                            <div class="sidebar-item-pic"></div>
-                                            <div class="sidebar-item-content">
+                                    <%
+                                        ResultSet candidatos = null;
+                                        basico.crearStatement();
+                                        candidatos = basico.crearResultSet("select dni, initcap(cnombre), hora from ateam_candi where puesto_sol='" + puesto + "'");
+                                        while (candidatos.next()) {
+                                            String dni = candidatos.getString(1);
+                                    %>
+                                    <li>
+                                        <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=<%=dni%>">
+                                                <div class="sidebar-item-pic"></div>
+                                                <div class="sidebar-item-content">
 
-                                                <strong><%=candidatos.getString(2)%></strong><p class="myhour"><%=candidatos.getString(3)%></p>
-                                                <div class="mypill">Nuevo Candidato</div>
-                                            </div> </a>  
-                                    </div>
-                                </li>
-                                <%
-                                }
-                                %> 
+                                                    <strong><%=candidatos.getString(2)%></strong><p class="myhour"><%=candidatos.getString(3)%></p>
+                                                    <div class="mypill">Nuevo Candidato</div>
+                                                </div> </a>  
+                                        </div>
+                                    </li>
+                                    <%
+                                        }
+                                    %> 
                                 </ul>
                             </li>
-                        <%
-                        }
-                        basico.finConectar();
-                        String reun = null;
-                        %>
+                            <%
+                                }
+                                basico.finConectar();
+                                String reun = null;
+                            %>
                         </ul>
                     </li>
                     <li class="boton"><a href="#">Calendario</a></li>
@@ -177,11 +180,15 @@
             <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
             <jsp:include page="FormularioReservaSR.jsp"/>
             <%
-            }else if(request.getParameter("dni") != null){
+            } else if (request.getParameter("dni") != null) {
             %>
             <jsp:include page="NuevaCandidatura_RRHH.jsp"/>
             <%
-            }else {
+            } else if (request.getParameter("emp") != null) {
+            %>
+            <jsp:include page="jerarquia_1.jsp"/> 
+            <%
+            } else {
             %>
             <section id="section">
                 <h1>Recursos Humanos</h1>
@@ -203,7 +210,7 @@
                 $(this).children("ul").slideToggle("slow").show();
                 $(this).children("ul").toggleClass('active');
             });
-            
+
             $(".submenu2").click(function () {
                 $(this).children("ul").toggleClass('active');
             });

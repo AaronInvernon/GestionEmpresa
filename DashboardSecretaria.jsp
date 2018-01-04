@@ -15,18 +15,23 @@
        
     </head>
     <body>
-        <header>
-            <a href="#" class="navbar-brand">[A_Team_Inc]</a>
+       <header>
+            <a href="DashboardSecretaria.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
 
             <nav class="menu">
 
                 <ul>
-                    <li class="boton"><a href="#">Empleados</a></li>
+                    <%
+                        String emp = null;
+                    %>
+                    <li class="boton"><a href="DashboardSecretaria.jsp?emp=jerarquia">Empleados</a></li>
+                   
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="#">Estadísticas</a></li>
-                    <li class="boton"><a href="#">Agenda</a></li>
+                    <li class="boton"><a href="DashboardSecretaria.jsp?reun=1">Reservar Sala</a></li>
+
                     <li class="submenu"><a href="#">Notificaciones</a>
                         <ul>
                             <li>
@@ -93,13 +98,30 @@
                 </ul>
             </nav>
         </header>
+        <%
+            if (request.getParameter("reun") != null) {
+        %>
+        <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
+        <%
+        } else if (request.getParameter("reun") != null) {
+        %>
+        <jsp:include page="FormularioReservaSR.jsp"/>  
+        <%
+        } else if (request.getParameter("emp") != null) {
+        %>
+        <jsp:include page="jerarquia_1.jsp"/>  
+        <%
+        } else {
+        %>
+        <section id="section">
+            <h1>Secretaria</h1>
 
-         <section id="section">
-            <h1>Secretaría</h1>
-
-            <p>Bienvenido <%=(String)session.getAttribute("Usuario")%></p>
+            <p>Bienvenido <%=(String) session.getAttribute("Usuario")%></p>
         </section>
-
+        <%
+            }
+        %>
+        
         <script>
 
             $(document).ready(function () {

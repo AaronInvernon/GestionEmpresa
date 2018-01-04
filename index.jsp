@@ -61,17 +61,9 @@
                                                 <label for="exampleDropdownFormPassword1">Contraseña</label>
                                                 <input type="password" class="form-control" id="exampleDropdownFormPassword1"  name="txtContraseña" placeholder="Contraseña">
                                             </div>
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    Recuérdame
-                                                </label>
-                                            </div>
                                             <button type="submit" class="btn btn-primary">Entra</button>
                                         </form>
                                         <div class="divider"></div>
-                                        <a class="dropdown-item" href="#">¿Eres nuevo? Regístrate</a><br/>
-                                        <a class="dropdown-item" href="#">No recuerdo mi contraseña</a>
 
                                     </div>
                                 </li>
