@@ -26,7 +26,7 @@
             PreparedStatement S3 = conn.prepareStatement("SELECT LEVEL,NOMBRE, N_EMP, N_RESP from ATEAM_EMP where level = 3 connect by PRIOR N_EMP = N_RESP START WITH N_EMP=10 ORDER BY LEVEL");
             ResultSet RS1 = S1.executeQuery();
             ResultSet RS2 = S2.executeQuery();
-            ResultSet RS3 = S3.executeQuery();
+            
             RS1.next();
             int lvl = RS1.getInt(1);
             String name = RS1.getString(2);
@@ -49,7 +49,8 @@
                                 if (nresp == N_Emp_Lvl_1) {%>
                         <li><a href="#"><span><%=name%></span></a>
                             <ul>
-                                <% while (RS3.next()) {
+                                <% ResultSet RS3 = S3.executeQuery();
+                                    while (RS3.next()) {
                                         lvl = RS3.getInt(1);
                                         name = RS3.getString(2);
                                         N_Emp_Lvl_3 = RS3.getInt(3);
