@@ -92,10 +92,7 @@
             if (request.getParameter("reun") != null) {
         %>
         <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
-        <%
-        } else if (request.getParameter("reun") != null) {
-        %>
-        <jsp:include page="FormularioReservaSR.jsp"/>  
+        <jsp:include page="FormularioReservaSR.jsp"/> 
         <%
         } else if (request.getParameter("emp") != null) {
         %>
