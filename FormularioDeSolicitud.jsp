@@ -4,9 +4,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/ATIclass.css" rel="stylesheet" type="text/css"/>
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
 
         <title>FORMULARIO DE SOLICITUD</title>
     </head>
@@ -83,8 +83,8 @@
         </div>
 
 
-        <script src="js/bootstrap.min.js" type="text/javascript"></script>
-        <script src="js/jquery-1.12.3.min.js" type="text/javascript"></script>
+        <script src="src/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 $("#capa1").hide();
