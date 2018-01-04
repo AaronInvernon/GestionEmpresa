@@ -6,7 +6,6 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="src/css/DashboardClass.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
@@ -122,11 +121,39 @@
         <%
             }
         %>
-
+        <div class="PopUpIn" >
+                <div class="InBox">
+                    <a><strong>X</strong></a>
+                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">Haz clic aquí</h4>
+                    <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
+                    <input id= "entrada" class="btn btn-primary"  type="submit" name="status" value="Marcar Entrada"/>
+                </div> 
+            </div>
+            <div class="PopUpEat" >
+                <div class="EatBox">
+                    <a><strong>X</strong></a>
+                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">¡Hora de comer!</h4>
+                    <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
+                    <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
+                    <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
+                </div> 
+            </div>
+            <div class="PopUpOut" >
+                <div class="OutBox">
+                    <a><strong>X</strong></a>
+                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">Finalizar</h4>
+                    <h5 style="color: grey; text-align: center">Tu horario a culminado</h5>
+                    <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
+                    <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
+                </div> 
+            </div>
         <script>
 
             $(document).ready(function () {
                 $("#btn-menu").attr('checked', false);
+                $(".PopUpIn").hide();
+                $(".PopUpEat").hide();
+                $(".PopUpOut").hide();
             });
 
             $(".submenu").click(function () {
@@ -141,7 +168,18 @@
             $(".submenu").children("ul").click(function () {
                 $("#btn-menu").attr('checked', false);
             });
-
+//----------TODO ESTO ES NUEVO----------//    
+            $(".InBox").children("a").click(function () {
+                $(".PopUpIn").hide();
+            });
+            
+            $(".EatBox").children("a").click(function () {
+                $(".PopUpEat").hide();
+            });
+            
+            $(".OutBox").children("a").click(function () {
+                $(".PopUpOut").hide();
+            });
         </script>
     </body>
 </html>
