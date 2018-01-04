@@ -38,7 +38,7 @@
         <div class="tree">
             <ul>
                 <li class="main">
-                    <a href="#"><span><%=name%></span></a>
+                    <a href="?n_emp=<%=N_Emp_Lvl_1%>"><span><%=name%></span></a>
                     <ul>
                         <%
                             while (RS2.next()) {
@@ -47,7 +47,7 @@
                                 N_Emp_Lvl_2 = RS2.getInt(3);
                                 nresp = RS2.getInt(4);
                                 if (nresp == N_Emp_Lvl_1) {%>
-                        <li><a href="#"><span><%=name%></span></a>
+                        <li><a href="?n_emp=<%=N_Emp_Lvl_2%>"><span><%=name%></span></a>
                             <ul>
                                 <% ResultSet RS3 = S3.executeQuery();
                                     while (RS3.next()) {
@@ -56,7 +56,7 @@
                                         N_Emp_Lvl_3 = RS3.getInt(3);
                                            nresp = RS3.getInt(4);
                                            if (nresp == N_Emp_Lvl_2) {%>
-                                <li><a href="#"><span><%=name%></span></a></li>
+                                <li><a href="?n_emp=<%=N_Emp_Lvl_3%>"><span><%=name%></span></a></li>
                                             <% }
                                        }
                                             %>

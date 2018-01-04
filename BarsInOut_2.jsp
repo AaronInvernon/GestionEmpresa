@@ -16,9 +16,9 @@
     <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
     <%DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
         Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "javaoracle");
-        PreparedStatement stmt = conn.prepareStatement("select TO_CHAR(ENTRADA,'dd-mm-yyyy') as FECHA, TO_CHAR(ROUND (ENTRADA, 'hh24'),'hh24:mi') as ENTRADA, TO_CHAR(ROUND (SALIDA, 'hh24'),'hh24:mi') as SALIDA, TO_CHAR(ROUND (H_COMIDA, 'hh24'),'hh24:mi') as COMIDA, TO_CHAR(ENTRADA,'dy dd','nls_date_language = Spanish') as FECHA2 from ATEAM_ENTRASALE where N_EMP = 10");
+        PreparedStatement stmt = conn.prepareStatement("select TO_CHAR(ENTRADA,'dd-mm-yyyy') as FECHA, TO_CHAR(ROUND (ENTRADA, 'hh24'),'hh24:mi') as ENTRADA, TO_CHAR(ROUND (SALIDA, 'hh24'),'hh24:mi') as SALIDA, TO_CHAR(ROUND (H_COMIDA, 'hh24'),'hh24:mi') as COMIDA, TO_CHAR(ENTRADA,'dy dd','nls_date_language = Spanish') as FECHA2 from ATEAM_ENTRASALE where N_EMP = "+request.getParameter("n_emp"));
         PreparedStatement stmt2 = conn.prepareStatement("select TO_CHAR(ROUND(SYSDATE,'hh24'),'hh24:mi'),TO_CHAR(SYSDATE,'dd-mm-yyyy') from DUAL");
-        PreparedStatement stmt3 = conn.prepareStatement("select * from ATEAM_EMP where N_EMP = 10");
+        PreparedStatement stmt3 = conn.prepareStatement("select * from ATEAM_EMP where N_EMP = "+request.getParameter("n_emp"));
         ResultSet rset = stmt.executeQuery();
         ResultSet n = stmt2.executeQuery();
         ResultSet f = stmt3.executeQuery();
@@ -327,9 +327,7 @@
             Este es el contador de las (8horas total de trabajo limite) que ahora esta en 0 porque se culminó el horario laboral completo<%=HoraTotal%>
         </li>
        --> 
-        <p> 
-            Un array con las horas extras uqe inicia cuando el contador queda en cero: <%=resta3%>
-        </p>
+        
        <!-- <li>
             Y esta es la fecha que se coloca debajo de las barras: <%=fechaminima%>
         </li>
