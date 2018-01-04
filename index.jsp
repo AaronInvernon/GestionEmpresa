@@ -196,13 +196,13 @@
                 session.setAttribute("Contraseña", contraseña);
 
                 /*Por ahora esta puesto ceo, una vez funcione la select, habra que introducirse 
-                con el usuario correspondiente, que se habra creado con anterioridad*/
+                con el usuario correspondiente, que se habra creado con anterioridad
                 String user = "ceo";
-                String pass = "1234";
+                String pass = "1234";*/
 
                 String cadena = "select nombre, departamento from ateam_emp where nombre = upper('" + nombre + "') and password = '" + contraseña + "'";
                 ResultSet resultado = null;
-                basico.Conectar(user, pass);
+                basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                 basico.crearStatement();
 
                 resultado = basico.crearResultSet(cadena);
@@ -213,27 +213,27 @@
                 if (departamento.equals("DIRECCION")) {
                     /*Ir a la pagina de direccion*/
                     response.sendRedirect("DashboardDireccion.jsp");
-
+                    basico.finConectar();
                 } else if (departamento.equals("DESARROLLO")) {
 
                     response.sendRedirect("DashboardDesarrollo.jsp");
-
+                    basico.finConectar();
                 } else if (departamento.equals("RRHH")) {
 
                     response.sendRedirect("DashboardRRHH.jsp");
-
+                    basico.finConectar();
                 } else if (departamento.equals("SECRETARIA")) {
 
                     response.sendRedirect("DashboardSecretaria.jsp");
-
+                    basico.finConectar();
                 } else if (departamento.equals("MANTENIMIENTO")) {
 
                     response.sendRedirect("DashboardMantenimiento.jsp");
-
+                    basico.finConectar();
                 } else if (departamento.equals("ADMINISTRACION")) {
 
                     response.sendRedirect("DashboardAdmin.jsp");
-
+                    basico.finConectar();
                 }
             }
         %>
