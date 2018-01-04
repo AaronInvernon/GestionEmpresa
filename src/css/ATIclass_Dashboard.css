@@ -1,3 +1,63 @@
+/*--------------------------TODO ESTO ES NUEVO----------------------------*/
+
+
+.PopUpIn, .PopUpEat, .PopUpOut{
+    color:white;
+    position:fixed;
+    z-index: 3;
+    top:0px;
+    left:0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+.InBox, .EatBox, .OutBox {
+    position:relative;
+    margin: auto;
+    top: 20%;
+    width: 350px;
+    height: 200px;
+    background:white;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+    padding: 50px 60px 50px 60px; 
+    border-radius: 5px; border: 3px solid orange
+}
+
+.InBox > a, .EatBox > a, .OutBox > a {
+    margin:0;
+    padding: 0;
+    position:relative;
+    float: right;
+    top:-40%;
+    right:-20%;
+    text-decoration:none;
+    cursor: pointer;
+    width:25px;
+    height: 25px;
+    border:3px solid lightgrey;
+    border-radius: 20px;
+    color: grey 
+}
+
+.InBox > a:hover, .EatBox > a:hover, .OutBox > a:hover{
+    color: orange;
+    border-color:orange;
+}
+
+.InBox > h4, .EatBox > h4, .OutBox > h4 {
+    position:relative;
+    left: 5%;
+    color:grey;
+    text-align: center
+}
+.InBox > h5, .EatBox > h5, .OutBox > h5 {
+    color:grey;
+    text-align: center
+}
+/*----------------------FIN DE TODO ESTO ES NUEVO----------------------------*/
+
 my-nav {
     position: absolute;
     top: 10px;
@@ -14,7 +74,7 @@ my-nav {
 
 .purplebody {
     background:#2e1247;
-  
+
 }
 
 .navbar-default {
@@ -36,7 +96,7 @@ my-nav {
 
 label {
     color: #58416c;
-    
+
 }
 
 
@@ -45,14 +105,17 @@ label {
     font-size: 20px;
 }
 
+.navbar-brand:hover {
+    color: white;
+}
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-     color: #58416c;
+    color: white;
 }
 
 .navbar-default .navbar-nav > li > a {
- color: #fff;    
+    color: #fff;    
 }
 
 .navbar-default .navbar-nav > li > a:hover,
@@ -105,23 +168,52 @@ label {
 
 
 .sidebar-item {
-    background-color: #2e1247;
+    height: 80px;
+    background-color: #260f3d; 
     
+
 }
 
+.sidebar-item > a {
+    height: 80px;
+    width: 100%;
+}
 
 .sidebar-item-pic {
-  height: 50px;
-  width: 50px;
-  background-color: white;
-  float:left;
-  border-radius: 25px;
-  border: 2px solid #25ea1f;
-  box-shadow: 2px 2px 3px #2f1348;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    float:left;
+    border-radius: 25px;
+    border: 2px solid #25ea1f;
+    box-shadow: 2px 2px 3px #2f1348;
+}
+/*INICIO css para puestos vacantes*/
+
+sidebar-puesto{
+    height: 80px;
+    width: 100%;
 }
 
+
+.sidebar-puesto-content {
+    
+    height: 80px;
+    width: 100%;
+    position:relative;
+    vertical-align: middle;
+}
+
+.sidebar-puesto > a {
+    height: 80px;
+    width: 100%;
+}
+
+
+/*FIN css para puestos vacantes*/
+
 .sidebar-item-content {
-  padding-left: 60px;
+    padding-left: 60px;
 }
 
 .sidebar-item-content strong {
@@ -151,3 +243,286 @@ label {
     height: 70px;
 }
 
+/*_____TODO______DASHBOARD______CLASS______CSS_______*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+header {
+    height: 50px;
+    background:#2e1247;
+    color: #fff;
+}
+
+
+header label {
+    cursor: pointer;
+    display:none;
+    padding: 10px;
+}
+
+
+#btn-menu{
+    display:none;
+    z-index: 1;
+}
+
+#icono {
+    font-size: 30px;
+}
+
+
+
+.menu ul {
+    background:#2e1247;
+    display: flex;
+    list-style: none;
+    justify-content: flex-end;
+}
+
+.menu ul ul{
+    display: none;
+}
+
+
+.menu ul li ul {
+    margin-top: 50px;
+    background-color: #2e1247;
+    position: absolute;
+    top:0px;
+    left: -350px;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 0;
+}
+
+.menu ul li ul:after {
+    margin-top: 0px;
+}
+
+
+.menu ul li ul.default {
+    margin-top: 50px;
+    background-color: #2e1247;
+    position: absolute;
+    top:0px;
+    left: -350px;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 0;
+}
+
+.menu ul li ul.active {
+    margin-top: 50px;
+    position: absolute;
+    top:0px;
+    left: 0px;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 0;
+
+}
+
+.menu ul li ul li ul {
+    margin-top: 0px;
+    display:none;
+    position: relative;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 0;
+}
+
+
+.menu ul li ul li ul.active {
+    margin-top: 0px;
+    display: block;
+    position: relative;
+    transition: all 0.3s;
+    height: 100%;
+    z-index: 0;
+}
+
+
+
+
+.menu a {
+    display: block;
+    position:static;
+    padding: 15px 10px 15px 10px;
+    color: #fff;
+    text-decoration: none;
+
+}
+
+/*ESTE ES EL HOVER DEL SIDE BAR*/
+
+.menu ul li a:hover {
+    background: #230D38;
+    overflow-x: hidden;
+}
+
+
+
+.menu ul li ul li a {
+    padding: 20px;
+    height: 100%;
+    width: 330px;
+}
+.menu ul li ul li a:hover {
+    padding: 15px;
+    height: 100%;
+    width: 330px;
+}
+
+
+
+.menu span {
+    padding-left: 10px;
+}
+
+.mypill {
+    background-color: orange;
+    height:20px;
+    width:140px;
+    border-radius: 10px;
+    text-align: center
+}
+
+.myhour {
+    float:right;
+    text-align: center;
+    opacity: 0.4;
+}
+
+.plazaPill {
+    float:right;
+    background-color: orange;
+    height:20px;
+    width:90px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.opacoDept {
+    
+    text-align: left;
+    opacity: 0.4;
+    font-size: 12px;
+}
+
+
+
+.navbar-brand {
+    color:white;
+    position: fixed;
+    z-index:3;
+}
+
+
+
+@media (max-width:768px){
+
+    .navbar-brand {
+        position: fixed;
+        padding: 15px 20px 15px 20px;
+        right: 0px;
+        top: 0px;
+        z-index: 2;
+    }
+
+    .menu ul li ul {
+        padding-top: 0px;
+        position: static;
+        left: -100%;
+        height: auto;
+    }
+
+    .menu ul li ul.active {
+        padding-top: 0px;
+        position: static;
+        left: 0px;
+        height: auto;
+    }
+
+    header label {
+        display: block;
+    }
+
+    .menu {
+        display:none;
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top:  -200%;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        background:#240F3A;
+    }
+
+    .menu ul li ul {
+        position: static;
+        left:0;
+    }
+
+
+    .menu ul li ul .active {
+        position: static;
+        left: 0;
+    }
+ 
+    .menu ul li:hover ul {
+        display: none;
+    }
+
+    .menu ul li:focus ul {
+        background: #2e1247;
+    }
+
+    .menu a span {
+        position: absolute;
+        right: 5px;
+    }
+
+    #btn-menu:checked ~ .menu {
+        margin-top:  0%;
+        margin-top:50px;
+        z-index: 2;
+        display:block;
+    }
+
+    .sidebar-item-content {
+        padding-top:5px;
+    }
+
+    .menu ul li ul li a {
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+    }
+    .menu ul li ul li a:hover {
+        padding: 15px;
+        height: 100%;
+        width: 100%;
+        background-color: #2e1247;
+    }
+
+    .myhour {
+        padding-right: 5px;
+    }
+
+}
+
+/*CONTENEDOR*/
+
+.content {
+    z-index: -1;
+}
