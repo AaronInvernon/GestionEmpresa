@@ -368,14 +368,7 @@
         <div class="col-sm-6" style="background-color: white; border-radius: 5px; padding:5px">
             <canvas id="myChart" ></canvas>
         </div>
-        <div class="col-sm-2" style="color: white; border-radius: 5px; padding:10px">
-            Opciones:<br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Ver CV</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Incentivo</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Aumento</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Sanción</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Despido</button>
-        </div>
+        
     </div>
     <script type="text/javascript">
         Chart.defaults.global.tooltips.enabled = false;
