@@ -24,10 +24,11 @@
                 <ul>
                     <%
                         String emp = null;
+                        String calen = null;
                     %>
                     <li class="boton"><a href="DashboardAdmin.jsp?emp=jerarquia">Empleados</a></li>
 
-                    <li class="boton"><a href="#">Calendario</a></li>
+                    <li class="boton"><a href="DashboardAdmin.jsp?calen=1">Calendario</a></li>
                     <li class="boton"><a href="DashboardAdmin.jsp?reun=1">Reservar Sala</a></li>
 
                     <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
@@ -100,6 +101,10 @@
         } else if (request.getParameter("n_emp") != null) {
         %>
         <jsp:include page="BarsInOut.jsp"/> 
+        <%
+        } else if (request.getParameter("calen") != null) {
+        %>
+        <jsp:include page="FormularioDeSolicitud.jsp"/> 
         <%
         } else {
 

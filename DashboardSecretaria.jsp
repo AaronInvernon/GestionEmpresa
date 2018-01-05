@@ -22,8 +22,8 @@
             <nav class="menu">
 
                 <ul>
-                   
-                    <li class="boton"><a href="#">Calendario</a></li>
+
+                    <li class="boton"><a href="DashboardSecretaria.jsp?calen=1">Calendario</a></li>
                     <li class="boton"><a href="DashboardSecretaria.jsp?reun=1">Reservar Sala</a></li>
 
                     <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
@@ -89,10 +89,13 @@
         <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
         <jsp:include page="FormularioReservaSR.jsp"/> 
         <%
-        }else if (request.getParameter("emp") != null) {
+        } else if (request.getParameter("emp") != null) {
         %>
         <jsp:include page="jerarquia_1.jsp"/>  
-        
+        <%
+        } else if (request.getParameter("calen") != null) {
+        %>
+        <jsp:include page="FormularioDeSolicitud.jsp"/> 
         <%
         } else {
 
@@ -115,31 +118,31 @@
             }
         %>
         <div class="PopUpIn" >
-                <div class="InBox">
-                    <a><strong>X</strong></a>
-                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">Haz clic aquí</h4>
-                    <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
-                    <input id= "entrada" class="btn btn-primary"  type="submit" name="status" value="Marcar Entrada"/>
-                </div> 
-            </div>
-            <div class="PopUpEat" >
-                <div class="EatBox">
-                    <a><strong>X</strong></a>
-                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">¡Hora de comer!</h4>
-                    <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
-                    <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
-                    <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
-                </div> 
-            </div>
-            <div class="PopUpOut" >
-                <div class="OutBox">
-                    <a><strong>X</strong></a>
-                    <h4 style="position:relative; left: 5%; color: grey; text-align: center">Finalizar</h4>
-                    <h5 style="color: grey; text-align: center">Tu horario a culminado</h5>
-                    <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
-                    <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
-                </div> 
-            </div>
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Haz clic aquí</h4>
+                <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
+                <input id= "entrada" class="btn btn-primary"  type="submit" name="status" value="Marcar Entrada"/>
+            </div> 
+        </div>
+        <div class="PopUpEat" >
+            <div class="EatBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">¡Hora de comer!</h4>
+                <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
+                <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
+                <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
+            </div> 
+        </div>
+        <div class="PopUpOut" >
+            <div class="OutBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Finalizar</h4>
+                <h5 style="color: grey; text-align: center">Tu horario a culminado</h5>
+                <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
+                <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
+            </div> 
+        </div>
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>

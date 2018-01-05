@@ -80,10 +80,6 @@
         </div>
         <%
             if (request.getParameter("password") != null) {
-
-               // basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
-                String user = "aaron";
-                String pass = "1234";
                 
                 if (request.getParameter("rdbLibre").equals("Vacaciones")){
 
@@ -104,8 +100,8 @@
                     }
                     String fechaFin = resultado2.substring(1, resultado2.length());
                     
-                    basico.Conectar(user,pass);
-                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
+                    basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                    String cadena = "insert into ateam_libre values('" + (String) session.getAttribute("Usuario") + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
                     System.out.println(cadena);
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();
@@ -131,8 +127,8 @@
                     }
                     String fechaFin = resultado2.substring(1, resultado2.length());
                     
-                    basico.Conectar(user,pass);
-                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
+                    basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                    String cadena = "insert into ateam_libre values('" + (String) session.getAttribute("Usuario") + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
                     System.out.println(cadena);
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();
@@ -160,8 +156,8 @@
                     String horaFin = horaFinal + ":" + minutos;
                     
                     
-                    basico.Conectar(user,pass);
-                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + HoraInicio + "','dd/mm/yyyy hh24:mi'),to_date('" + fechaInicio + horaFin + "','dd/mm/yyyy hh24:mi'), '"  + tipo + "')";
+                    basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                    String cadena = "insert into ateam_libre values('" + (String) session.getAttribute("Usuario") + "',to_date('" + fechaInicio + HoraInicio + "','dd/mm/yyyy hh24:mi'),to_date('" + fechaInicio + horaFin + "','dd/mm/yyyy hh24:mi'), '"  + tipo + "')";
                     System.out.println(cadena);
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();
