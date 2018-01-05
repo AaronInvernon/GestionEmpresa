@@ -34,20 +34,17 @@
                     %>
                     <li class="boton"><a href="DashboardRRHH.jsp?emp=jerarquia">Empleados</a></li>
                     <li class="submenu" id="mycandis"><a href="#">Candidaturas</a>
-
                         <%
-                            String user = "ceo";
-                            String pass = "1234";
-                            ResultSet vacantes = null;
+                    String user = (String)session.getAttribute("Usuario");
+                    String pass = (String)session.getAttribute("Contraseña");
+                    ResultSet vacantes = null;
 
-                            basico.Conectar(user, pass);
-                            basico.crearStatement();
-
-                            vacantes = basico.crearResultSet("select * from ateam_vacant");
+                    basico.Conectar(user, pass);
+                    basico.crearStatement();
+                    vacantes = basico.crearResultSet("select * from ateam_vacant");
                         %>
                         <div class="space">
                         <ul>
-
                             <%
                                 while (vacantes.next()) {
                                     String puesto = vacantes.getString(1);
@@ -86,28 +83,7 @@
                                     %> 
                                 </ul>
                             </li>
-                            <li class="submenu2">
-                                <div class="sidebar-puesto">
-
-                                    <div class="sidebar-puesto-content"><a>
-                                            <%=puesto%> <div class="plazaPill">Nº plazas: <%=plazas%></div>
-                                            <p class="opacoDept"><%=departa%></p></a>
-
-                                    </div>
-                                </div>
-                                            <ul>
-                                                <li>
-                                        <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=bla">
-                                                <div class="sidebar-item-pic"></div>
-                                                <div class="sidebar-item-content">
-
-                                                    <strong>bla</strong><p class="myhour">bla</p>
-                                                    <div class="mypill">Nuevo Candidato</div>
-                                                </div> </a>  
-                                        </div>
-                                    </li>
-                                            </ul>
-                            </li>
+                            
                             <%
                                 }
                                 basico.finConectar();
@@ -120,57 +96,43 @@
                     <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
 
                     <li class="submenu" id="mynotes"><a href="#">Notificaciones</a>
-                        <ul>
-                            <li>
+                                 <ul>
+                            <%
+                            ResultSet rset=null;
+                            basico.Conectar(user, pass);
+                            basico.crearStatement();
+                            String cad ="select * from ateam_sms where upper(destinatario)=upper('"+(String)session.getAttribute("Usuario")+"')";
+                            System.out.println(cad);
+                            rset = basico.crearResultSet(cad);
+                            if (rset.isBeforeFirst()){
+                                while(rset.next()){                                  
+                                %>
+                                    <li>
+                                        <div class="sidebar-item"><a href="?noti=<%=rset.getString(6)%>">
+                                            <div class="sidebar-item-pic"></div>
+                                            <div class="sidebar-item-content">
+                                                <strong><%=rset.getString(1)%></strong><p class="myhour"><%=rset.getString(5)%></p>
+                                                <div class="mypill"><%=rset.getString(3)%></div>
+
+                                            </div> </a>  
+                                        </div> 
+                                    </li>   
+                                <%
+                                }
+                            }else{
+                                %>  
+                                <li>
                                 <div class="sidebar-item"><a href="#">
                                         <div class="sidebar-item-pic"></div>
                                         <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
+                                            <strong>No tiene nnotificaciones nuevas</strong>
 
                                         </div> </a>  
                                 </div>
-                            </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Candidato</div>
-                                        </div> </a>  
-                                </div>
-                            </li>
+                                </li>
+                                <%
+                            }
+                                %>
                         </ul>
                     <li class="boton"><a href="index.jsp">Log Out</a></li>
                 </ul>
@@ -179,22 +141,14 @@
 
         <div class="content container">
             <%
-                if (session.getAttribute("CandiEstado") != null) {
-                    if ((boolean) session.getAttribute("CandiEstado") == true) {
-            %>
-            <h4 align="center"> El candidato ha sido aceptado. </h4>     
-            <%
-                session.setAttribute("CandiEstado", null);
-            } else if ((boolean) session.getAttribute("CandiEstado") == false) {
-            %>
-            <h4 align="center"> El candidato ha sido rechazado. </h4>
-            <%
-                    session.setAttribute("CandiEstado", null);
-                }
-            } else if (request.getParameter("reun") != null) {
+            if (request.getParameter("reun") != null) {
             %>
             <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
             <jsp:include page="FormularioReservaSR.jsp"/>
+            <%
+            } else if (request.getParameter("noti") != null) {
+            %>
+            <jsp:include page="verNotificaciones.jsp"/>
             <%
             } else if (request.getParameter("dni") != null) {
             %>

@@ -7,7 +7,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reserva Sala Reunión</title>
-        <link href="src/css/ATIclass.css" rel="stylesheet" type="text/css"/>
+        <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/style.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/formulario.css" rel="stylesheet" type="text/css"/>
@@ -41,11 +41,9 @@
                 <select class="form-control" name="slctSala" id="slctSala">
                     <%     
                         
-                String user = "ceo"; // HAY QUE CAMBIAR EL USUARIO POR EL DE SESSION (CREAR UN USUARIO EN LA BASE DE DATOS)
-                String pass = "1234";
                 String codigoSala = "";
                 
-                basico.Conectar(user, pass);
+                basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                 basico.crearStatement();
                 ResultSet resultadoSala = basico.crearResultSet("select cod_sala from ateam_salasreu");
                         
@@ -372,21 +370,20 @@
                 int lastTest = 1;
                 if(request.getParameter("submit").equals("Enviar")){
 
-                    basico.Conectar(user, pass);
+                    basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                     String cadena = "insert into ateam_reservasala values('" + nomReunion + "','" + sala + "',to_date('" + fecha + "','dd/mm/yyyy')," + horaInicio + "," + nHoras + ")";
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();
                     basico.finConectar();
                     String mensaje = "La reunion '"+nomReunion+"', en la sala "+sala+"; Ha sido convocada desde las "+horaInicio+":00 hasta las "+(horaInicio+nHoras)+":00 el día: "+fecha+".";
-                    boolean hayReunion = true;
-                    session.setAttribute("estadoReunion", hayReunion);
+                    
                     response.sendRedirect("DashboardRRHH.jsp");
                 %>
                     <h4 align="center"> <%=mensaje%> </h4> <br/> <br/>     
                 <%    
                 } else if(request.getParameter("submit").equals("Comprobar Disponibilidad")){
                     
-                    basico.Conectar(user, pass);
+                    basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                     String cadena = "select * from ateam_reservasala where cod_sala='"+sala+"' and fecha=to_date('" + fecha + "','dd/mm/yyyy') and (hora_inicio between "+horaInicio+" and "+(horaInicio+nHoras)+" or hora_inicio+num_horas between "+horaInicio+" and "+(horaInicio+nHoras)+")"; 
                     System.out.println(cadena);
                     basico.crearStatement();
@@ -401,6 +398,7 @@
                                 //sala no disponible
                                 lastTest = 0 * lastTest;       
                             }else if(horaInicio >= Inicio && horaInicio < Fin){
+                                //sala no disponible
                                 lastTest = 0 * lastTest;
                             }else if (sumaForm == Inicio || horaInicio == Fin){
                                 //sala disponible
