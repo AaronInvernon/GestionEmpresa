@@ -103,7 +103,7 @@
                                 basico.Conectar(user, pass);
                                 basico.crearStatement();
                                 String cad = "select * from ateam_sms where upper(destinatario)=upper('" + (String) session.getAttribute("Usuario") + "')";
-                                System.out.println(cad);
+                                
                                 rset = basico.crearResultSet(cad);
                                 if (rset.isBeforeFirst()) {
                                     while (rset.next()) {

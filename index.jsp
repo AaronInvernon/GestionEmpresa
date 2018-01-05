@@ -23,7 +23,7 @@
                 <nav class="my-nav navbar navbar-default">
 
                     <!--Div container-fluid abarca todo el ancho de pantalla-->
-                    <div >
+                    <div>
 
                         <!--Navbar header contiene el logo y el boton toggle para móviles-->
                         <div class="navbar-header" >
@@ -88,15 +88,15 @@
                 <h5>Bienvenido a</h5>
                 <h1>[A_Team_Inc]</h1>
                 <div>
-                    <img src="img/001.png" alt=""/>
-                    <img src="img/002.png" alt=""/>
-                    <img src="img/003.png" alt=""/>
+                    <img src="src/img/001.png" alt=""/>
+                    <img src="src/img/002.png" alt=""/>
+                    <img src="src/img/003.png" alt=""/>
 
                 </div>
                 <br/>
                 <div>
                     <a href="#espacio1" id="flecha">
-                        <img style="width: 35px; height: 35px;" src="img/arrow.png" alt=""/>
+                        <img style="width: 35px; height: 35px;" src="src/img/arrow.png" alt=""/>
                     </a>
                 </div>  
             </div>
@@ -143,7 +143,7 @@
             </div>
             <div id="espacio2">
                 <div class="caption">
-                    <span  id="colores" style="font-size:25px;">TRABAJA PARA NOSOTROS</span>
+                    <span  id="colores" style="font-size:25px;">TRABAJA CON NOSOTROS</span>
                 </div>
             </div>
             <div class="plantilla" id="plantilla">
@@ -151,9 +151,12 @@
                 <p>
 
                     Esto es una prueba para que trabajes con Nosotros
-                <br/><br/>Si estás interesado en trabajar con nosotros, consulta los puestos vacantes en este momento y envía tu candidatura:
-                </p>
-                <input type="button" value="ACCEDE" onclick="window.open('FormularioNuevaCandidatura.jsp','_blank','toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600', false);" style="color:black;"/>
+                <br/><br/>
+                <p> Si estás interesado en trabajar con nosotros, consulta los puestos vacantes en este momento y envía tu candidatura: </p>
+                <input type="button" value="ACCEDER" onclick="window.open('FormularioNuevaCandidatura.jsp','_blank','toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600', false);" style="color:black;"/>
+                <br/><br/>
+                <p> O si ya has aplicado, y quieres consultar el estado de tu candidatura: </p>
+                <input type="button" value="CONSULTAR" onclick="window.open('ConsultarCandidatura.jsp','_blank','toolbar=yes,scrollbars=yes,resizable=yes,width=600,height=400,left=350,top=150', false);" style="color:black;"/>
             </div>
         </div> 
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
@@ -191,51 +194,45 @@
 
                 String nombre = request.getParameter("txtUsuario");
                 String contraseña = request.getParameter("txtContraseña");
-
                 session.setAttribute("Usuario", nombre);
                 session.setAttribute("Contraseña", contraseña);
-
-                /*Por ahora esta puesto ceo, una vez funcione la select, habra que introducirse 
-                con el usuario correspondiente, que se habra creado con anterioridad
-                String user = "ceo";
-                String pass = "1234";*/
 
                 String cadena = "select nombre, departamento from ateam_emp where nombre = upper('" + nombre + "') and password = '" + contraseña + "'";
                 ResultSet resultado = null;
                 basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                 basico.crearStatement();
-
                 resultado = basico.crearResultSet(cadena);
-                resultado.next();
-                String departamento = resultado.getString(2);
+                    resultado.next();
+                    String departamento = resultado.getString(2);
 
-                /*System.out.println(departamento);*/
-                if (departamento.equals("DIRECCION")) {
-                    /*Ir a la pagina de direccion*/
-                    response.sendRedirect("DashboardDireccion.jsp");
-                    basico.finConectar();
-                } else if (departamento.equals("DESARROLLO")) {
+                    /*System.out.println(departamento);*/
+                    if (departamento.equals("DIRECCION")) {
+                        /*Ir a la pagina de direccion*/
+                        response.sendRedirect("DashboardDireccion.jsp");
+                        basico.finConectar();
+                    } else if (departamento.equals("DESARROLLO")) {
 
-                    response.sendRedirect("DashboardDesarrollo.jsp");
-                    basico.finConectar();
-                } else if (departamento.equals("RRHH")) {
+                        response.sendRedirect("DashboardDesarrollo.jsp");
+                        basico.finConectar();
+                    } else if (departamento.equals("RRHH")) {
 
-                    response.sendRedirect("DashboardRRHH.jsp");
-                    basico.finConectar();
-                } else if (departamento.equals("SECRETARIA")) {
+                        response.sendRedirect("DashboardRRHH.jsp");
+                        basico.finConectar();
+                    } else if (departamento.equals("SECRETARIA")) {
 
-                    response.sendRedirect("DashboardSecretaria.jsp");
-                    basico.finConectar();
-                } else if (departamento.equals("MANTENIMIENTO")) {
+                        response.sendRedirect("DashboardSecretaria.jsp");
+                        basico.finConectar();
+                    } else if (departamento.equals("MANTENIMIENTO")) {
 
-                    response.sendRedirect("DashboardMantenimiento.jsp");
-                    basico.finConectar();
-                } else if (departamento.equals("ADMINISTRACION")) {
+                        response.sendRedirect("DashboardMantenimiento.jsp");
+                        basico.finConectar();
+                    } else if (departamento.equals("ADMINISTRACION")) {
 
-                    response.sendRedirect("DashboardAdmin.jsp");
-                    basico.finConectar();
-                }
+                        response.sendRedirect("DashboardAdmin.jsp");
+                        basico.finConectar();
+                    }
             }
         %>
     </body>
 </html>
+                  
