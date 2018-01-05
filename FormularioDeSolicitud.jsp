@@ -13,13 +13,13 @@
     </head>
     <body>
         <div class="container" style="width: 400px">
-            <form action="" class="">
+            <form action="" class="" method="post">
                 <h3>Solicitud</h3>
 
                 <p>¿Qué deseas solicitar?</p>
-                <input class="btn btn-primary" type="button" id="Vacaciones" name="Libre" value="Vacaciones"/>
-                <input class="btn btn-primary" type="button" id="DiasLibres" name="Libre" value="Dias Libres"/>
-                <input class="btn btn-primary" type="button" id="HorasLibres" name="Libre" value="Horas Libres"/>
+                <input class="btn btn-primary" type="radio" id="Vacaciones"  name="rdbLibre" value="Vacaciones" /> <strong>Vacaciones</strong> 
+                <input class="btn btn-primary" type="radio" id="DiasLibres"  name="rdbLibre" value="Dias Libres" /> <strong>Dias Libres</strong>
+                <input class="btn btn-primary" type="radio" id="HorasLibres"  name="rdbLibre" value="Horas Libres" /> <strong>Horas Libres</strong>
 
                 <div id="capa1" class="form-inline">
                     <br/>
@@ -70,7 +70,7 @@
                 <br/>
                 <div class="input-group">
                     <span class="input-group-addon">Contraseña:</span>
-                    <input class="form-control" style="width: 200px" type="password" name="pass"/>
+                    <input class="form-control" style="width: 200px" type="password" name="password"/>
                 </div>
                 <br/>
                 <input class="btn btn-primary" type="submit" value="Enviar Solicitud"/>
@@ -79,13 +79,15 @@
             </form>
         </div>
         <%
-            if (request.getParameter("Libre") != null) {
+            if (request.getParameter("password") != null) {
 
                // basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                String user = "aaron";
+                String pass = "1234";
                 
-                if (request.getParameter("Libre").equals("Vacaciones")) {
+                if (request.getParameter("rdbLibre").equals("Vacaciones")){
 
-                    String tipo = request.getParameter("Libre");
+                    String tipo = request.getParameter("rdbLibre");
                     String dato = request.getParameter("FechaInicioVacaciones");
                     String[] datoArray = dato.split("-");
                     String resultado = "";
@@ -95,25 +97,24 @@
                     String fechaInicio = resultado.substring(1, resultado.length());
                     
                     String dato2 = request.getParameter("FechaFinVacaciones");
-                    String[] datoArray2 = dato.split("-");
+                    String[] datoArray2 = dato2.split("-");
                     String resultado2 = "";
                     for (int j = 2; j >= 0; j--) {
                         resultado2 = resultado2 + "/" + datoArray2[j];
                     }
                     String fechaFin = resultado2.substring(1, resultado2.length());
                     
-                    String user = "aaron";
-                    String pass = "1234";
                     basico.Conectar(user,pass);
                     String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
                     System.out.println(cadena);
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();
+                    basico.finConectar();
                     
 
-                } else if (request.getParameter("Libre").equals("Dias Libres")) {
+                } else if (request.getParameter("rdbLibre").equals("Dias Libres")) {
                     
-                    String tipo = request.getParameter("Libre");
+                    String tipo = request.getParameter("rdbLibre");
                     String dato = request.getParameter("FechaInicioDias");
                     String[] datoArray = dato.split("-");
                     String resultado = "";
@@ -123,15 +124,48 @@
                     String fechaInicio = resultado.substring(1, resultado.length());
                     
                     String dato2 = request.getParameter("FechaFinDias");
-                    String[] datoArray2 = dato.split("-");
+                    String[] datoArray2 = dato2.split("-");
                     String resultado2 = "";
                     for (int j = 2; j >= 0; j--) {
                         resultado2 = resultado2 + "/" + datoArray2[j];
                     }
                     String fechaFin = resultado2.substring(1, resultado2.length());
                     
-                } else if (request.getParameter("Libre").equals("Horas Libres")) {
+                    basico.Conectar(user,pass);
+                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
+                    System.out.println(cadena);
+                    basico.crearPreparedStatement(cadena);
+                    basico.ejUpdatePrepStat();
+                    basico.finConectar();
+                    
+                } else if (request.getParameter("rdbLibre").equals("Horas Libres")) {
 
+                    String tipo = request.getParameter("rdbLibre");
+                    int horasLibres = Integer.parseInt(request.getParameter("HorasLibres"));
+                    
+                    String dato = request.getParameter("FechaHoras");
+                    String[] datoArray = dato.split("-");
+                    String resultado = "";
+                    for (int j = 2; j >= 0; j--) {
+                        resultado = resultado + "/" + datoArray[j];
+                    }
+                    String fechaInicio = resultado.substring(1, resultado.length());
+                    
+                    String horas = request.getParameter("Horas");
+                    String minutos = request.getParameter("Minutos");
+                    
+                    String HoraInicio = horas +":"+ minutos;
+                    int horas2 = Integer.parseInt(horas);
+                    int horaFinal = horas2+horasLibres;
+                    String horaFin = horaFinal + ":" + minutos;
+                    
+                    
+                    basico.Conectar(user,pass);
+                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + HoraInicio + "','dd/mm/yyyy hh24:mi'),to_date('" + fechaInicio + horaFin + "','dd/mm/yyyy hh24:mi'), '"  + tipo + "')";
+                    System.out.println(cadena);
+                    basico.crearPreparedStatement(cadena);
+                    basico.ejUpdatePrepStat();
+                    basico.finConectar();
                 }
 
             }
