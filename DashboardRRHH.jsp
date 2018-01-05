@@ -22,6 +22,8 @@
         <header>
             <a href="DashboardRRHH.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
+            <input type="checkbox" class="mybtn" id="btn-candidaturas">
+            <input type="checkbox" class="mybtn" id="btn-notificaciones">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
 
             <nav class="menu">
@@ -31,7 +33,7 @@
                         String emp = null;
                     %>
                     <li class="boton"><a href="DashboardRRHH.jsp?emp=jerarquia">Empleados</a></li>
-                    <li class="submenu"><a href="#">Candidaturas</a>
+                    <li class="submenu" id="mycandis"><a href="#">Candidaturas</a>
 
                         <%
                             String user = "ceo";
@@ -43,6 +45,7 @@
 
                             vacantes = basico.crearResultSet("select * from ateam_vacant");
                         %>
+                        <div class="space">
                         <ul>
 
                             <%
@@ -83,17 +86,40 @@
                                     %> 
                                 </ul>
                             </li>
+                            <li class="submenu2">
+                                <div class="sidebar-puesto">
+
+                                    <div class="sidebar-puesto-content"><a>
+                                            <%=puesto%> <div class="plazaPill">Nº plazas: <%=plazas%></div>
+                                            <p class="opacoDept"><%=departa%></p></a>
+
+                                    </div>
+                                </div>
+                                            <ul>
+                                                <li>
+                                        <div class="sidebar-item"><a href="DashboardRRHH.jsp?dni=bla">
+                                                <div class="sidebar-item-pic"></div>
+                                                <div class="sidebar-item-content">
+
+                                                    <strong>bla</strong><p class="myhour">bla</p>
+                                                    <div class="mypill">Nuevo Candidato</div>
+                                                </div> </a>  
+                                        </div>
+                                    </li>
+                                            </ul>
+                            </li>
                             <%
                                 }
                                 basico.finConectar();
                                 String reun = null;
                             %>
                         </ul>
+                        </div>
                     </li>
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="DashboardRRHH.jsp?reun=1">Reservar Sala</a></li>
 
-                    <li class="submenu"><a href="#">Notificaciones</a>
+                    <li class="submenu" id="mynotes"><a href="#">Notificaciones</a>
                         <ul>
                             <li>
                                 <div class="sidebar-item"><a href="#">
@@ -230,43 +256,6 @@
                     <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
                 </div> 
             </div>
-        <script>
-
-            $(document).ready(function () {
-                $("#btn-menu").attr('checked', false);
-                $(".PopUpIn").hide();
-                $(".PopUpEat").hide();
-                $(".PopUpOut").hide();
-            });
-
-            $(".submenu").click(function () {
-                $(this).children("ul").slideToggle("slow").show();
-                $(this).children("ul").toggleClass('active');
-            });
-
-            $(".submenu2").click(function () {
-                $(this).children("ul").toggleClass('active');
-            });
-
-            $(".boton").click(function () {
-                $("#btn-menu").attr('checked', false);
-            });
-
-            $(".submenu").children("ul").click(function () {
-                $("#btn-menu").attr('checked', false);
-            });
-//----------TODO ESTO ES NUEVO----------//    
-            $(".InBox").children("a").click(function () {
-                $(".PopUpIn").hide();
-            });
-            
-            $(".EatBox").children("a").click(function () {
-                $(".PopUpEat").hide();
-            });
-            
-            $(".OutBox").children("a").click(function () {
-                $(".PopUpOut").hide();
-            });
-        </script>
+        <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>
