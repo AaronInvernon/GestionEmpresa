@@ -28,8 +28,8 @@
         if(request.getParameter("txtDniNie")!=null){
                     
                 String dni = request.getParameter("txtDniNie");
-                String user="ceo";
-                String pass="1234";
+                String user="externo";
+                String pass="1111";
                 ResultSet estad =null;
                 String cadena = "select puesto_sol, cnombre||' '||capellidos, estado_candidatura from ateam_candi where upper(dni)=upper('"+dni+"')";
                 System.out.println(cadena);
