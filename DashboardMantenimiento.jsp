@@ -8,7 +8,6 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
-        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Mantenimiento</title>
 
@@ -17,6 +16,7 @@
         <header>
             <a href="DashboardMantenimiento.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
+            <input type="checkbox" class="mybtn" id="btn-candidaturas">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
 
             <nav class="menu">
@@ -26,7 +26,7 @@
                     <li class="boton"><a href="#">Calendario</a></li>
                     <li class="boton"><a href="DashboardMantenimiento.jsp?reun=1">Reservar Sala</a></li>
 
-                    <li class="submenu"><a href="#">Notificaciones</a>
+                    <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
                         <ul>
                             <li>
                                 <div class="sidebar-item"><a href="#">
@@ -140,40 +140,7 @@
                     <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
                 </div> 
             </div>
-
-        <script>
-
-            $(document).ready(function () {
-                $("#btn-menu").attr('checked', false);
-                $(".PopUpIn").hide();
-                $(".PopUpEat").hide();
-                $(".PopUpOut").hide();
-            });
-
-            $(".submenu").click(function () {
-                $(this).children("ul").slideToggle();
-                $(this).children("ul").toggleClass('active');
-            });
-
-            $(".boton").click(function () {
-                $("#btn-menu").attr('checked', false);
-            });
-
-            $(".submenu").children("ul").click(function () {
-                $("#btn-menu").attr('checked', false);
-            });
-//----------TODO ESTO ES NUEVO----------//    
-            $(".InBox").children("a").click(function () {
-                $(".PopUpIn").hide();
-            });
-            
-            $(".EatBox").children("a").click(function () {
-                $(".PopUpEat").hide();
-            });
-            
-            $(".OutBox").children("a").click(function () {
-                $(".PopUpOut").hide();
-            });
-        </script>
+<script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+        <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>
