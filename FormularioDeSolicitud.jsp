@@ -1,5 +1,6 @@
-
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,59 +17,55 @@
                 <h3>Solicitud</h3>
 
                 <p>¿Qué deseas solicitar?</p>
-                <input class="btn btn-primary" type="button" id="Vacaciones" value="Vacaciones"/>
-                <input class="btn btn-primary" type="button" id="DiasLibres" value="Dias Libres"/>
-                <input class="btn btn-primary" type="button" id="HorasLibres" value="Horas Libres"/>
+                <input class="btn btn-primary" type="button" id="Vacaciones" name="Libre" value="Vacaciones"/>
+                <input class="btn btn-primary" type="button" id="DiasLibres" name="Libre" value="Dias Libres"/>
+                <input class="btn btn-primary" type="button" id="HorasLibres" name="Libre" value="Horas Libres"/>
 
                 <div id="capa1" class="form-inline">
                     <br/>
                     <p>Tienes <strong style="color: #46b8da">(x)</strong> días de vacaciones </p>
                     <p>¿Cuantos días deseas tomar?</p>
-                    <div class="input-group">
-                            <span class="input-group-addon">Días</span>
-                            <input class="form-control" type="text" style="width: 50px" placeholder="00" name="DiasLibres">
-                        </div>
-                    <br/><br/>
 
-                    Fecha de inicio: <input class="form-control" type="date" name="Fecha" placeholder="dd/mm/yyyy">
+                    Fecha de inicio: <input class="form-control" type="date" name="FechaInicioVacaciones" placeholder="dd/mm/yyyy">
+                    <br/><br/>
+                    Fecha fin: <input class="form-control" type="date" name="FechaFinVacaciones" placeholder="dd/mm/yyyy">
 
                 </div>
                 <div id="capa2" class="form-inline">
                     <br/>
                     <p>Tienes <strong style="color: #46b8da">(x)</strong> días libres acumulados </p>
                     <p>¿Cuantos días deseas tomar?</p>
-                    <div class="form group">
-                        <div class="input-group">
-                            <span class="input-group-addon">Días</span>
-                            <input class="form-control" type="text" style="width: 50px" placeholder="00" name="DiasLibres">
-                        </div>
-                    </div>
+                    <!-- <div class="form group">
+                         <div class="input-group">
+                             <span class="input-group-addon">Días</span>
+                             <input class="form-control" type="text" style="width: 50px" placeholder="00" name="DiasLibres">
+                         </div>
+                     </div>-->
+                    Fecha de inicio: <input class="form-control" type="date" name="FechaInicioDias" placeholder="dd/mm/yyyy">
                     <br/><br/>
-
-                    Fecha de inicio: <input class="form-control" type="date" name="Fecha" placeholder="dd/mm/yyyy">
-
+                    Fecha fin: <input class="form-control" type="date" name="FechaFinDias" placeholder="dd/mm/yyyy">
                 </div>
                 <div id="capa3" class="form-inline">
                     <br/>
                     <p>Tienes <strong style="color: #46b8da">(x)</strong> horas acumuladas </p>
                     <p>¿Cuantas horas deseas tomar?</p>
                     <div class="input-group">
-                            <span class="input-group-addon">Horas</span>
-                            <input class="form-control" type="text" style="width: 50px" placeholder="00" name="DiasLibres">
-                        </div>
+                        <span class="input-group-addon">Horas</span>
+                        <input class="form-control" type="text" style="width: 50px" placeholder="00" name="HorasLibres">
+                    </div>
                     <br/><br/>
                     <div class="form-group">
-                    Fecha: <input class="form-control" type="date" name="Fecha"/><br/><br/>
-                    Hora: <input class="form-control" type="text" style="width: 50px" placeholder="00" name="Horas"> - <input class="form-control" type="text" style="width: 50px" placeholder="00" name="Minutos">
+                        Fecha: <input class="form-control" type="date" name="FechaHoras"/><br/><br/>
+                        Hora: <input class="form-control" type="text" style="width: 50px" placeholder="00" name="Horas"> - <input class="form-control" type="text" style="width: 50px" placeholder="00" name="Minutos">
                     </div>
                 </div>
                 <hr/>
                 <div style="padding-left: 20px">
-                <div class="checkbox">
-                    <input type="checkbox" name="chkLopd" id="chkLopd"/> Soy
-                    <em style="color: #46b8da">[Nombre de Empleado]</em>, empleado n°
-                    <em style="color: #46b8da">[Número de Empleado]</em> de la empresa A_Team_Inc y deseo enviar esta solicitud.
-                </div>
+                    <div class="checkbox">
+                        <input type="checkbox" name="chkLopd" id="chkLopd"/> Soy
+                        <em style="color: #46b8da">[Nombre de Empleado]</em>, empleado n°
+                        <em style="color: #46b8da">[Número de Empleado]</em> de la empresa A_Team_Inc y deseo enviar esta solicitud.
+                    </div>
                 </div>
                 <br/>
                 <div class="input-group">
@@ -81,7 +78,64 @@
 
             </form>
         </div>
+        <%
+            if (request.getParameter("Libre") != null) {
 
+               // basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                
+                if (request.getParameter("Libre").equals("Vacaciones")) {
+
+                    String tipo = request.getParameter("Libre");
+                    String dato = request.getParameter("FechaInicioVacaciones");
+                    String[] datoArray = dato.split("-");
+                    String resultado = "";
+                    for (int j = 2; j >= 0; j--) {
+                        resultado = resultado + "/" + datoArray[j];
+                    }
+                    String fechaInicio = resultado.substring(1, resultado.length());
+                    
+                    String dato2 = request.getParameter("FechaFinVacaciones");
+                    String[] datoArray2 = dato.split("-");
+                    String resultado2 = "";
+                    for (int j = 2; j >= 0; j--) {
+                        resultado2 = resultado2 + "/" + datoArray2[j];
+                    }
+                    String fechaFin = resultado2.substring(1, resultado2.length());
+                    
+                    String user = "aaron";
+                    String pass = "1234";
+                    basico.Conectar(user,pass);
+                    String cadena = "insert into ateam_libre values('" + user + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
+                    System.out.println(cadena);
+                    basico.crearPreparedStatement(cadena);
+                    basico.ejUpdatePrepStat();
+                    
+
+                } else if (request.getParameter("Libre").equals("Dias Libres")) {
+                    
+                    String tipo = request.getParameter("Libre");
+                    String dato = request.getParameter("FechaInicioDias");
+                    String[] datoArray = dato.split("-");
+                    String resultado = "";
+                    for (int j = 2; j >= 0; j--) {
+                        resultado = resultado + "/" + datoArray[j];
+                    }
+                    String fechaInicio = resultado.substring(1, resultado.length());
+                    
+                    String dato2 = request.getParameter("FechaFinDias");
+                    String[] datoArray2 = dato.split("-");
+                    String resultado2 = "";
+                    for (int j = 2; j >= 0; j--) {
+                        resultado2 = resultado2 + "/" + datoArray2[j];
+                    }
+                    String fechaFin = resultado2.substring(1, resultado2.length());
+                    
+                } else if (request.getParameter("Libre").equals("Horas Libres")) {
+
+                }
+
+            }
+        %>
 
         <script src="src/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
