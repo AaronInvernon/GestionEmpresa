@@ -2,9 +2,10 @@
 
 
 .PopUpIn, .PopUpEat, .PopUpOut{
+    display:none;
     color:white;
     position:fixed;
-    z-index: 3;
+    z-index: 5;
     top:0px;
     left:0px;
     width: 100%;
@@ -169,7 +170,6 @@ label {
 
 .sidebar-item {
     height: 80px;
-    background-color: #260f3d; 
     
 
 }
@@ -193,6 +193,7 @@ label {
 sidebar-puesto{
     height: 80px;
     width: 100%;
+    
 }
 
 
@@ -202,6 +203,7 @@ sidebar-puesto{
     width: 100%;
     position:relative;
     vertical-align: middle;
+    
 }
 
 .sidebar-puesto > a {
@@ -256,6 +258,8 @@ header {
     height: 50px;
     background:#2e1247;
     color: #fff;
+    z-index: 4;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
 }
 
 
@@ -266,7 +270,7 @@ header label {
 }
 
 
-#btn-menu{
+#btn-menu, #btn-candidaturas, #btn-notificaciones{
     display:none;
     z-index: 1;
 }
@@ -284,11 +288,92 @@ header label {
     justify-content: flex-end;
 }
 
-.menu ul ul{
+
+
+/*------------------------NUEVO-------------------------*/
+
+.space {
+    display: block;
+    position:initial;
+    top: 50px;
+}
+
+.menu ul li ul {
+    cursor: pointer;
+    display:block;
+    margin-top: 0px;
+    background-color: #2e1247;
+    position: absolute;
+    left: -350px;
+    transition: all 0.3s;
+    height: 92%;
+    z-index: 2;
+}
+
+/*
+.menu ul li ul li ul li {
+    background-color: red;}
+*/
+#btn-notificaciones:checked, #btn-candidaturas:checked {
     display: none;
 }
 
+#btn-notificaciones:checked ~ .menu ul li#mynotes ul{
+    display:block;
+    margin-top: 0px;
+    position: absolute;
+    left: 0px;
+    transition: all 0.3s;
+    height: 92%;
+    z-index: 2;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+}
 
+#btn-candidaturas:checked ~ .menu ul li#mycandis ul {
+    display:block;
+    background-color: rgba (0,0,0,0);
+    margin-top: 0px;
+    position: absolute;
+    left: 0px;
+    transition: all 0.3s;
+    height: 92%;
+    z-index: 2;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+}
+
+#btn-notificaciones:checked, .menu ul li#mycandis ul li ul:default{
+    display:block;
+    background-color: greenyellow;
+    margin-top: -100px;
+    margin-left:300px;
+    padding-left: 20px;
+    position: static;
+    left: 310px;
+    transition: none;
+    height: 0%;
+    z-index: 2;
+    box-shadow: none;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
+}
+
+#btn-notificaciones:checked, .menu ul li#mycandis ul li ul li:default{
+    background-color: #2e1247;
+    display:list-item;
+    margin-top: 0px;
+    margin-left: 0px;
+    position: static;
+    left: 0px;
+    height: auto;
+    transition: all 0.3s;
+    z-index: 2;
+    
+}
+/*------------------------NUEVO-------------------------*/
+
+    
+
+
+/*
 .menu ul li ul {
     margin-top: 50px;
     background-color: #2e1247;
@@ -297,7 +382,7 @@ header label {
     left: -350px;
     transition: all 0.3s;
     height: 100%;
-    z-index: 0;
+    z-index: 2;
 }
 
 .menu ul li ul:after {
@@ -313,7 +398,7 @@ header label {
     left: -350px;
     transition: all 0.3s;
     height: 100%;
-    z-index: 0;
+    z-index: 2;
 }
 
 .menu ul li ul.active {
@@ -323,9 +408,12 @@ header label {
     left: 0px;
     transition: all 0.3s;
     height: 100%;
-    z-index: 0;
+    z-index: 2;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.5);
 
 }
+
+
 
 .menu ul li ul li ul {
     margin-top: 0px;
@@ -334,6 +422,7 @@ header label {
     transition: all 0.3s;
     height: 100%;
     z-index: 0;
+    
 }
 
 
@@ -346,7 +435,7 @@ header label {
     z-index: 0;
 }
 
-
+*/
 
 
 .menu a {
@@ -360,6 +449,7 @@ header label {
 
 /*ESTE ES EL HOVER DEL SIDE BAR*/
 
+
 .menu ul li a:hover {
     background: #230D38;
     overflow-x: hidden;
@@ -367,8 +457,17 @@ header label {
 
 
 
+.reset-this{
+    display:none;
+    margin-top: 0;
+    position: static;
+    top:0px;
+    left: 0px;
+    transition: none;
+    height: auto;
+}
+
 .menu ul li ul li a {
-    padding: 20px;
     height: 100%;
     width: 330px;
 }
@@ -498,6 +597,8 @@ header label {
         z-index: 2;
         display:block;
     }
+    
+
 
     .sidebar-item-content {
         padding-top:5px;
