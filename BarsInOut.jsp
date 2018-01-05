@@ -6,6 +6,7 @@
 
 <%@page import="java.text.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*,  java.util.logging.Level, java.util.logging.Logger, java.util.Date"%>
+<jsp:useBean id="basico" scope="session" class="nuestrosBeans.baseDeDatos"/>
 <!DOCTYPE html>
 <html>
 
@@ -347,6 +348,10 @@
     -->
     <br/>
     <div class="container">
+        <%
+        session.setAttribute("miEmp", Integer.parseInt(request.getParameter("n_emp")));
+        %>
+        <form action="" method="post">
         <div class="col-sm-4" style="color: white; border-radius: 5px; padding:5px">
             <div class="sidebar-item"><a href="#">
                     <div class="sidebar-item-pic"></div>
@@ -370,12 +375,80 @@
         </div>
         <div class="col-sm-2" style="color: white; border-radius: 5px; padding:10px">
             Opciones:<br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Ver CV</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Incentivo</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Aumento</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Añadir Sanción</button><br/>
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px">Gestionar Despido</button>
+            <button type="button" class="btn btn-primary" Style="background-color: orange; margin: 3px"  value="aumento"/>Gestionar Aumento</button><br/>
+        
+                <div id="capa1" class="form-inline">
+                    
+                    <p>¿En qué cantidad deseas aumentar el sueldo?</p>
+                    Aumentar el sueldo en: <input type="text" name="txtAumento"  class="form-control" placeholder="00"> €.
+                    <br/>
+                    <div class="input-group">
+                        <span>Contraseña:</span><br/>
+                        <input style="width: 200px" type="password" class="form-control" name="password1"/>
+                    </div><br/>
+                    <input style="color:black;" class="btn" type="submit" name="submit" value="Aumentar">
+                </div>
+        
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px" value="aviso"/>Aviso</button><br/>
+    
+                <div id="capa2" class="form-inline">
+                    <p>¿Avisar de retrasos?</p>
+                    <div class="input-group">
+                        <span>Contraseña:</span><br/>
+                        <input style="width: 200px" type="password" class="form-control" name="password2"/>
+                    </div><br/>
+                    <input type="text" name='txtNombre' value='<%=NombCompleto%>' hidden="true"/>
+                    <input style="color:black;" class="btn" type="submit" name="submit" value="Enviar Aviso">
+                </div>
+                
+            <button type="button" class="btn" Style="background-color: orange; margin: 3px" value="despido"/>Gestionar Despido</button>
+    
+                <div id="capa3" class="form-inline">
+                    <p>¿Despedir empleado?</p>
+                    <div class="input-group">
+                        <span>Contraseña:</span><br/>
+                        <input style="width: 200px" type="password" class="form-control" name="password3"/>
+                    </div><br/>
+                    <input style="color:black;" class="btn" type="submit" name="submit" value="Despedir">
+                </div>
+    
         </div>
+        </form>
+            <%
+                String user= (String)session.getAttribute("Usuario");
+                String pass= (String)session.getAttribute("Contraseña");
+                int identificador = Integer.parseInt(request.getParameter("n_emp"));
+            if(request.getParameter("password1")!=null && request.getParameter("submit").equals("Aumentar")){
+                
+               int aument = Integer.parseInt(request.getParameter("txtAumento"));
+               basico.Conectar(user, pass);
+               String cadena = "update ateam_emp set salario=(salario+"+aument+") where n_emp="+identificador+"";
+               basico.crearPreparedStatement(cadena);
+               basico.ejUpdatePrepStat();
+               
+               
+            }else if(request.getParameter("password2")!=null && request.getParameter("submit").equals("Enviar Aviso")){
+                
+                String dato = request.getParameter("txtNombre");
+                String[] datoArray = dato.split(" ");
+                String miName = datoArray[0];
+                String mensajeAviso = "Te has retrasado " + Deuda +" horas";
+                String cadena = "insert into ateam_sms(remitente,destinatario,tipo,mensaje,fecha_env) values(user,'"+miName+"','AVISO','"+mensajeAviso+"',to_date(sysdate, 'dd/mm/yy'))";
+     
+                
+                basico.Conectar(user, pass);
+                basico.crearPreparedStatement(cadena);
+                basico.ejUpdatePrepStat();
+                
+            }else if(request.getParameter("password3")!=null && request.getParameter("submit").equals("Despedir")){
+                
+                basico.Conectar(user, pass);
+                String cadena = "delete from ateam_emp where n_emp="+identificador+"";
+                basico.crearPreparedStatement(cadena);
+                basico.ejUpdatePrepStat();
+            }
+            %>
+            
     </div>
     <script type="text/javascript">
         Chart.defaults.global.tooltips.enabled = false;
