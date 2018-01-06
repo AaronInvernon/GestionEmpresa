@@ -282,8 +282,21 @@
 
                 }
             %>
+         <div class="timer">
+            <div class="iconito">
+                <img id="timeicon" src="src/img/time.png">
+                <div class="controlpanel">
+                    <h6 style="margin:0px 0px 0px 5px; padding:0px; color: grey; font-family: arial; font-size: 13px; font-weight: bold">Control de tiempo</h6>
+                    <div id ="clockDisplay" style="margin-left: 25px; font-family: arial; font-size: 18px; color: grey"></div>
+                    <form action="">
+                        <input id= "comida" class="btn btn-primary" style=" border-color: rgba(0,0,0,0); margin: 15px 0px 10px 23px;" type="submit" name="status" value="Comida"/>
+                        <input id= "salida" class="btn btn-primary" style=" border-color: rgba(0,0,0,0); margin-left: 27px;" type="submit" name="status" value="Salida"/>
+                    </form>
+                </div>
+            </div>
         </div>
-         
+        </div>
+        
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>
