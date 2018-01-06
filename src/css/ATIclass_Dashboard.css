@@ -1,8 +1,66 @@
 /*--------------------------TODO ESTO ES NUEVO----------------------------*/
 
 
+
+.iconito {
+    border-radius: 5px;
+    display:block;
+    position: fixed;
+    top:160px;
+    right:-60px;
+    background-color:lightgrey;
+    width: 110px;
+    height: 50px;
+    transition: all 0.3s;
+    box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.iconito img {
+    cursor: pointer;
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+}
+
+.controlpanel {
+     padding:20px;
+     border-radius: 5px;
+     display:block;
+     position: absolute;
+     top:0px;
+     right:-125px;
+     background-color: lightgrey;
+     width: 180px;
+     height: 180px;
+     transition: all 0.3s;
+     box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+}
+
+
+.controlpanel form input.btn-primary{
+    background-color: orange;
+}
+
+.controlpanel form input.btn-primary:hover{
+    background-color: #ff8800;
+}
+
+.iconito:hover {
+    border-radius: 5px;
+    display:block;
+    position: fixed;
+    top:160px;
+    right:110px;
+    background-color:lightgrey;
+    width: 110px;
+    height: 50px;
+    transition: all 0.3s;
+    box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+}
+
+
 .PopUpIn, .PopUpEat, .PopUpOut{
-    display:none;
+    display:block;
     color:white;
     position:fixed;
     z-index: 5;
