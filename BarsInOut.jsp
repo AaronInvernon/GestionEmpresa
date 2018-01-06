@@ -240,15 +240,7 @@
                     
                     extra = extra + Integer.toString(resta3) + ",";
                         ExtrasAcum = ExtrasAcum + resta3;
-                    
-                   /* if (resta3 <= 0) {
-                        resta3 = -(resta3);
-                        extra = extra + Integer.toString(resta3) + ",";
-                        ExtrasAcum = ExtrasAcum + 0;
-                    } else {
-                        extra = extra + Integer.toString(resta3) + ",";
-                        ExtrasAcum = ExtrasAcum + resta3;
-                    } */
+          
                 } else {
                     
                     extra = extra + Integer.toString(resta3) + ",";
@@ -264,88 +256,9 @@
         }
     %>
 
-
-    <style media="screen">
-
-
-
-        /*  .myChart-container{
-              position: relative;
-              margin-left:300px;
-              width: 600px;
-              height: 300px;
-              background-color: white;
-              border-radius: 5px;
-          } 
-          canvas{
-              padding:10px;
-              background-color: white;
-              border-radius: 5px;
-          }       
-          @media (max-width:550px){
-          
-         .myChart-container{
-              position: relative;
-              margin:auto;
-              height: 150px;
-              width: 320px;
-              
-          } 
-          canvas{
-              min-height: 150px;
-              min-width: 320px;
-              padding:10px;
-              background-color: white;
-              border-radius: 5px;
-          }}*/
-    </style>
 </head>
 <body style="background-color: #2e1247">
-    <!--
-      <p style="color:white"><%=fecha%></p>
-      <p style="color:white"><%=entrada%></p>
-      <p style="color:white"><%=salida%></p>
-      <p style="color:white"><%=entradabar%></p>
-      <p style="color:white"><%=salidabar%></p>
-      <p style="color:white"><%=hora%></p>
-      <p style="color:white"><%=fechaminima%></p>
-    
-    <p style="color:white">Para controlar las barras de la base de datos hice lo siguiente:</p>
-    <ul style="color:white" >
-        <li>
-            Un array con la hora de entrada: <%=entradabar%>
-        </li>
-        <li>
-            Conteo1: <%=conteo1%>
-        </li>
-        <li>
-            Un array de 1hora de comida: <%=comida%>
-        </li>
-        <li>
-            Conteo2: <%=conteo2%>
-        </li>
-        <li>
-            Este es el contador de las (8horas total de trabajo limite) que ahora esta en 0 porque se culminó el horario laboral completo<%=HoraTotal%>
-        </li>
-       --> 
-        
-       <!-- <li>
-            Y esta es la fecha que se coloca debajo de las barras: <%=fechaminima%>
-        </li>
-        <li>
-            FechaActual: <%=Actual%>
-        </li>
-        <li>
-            HoraActual: <%=HoraActual%>
-        </li>
-        <li>
-            FechaCapturada: <%=fecha2%>
-        </li>
-        <li>
-        Horas Tarde: <%=Tarde%>
-        </li> 
-    </ul>
-    -->
+   
     <br/>
     <div class="container">
         <%
@@ -365,7 +278,6 @@
             Incorporación: <%=Incorp%><br/>
             Salario: <%=Salario%><br/>
             Horas extras acumuladas: <%=ExtrasAcum%><br/>
-            Horas de vacaciones acumuladas: (Todavía en calculo)<br/>
             Horas en deuda: <%=Deuda%><br/>
 
 
@@ -375,9 +287,10 @@
         </div>
         <div class="col-sm-2" style="color: white; border-radius: 5px; padding:10px">
             Opciones:<br/>
-            <button type="button" class="btn btn-primary" Style="background-color: orange; margin: 3px"  value="aumento"/>Gestionar Aumento</button><br/>
-        
-                <div id="capa1" class="form-inline">
+            <div class="dropdown">
+            <button type="button" class="btn dropdown-toggle" Style="background-color: orange; margin: 3px"  value="aumento" id="btncapa1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Gestionar Aumento</button><br/>
+            <div class="dropdown-menu" aria-labelledby="btncapa1">
+                <div id="capa1" class="form-inline" style="padding:20px; color:grey">
                     
                     <p>¿En qué cantidad deseas aumentar el sueldo?</p>
                     Aumentar el sueldo en: <input type="text" name="txtAumento"  class="form-control" placeholder="00"> €.
@@ -385,33 +298,34 @@
                     <div class="input-group">
                         <span>Contraseña:</span><br/>
                         <input style="width: 200px" type="password" class="form-control" name="password1"/>
-                    </div><br/>
+                    </div><br/><br/>
                     <input style="color:black;" class="btn" type="submit" name="submit" value="Aumentar">
                 </div>
-        
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px" value="aviso"/>Aviso</button><br/>
-    
-                <div id="capa2" class="form-inline">
+            </div>
+            </div>
+            <button type="button" class="btn dropdown-toggle" Style="background-color: orange; margin: 3px" value="aviso" id="btncapa2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aviso</button><br/>
+            <div class="dropdown-menu" aria-labelledby="btncapa2">
+                <div id="capa2" class="form-inline" style="padding:20px; color:grey">
                     <p>¿Avisar de retrasos?</p>
                     <div class="input-group">
                         <span>Contraseña:</span><br/>
                         <input style="width: 200px" type="password" class="form-control" name="password2"/>
-                    </div><br/>
-                    <input type="text" name='txtNombre' value='<%=NombCompleto%>' hidden="true"/>
+                    </div><br/><br/>
+                    <input type="text" name='txtNombre' value='<%=NombCompleto%>' hidden="true"/> 
                     <input style="color:black;" class="btn" type="submit" name="submit" value="Enviar Aviso">
                 </div>
-                
-            <button type="button" class="btn" Style="background-color: orange; margin: 3px" value="despido"/>Gestionar Despido</button>
-    
-                <div id="capa3" class="form-inline">
+             </div>   
+            <button type="button" class="btn dropdown-toggle" Style="background-color: orange; margin: 3px" value="despido" id="btncapa3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestionar Despido</button>
+            <div class="dropdown-menu" aria-labelledby="btncapa3">
+                <div id="capa3" class="form-inline" style="padding:20px; color:grey">
                     <p>¿Despedir empleado?</p>
                     <div class="input-group">
                         <span>Contraseña:</span><br/>
                         <input style="width: 200px" type="password" class="form-control" name="password3"/>
-                    </div><br/>
+                    </div><br/><br/>
                     <input style="color:black;" class="btn" type="submit" name="submit" value="Despedir">
                 </div>
-    
+                </div>
         </div>
         </form>
             <%
