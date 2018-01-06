@@ -433,7 +433,7 @@
                 String[] datoArray = dato.split(" ");
                 String miName = datoArray[0];
                 String mensajeAviso = "Te has retrasado " + Deuda +" horas";
-                String cadena = "insert into ateam_sms(remitente,destinatario,tipo,mensaje,fecha_env) values(user,'"+miName+"','AVISO','"+mensajeAviso+"',to_date(sysdate, 'dd/mm/yy'))";
+                String cadena = "insert into ateam_sms(remitente,destinatario,tipo,mensaje,fecha_env,id) values(user,'"+miName+"','AVISO','"+mensajeAviso+"',to_date(sysdate, 'dd/mm/yy hh24:mi'),seq_ateam_sms.nextval)";
      
                 
                 basico.Conectar(user, pass);
