@@ -28,56 +28,42 @@
 
                     <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
                         <ul>
+                            <%
+                                ResultSet rset = null;
+                                basico.Conectar((String)session.getAttribute("Usuario"),(String)session.getAttribute("Contraseña"));
+                                basico.crearStatement();
+                                String cad = "select * from ateam_sms where upper(destinatario)=upper('" + (String) session.getAttribute("Usuario") + "')";
+                                
+                                rset = basico.crearResultSet(cad);
+                                if (rset.isBeforeFirst()) {
+                                    while (rset.next()) {
+                            %>
+                            <li>
+                                <div class="sidebar-item"><a href="?noti=<%=rset.getString(6)%>">
+                                        <div class="sidebar-item-pic"></div>
+                                        <div class="sidebar-item-content">
+                                            <strong><%=rset.getString(1)%></strong><p class="myhour"><%=rset.getString(5)%></p>
+                                            <div class="mypill"><%=rset.getString(3)%></div>
+
+                                        </div> </a>  
+                                </div> 
+                            </li>   
+                            <%
+                                }
+                            } else {
+                            %>  
                             <li>
                                 <div class="sidebar-item"><a href="#">
                                         <div class="sidebar-item-pic"></div>
                                         <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
+                                            <strong>No tiene notificaciones nuevas</strong>
 
                                         </div> </a>  
                                 </div>
                             </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Candidato</div>
-                                        </div> </a>  
-                                </div>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     <li class="boton"><a href="index.jsp">Log Out</a></li>
                 </ul>
@@ -89,7 +75,11 @@
         <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
         <jsp:include page="FormularioReservaSR.jsp"/> 
         <%
-        } else if (request.getParameter("emp") != null) {
+        }else if (request.getParameter("noti") != null) {
+        %>
+        <jsp:include page="verNotificaciones.jsp"/>
+        <%
+        }else if (request.getParameter("emp") != null) {
         %>
         <jsp:include page="jerarquia_1.jsp"/>  
         <%

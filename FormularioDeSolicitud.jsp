@@ -101,7 +101,7 @@
                     String fechaFin = resultado2.substring(1, resultado2.length());
                     
                     basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
-                    String cadena = "insert into ateam_libre values('" + (String) session.getAttribute("Usuario") + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yyyy'), '"  + tipo + "')";
+                    String cadena = "insert into ateam_libre values('" + (String) session.getAttribute("Usuario") + "',to_date('" + fechaInicio + "','dd/mm/yyyy'),to_date('" + fechaFin + "','dd/mm/yy'), '"  + tipo + "')";
                     System.out.println(cadena);
                     basico.crearPreparedStatement(cadena);
                     basico.ejUpdatePrepStat();

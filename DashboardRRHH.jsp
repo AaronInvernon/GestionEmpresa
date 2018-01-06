@@ -126,7 +126,7 @@
                                 <div class="sidebar-item"><a href="#">
                                         <div class="sidebar-item-pic"></div>
                                         <div class="sidebar-item-content">
-                                            <strong>No tiene nnotificaciones nuevas</strong>
+                                            <strong>No tiene notificaciones nuevas</strong>
 
                                         </div> </a>  
                                 </div>
