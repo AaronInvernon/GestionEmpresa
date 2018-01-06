@@ -12,7 +12,7 @@
         <title>Secretaria</title>
 
     </head>
-    <body>
+    <body onload="renderTime();">
         <header>
             <a href="DashboardSecretaria.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
@@ -69,6 +69,105 @@
                 </ul>
             </nav>
         </header>
+                        <%
+            String user = (String) session.getAttribute("Usuario");
+            String pass = (String) session.getAttribute("Contraseña");
+            basico.Conectar(user, pass);
+            ResultSet empleado = null;
+            empleado = basico.crearResultSet("select n_emp from ateam_emp where upper(nombre) =upper('" + (String) session.getAttribute("Usuario") + "')");
+            empleado.next();
+            int userNum = Integer.parseInt(empleado.getString(1));
+
+            ResultSet hayfecha = basico.crearResultSet("select FECHA from ateam_entrasale where FECHA = TO_CHAR(SYSDATE,'dd/mm/yyyy') AND N_EMP = " + userNum);
+            if (hayfecha.isBeforeFirst()) {
+                hayfecha.next();
+                if (request.getParameter("status") != null) {
+                    String estado = request.getParameter("status");
+                    if ((estado).equals("Comida")) {
+                        int Resultado = basico.insertarComida(userNum, user, pass);
+                        if (Resultado > 0) {
+        %>
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Modificado</h4>
+                <h5 style="color: grey; text-align: center">control de comida ingresado</h5>
+            </div> 
+        </div>
+        <%
+        } else {
+        %>
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">ERROR</h4>
+                <h5 style="color: grey; text-align: center">no pudo ser ingresado</h5>
+            </div> 
+        </div>
+        <%
+                }
+            }
+            if ((estado).equals("Salida")) {
+                int Resultado = basico.insertarSalida(userNum, user, pass);
+                if (Resultado > 0) {
+        %>
+        <jsp:forward page="index.jsp"/>
+        <%
+        } else {
+        %>
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">ERROR</h4>
+                <h5 style="color: grey; text-align: center">no pudo ser ingresado</h5>
+            </div> 
+        </div>
+        <%
+                    }
+
+                }
+            }
+        } else {
+
+        %>   
+
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Haz clic aquí</h4>
+                <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
+                <form action="">
+                    <input id= "entrada" class="btn btn-primary"  type="submit" name="status" value="Entrada"/>
+                </form>
+            </div> 
+        </div>
+        <%            if (request.getParameter("status") != null) {
+                String estado = request.getParameter("status");
+                if ((estado).equals("Entrada")) {
+                    int Resultado = basico.insertarEntrada(userNum, user, pass);
+                    if (Resultado > 0) {
+        %>
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Modificado</h4>
+                <h5 style="color: grey; text-align: center">control de entrada ingresado</h5>
+            </div> 
+        </div>
+        <%
+        } else {
+        %>
+        <div class="PopUpIn" >
+            <div class="InBox">
+                <a><strong>X</strong></a>
+                <h4 style="position:relative; left: 5%; color: grey; text-align: center">ERROR</h4>
+                <h5 style="color: grey; text-align: center">no pudo ser ingresado</h5>
+            </div> 
+        </div>
+        <% }
+                    }
+                }
+            }; %>
         <%
             if (request.getParameter("reun") != null) {
         %>
@@ -89,7 +188,7 @@
         <%
         } else {
 
-            ResultSet empleado = null;
+            empleado = null;
             basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
             basico.crearStatement();
             empleado = basico.crearResultSet("select n_emp from ateam_emp where upper(nombre) =upper('" + (String) session.getAttribute("Usuario") + "')");
@@ -107,32 +206,7 @@
         <%
             }
         %>
-        <div class="PopUpIn" >
-            <div class="InBox">
-                <a><strong>X</strong></a>
-                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Haz clic aquí</h4>
-                <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
-                <input id= "entrada" class="btn btn-primary"  type="submit" name="status" value="Marcar Entrada"/>
-            </div> 
-        </div>
-        <div class="PopUpEat" >
-            <div class="EatBox">
-                <a><strong>X</strong></a>
-                <h4 style="position:relative; left: 5%; color: grey; text-align: center">¡Hora de comer!</h4>
-                <h5 style="color: grey; text-align: center">para iniciar tu jornada laboral</h5>
-                <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
-                <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
-            </div> 
-        </div>
-        <div class="PopUpOut" >
-            <div class="OutBox">
-                <a><strong>X</strong></a>
-                <h4 style="position:relative; left: 5%; color: grey; text-align: center">Finalizar</h4>
-                <h5 style="color: grey; text-align: center">Tu horario a culminado</h5>
-                <input id= "comida" class="btn btn-primary"  type="submit" name="status" value="Marcar Comida"/>
-                <input id= "comida" class="btn btn-primary"  type="button" name="status" value="Mas Tarde"/>
-            </div> 
-        </div>
+        
         <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
