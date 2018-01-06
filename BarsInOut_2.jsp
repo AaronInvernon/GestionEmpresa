@@ -360,7 +360,6 @@
             Incorporación: <%=Incorp%><br/>
             Salario: <%=Salario%><br/>
             Horas extras acumuladas: <%=ExtrasAcum%><br/>
-            Horas de vacaciones acumuladas: (Todavía en calculo)<br/>
             Horas en deuda: <%=Deuda%><br/>
 
 
