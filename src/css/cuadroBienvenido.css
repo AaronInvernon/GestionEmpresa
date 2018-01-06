@@ -1,3 +1,8 @@
+* a:hover{
+    color: white !important;
+    text-decoration: none !important;
+}
+
 body{
     background: #40255b;
 }

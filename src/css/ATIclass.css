@@ -1,3 +1,8 @@
+* a:hover{
+    color: white !important;
+    text-decoration: none !important;
+}
+
 my-nav {
     position: absolute;
     top: 10px;

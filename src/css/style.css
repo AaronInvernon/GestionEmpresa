@@ -1,8 +1,7 @@
-/*
-    DEMO STYLE
-*/
-
-
+* a:hover{
+    color: white !important;
+    text-decoration: none !important;
+}
 
 
 .wrapper {

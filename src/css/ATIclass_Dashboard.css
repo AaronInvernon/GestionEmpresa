@@ -1,5 +1,12 @@
 /*--------------------------TODO ESTO ES NUEVO----------------------------*/
+* a:hover{
+    color: white !important;
+    text-decoration: none !important;
+}
 
+.timer {
+    z-index: 4;
+}
 
 
 .iconito {
@@ -13,6 +20,7 @@
     height: 50px;
     transition: all 0.3s;
     box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+    z-index: 4;
 }
 
 .iconito img {
@@ -23,17 +31,18 @@
 }
 
 .controlpanel {
-     padding:20px;
-     border-radius: 5px;
-     display:block;
-     position: absolute;
-     top:0px;
-     right:-125px;
-     background-color: lightgrey;
-     width: 180px;
-     height: 180px;
-     transition: all 0.3s;
-     box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+    padding:20px;
+    border-radius: 5px;
+    display:block;
+    position: absolute;
+    top:0px;
+    right:-125px;
+    background-color: lightgrey;
+    width: 180px;
+    height: 180px;
+    transition: all 0.3s;
+    box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+    z-index: 4;
 }
 
 
@@ -56,6 +65,7 @@
     height: 50px;
     transition: all 0.3s;
     box-shadow: -3px 3px 3px rgba(0,0,0,0.5);
+    z-index: 4;
 }
 
 
@@ -228,7 +238,7 @@ label {
 
 .sidebar-item {
     height: 80px;
-    
+
 
 }
 
@@ -251,17 +261,17 @@ label {
 sidebar-puesto{
     height: 80px;
     width: 100%;
-    
+
 }
 
 
 .sidebar-puesto-content {
-    
+
     height: 80px;
     width: 100%;
     position:relative;
     vertical-align: middle;
-    
+
 }
 
 .sidebar-puesto > a {
@@ -424,11 +434,11 @@ header label {
     height: auto;
     transition: all 0.3s;
     z-index: 2;
-    
+
 }
 /*------------------------NUEVO-------------------------*/
 
-    
+
 
 
 /*
@@ -566,7 +576,7 @@ header label {
 }
 
 .opacoDept {
-    
+
     text-align: left;
     opacity: 0.4;
     font-size: 12px;
@@ -576,7 +586,7 @@ header label {
 
 .navbar-brand {
     color:white;
-    position: fixed;
+    position: relative;
     z-index:3;
 }
 
@@ -584,27 +594,113 @@ header label {
 
 @media (max-width:768px){
 
+.iconito img {
+    cursor:auto;
+}    
+    .iconito {
+    padding-left:20px;
+    border-radius: 5px;
+    display:block;
+    position: fixed;
+    left:-20px;
+    top:auto;
+    bottom:0px;
+    right:0px;
+    background-color:lightgrey;
+    width: 110%;
+    height: 50px;
+    transition: all 0.3s;
+    box-shadow: 0px -3px 3px rgba(0,0,0,0.5);
+    z-index: 4;
+}
+
+.iconito:hover {
+    padding-left:20px;
+    border-radius: 5px;
+    display:block;
+    position: fixed;
+    left:-20px;
+    top:auto;
+    bottom:0px;
+    right:0px;
+    background-color:lightgrey;
+    width: 110%;
+    height: 50px;
+    transition: all 0.3s;
+    box-shadow: 0px -3px 3px rgba(0,0,0,0.5);
+    z-index: 4;
+}
+
+.controlpanel {
+    padding:10px 0px 0px 0px;
+    border-radius: 5px;
+    display:inline-block;
+    position: absolute;
+    top:0px;
+    right:auto;
+    left:70px;
+    background-color: lightgrey;
+    width: 80%;
+    height: 180px;
+    transition: all 0.3s;
+    box-shadow: -3px 3px 3px rgba(0,0,0,0);
+    z-index: 4;
+}
+
+.controlpanel form input#comida{
+    display:inline-block;
+    position: absolute;
+    background-color: orange;
+    top:-5px;
+    right: auto;
+    left:100px;
+}
+
+.controlpanel form input#salida{
+    display:inline-block;
+    position: absolute;
+    background-color: orange;
+    top:10px;
+    right: auto;
+    left:180px;
+}
+
+    .menu ul li#mynotes ul{display:none}
+    .menu ul li#mycandis ul{display:none}
+    
+    #btn-notificaciones:checked ~ .menu ul li#mynotes ul{
+        display:block;
+        margin-top: 0px;
+        position: static;
+        left: 0px;
+        transition: all 0.3s;
+        height: 92%;
+        z-index: 4;
+        box-shadow: 2px 2px 3px rgba(0,0,0,0);
+    }
+
+    #btn-candidaturas:checked ~ .menu ul li#mycandis ul {
+        display:block;
+        background-color: rgba (0,0,0,0);
+        margin-top: 0px;
+        position: static;
+        left: 0px;
+        transition: all 0.3s;
+        height: 92%;
+        z-index: 4;
+        box-shadow: 2px 2px 3px rgba(0,0,0,0);
+    }
+
     .navbar-brand {
-        position: fixed;
+        position: absolute;
         padding: 15px 20px 15px 20px;
         right: 0px;
         top: 0px;
-        z-index: 2;
+        z-index: 4;
     }
 
-    .menu ul li ul {
-        padding-top: 0px;
-        position: static;
-        left: -100%;
-        height: auto;
-    }
 
-    .menu ul li ul.active {
-        padding-top: 0px;
-        position: static;
-        left: 0px;
-        height: auto;
-    }
+
 
     header label {
         display: block;
@@ -612,7 +708,7 @@ header label {
 
     .menu {
         display:none;
-        z-index: -1;
+        z-index: 4;
         position: absolute;
         top: 0;
         left: 0;
@@ -635,9 +731,10 @@ header label {
         position: static;
         left: 0;
     }
- 
+
     .menu ul li:hover ul {
-        display: none;
+        display: block;
+        position:static;
     }
 
     .menu ul li:focus ul {
@@ -652,10 +749,10 @@ header label {
     #btn-menu:checked ~ .menu {
         margin-top:  0%;
         margin-top:50px;
-        z-index: 2;
+        z-index: 4;
         display:block;
     }
-    
+
 
 
     .sidebar-item-content {
