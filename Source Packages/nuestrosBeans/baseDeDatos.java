@@ -76,4 +76,53 @@ public class baseDeDatos {
         return meta;
     }
     
+	
+    public int insertarEntrada (int userNum, String user, String pass) throws Exception{
+        int insertados=0;
+        try
+        {
+            this.Conectar(user, pass);
+            CallableStatement cst = conn.prepareCall("{call PQ_TABLA_ENTRASALE.ENTRADA(?,?)}");
+            cst.setInt(1, userNum);
+            cst.setString(2, user);
+            insertados = cst.executeUpdate();
+            }catch (SQLException ex)
+        {
+            System.out.println("Excepcion " + ex.toString());
+            throw new Exception(ex.toString());
+        }
+        return insertados;
+    }
+    
+    public int insertarComida (int userNum, String user, String pass) throws Exception{
+        int insertados=0;
+        try
+        {
+            this.Conectar(user, pass);
+            CallableStatement cst = conn.prepareCall("{call PQ_TABLA_ENTRASALE.COMIDA(?)}");
+            cst.setInt(1, userNum);
+            insertados = cst.executeUpdate();
+            }catch (SQLException ex)
+        {
+            System.out.println("Excepcion " + ex.toString());
+            throw new Exception(ex.toString());
+        }
+        return insertados;
+    }
+    
+    public int insertarSalida (int userNum, String user, String pass) throws Exception{
+        int insertados=0;
+        try
+        {
+            this.Conectar(user, pass);
+            CallableStatement cst = conn.prepareCall("{call PQ_TABLA_ENTRASALE.SALIDA(?)}");
+            cst.setInt(1, userNum);
+            insertados = cst.executeUpdate();
+            }catch (SQLException ex)
+        {
+            System.out.println("Excepcion " + ex.toString());
+            throw new Exception(ex.toString());
+        }
+        return insertados;
+    }
 }
