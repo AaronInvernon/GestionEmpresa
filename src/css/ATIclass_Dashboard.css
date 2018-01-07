@@ -4,6 +4,11 @@
     text-decoration: none !important;
 }
 
+* a:focus {
+    color: white !important;
+    text-decoration: none !important;
+}
+
 .timer {
     z-index: 4;
 }

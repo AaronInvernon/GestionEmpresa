@@ -2,6 +2,10 @@
     color: white !important;
     text-decoration: none !important;
 }
+* a:focus {
+    color: white !important;
+    text-decoration: none !important;
+}
 
 body{
     background: #40255b;

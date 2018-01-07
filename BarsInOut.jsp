@@ -303,6 +303,7 @@
                 </div>
             </div>
             </div>
+            <div class="dropdown">
             <button type="button" class="btn dropdown-toggle" Style="background-color: orange; margin: 3px" value="aviso" id="btncapa2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aviso</button><br/>
             <div class="dropdown-menu" aria-labelledby="btncapa2">
                 <div id="capa2" class="form-inline" style="padding:20px; color:grey">
@@ -314,7 +315,9 @@
                     <input type="text" name='txtNombre' value='<%=NombCompleto%>' hidden="true"/> 
                     <input style="color:black;" class="btn" type="submit" name="submit" value="Enviar Aviso">
                 </div>
-             </div>   
+             </div>  
+            </div>
+                    <div class="dropdown">
             <button type="button" class="btn dropdown-toggle" Style="background-color: orange; margin: 3px" value="despido" id="btncapa3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestionar Despido</button>
             <div class="dropdown-menu" aria-labelledby="btncapa3">
                 <div id="capa3" class="form-inline" style="padding:20px; color:grey">
