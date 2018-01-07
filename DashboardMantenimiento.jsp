@@ -18,6 +18,7 @@
             <a href="DashboardMantenimiento.jsp" class="navbar-brand">[A_Team_Inc]</a>
             <input type="checkbox" class="mybtn" id="btn-menu">
             <input type="checkbox" class="mybtn" id="btn-candidaturas">
+            <input type="checkbox" class="mybtn" id="btn-notificaciones">
             <label for="btn-menu"><span class="fa fa-bars" id="icono"></span></label>
 
             <nav class="menu">
@@ -67,6 +68,7 @@
                             <%
                                 }
                             basico.finConectar();
+                            String reun = null;
                             %>
                         </ul>
                     <li class="boton"><a href="index.jsp">Log Out</a></li>
