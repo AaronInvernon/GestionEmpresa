@@ -193,17 +193,18 @@
 
                 String nombre = request.getParameter("txtUsuario");
                 String contraseña = request.getParameter("txtContraseña");
-                session.setAttribute("Usuario", nombre);
-                session.setAttribute("Contraseña", contraseña);
+                
 
                 String cadena = "select nombre, departamento from ateam_emp where nombre = upper('" + nombre + "') and password = '" + contraseña + "'";
                 ResultSet resultado = null;
-                basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
+                basico.Conectar("ceo", "1234");
                 basico.crearStatement();
                 resultado = basico.crearResultSet(cadena);
                 
                 if(resultado.isBeforeFirst()){
                     resultado.next();
+                    session.setAttribute("Usuario", nombre);
+                    session.setAttribute("Contraseña", contraseña);
                     String departamento = resultado.getString(2);
 
                     /*System.out.println(departamento);*/
