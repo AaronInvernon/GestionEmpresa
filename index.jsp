@@ -8,7 +8,6 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass.css" rel="stylesheet" type="text/css"/>
         <title>INICIO</title>
-
     </head>
     <body class="purplebody"><!--Purple body esta en ATIclass.css, lo invente para hacerlo morado-->
 
@@ -202,6 +201,8 @@
                 basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
                 basico.crearStatement();
                 resultado = basico.crearResultSet(cadena);
+                
+                if(resultado.isBeforeFirst()){
                     resultado.next();
                     String departamento = resultado.getString(2);
 
@@ -231,6 +232,13 @@
                         response.sendRedirect("DashboardAdmin.jsp");
                         basico.finConectar();
                     }
+                }else{
+                     %>
+                    <script>
+                        window.open('errorLogin.html','_blank','toolbar=yes,scrollbars=yes,resizable=yes,width=500,height=300,left=450,top=200', false);
+                    </script>
+                    <%
+                }
             }
         %>
     </body>
