@@ -8,6 +8,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Secretaria</title>
 
@@ -219,7 +220,6 @@
                 </div>
             </div>
         </div>
-        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>

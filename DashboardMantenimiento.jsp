@@ -8,6 +8,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Mantenimiento</title>
 
@@ -23,74 +24,63 @@
 
                 <ul>
                     <%
+                        String emp =null;
                         String calen = null;
                     %>
                     <li class="boton"><a href="DashboardMantenimiento.jsp?calen=1">Calendario</a></li>
                     <li class="boton"><a href="DashboardMantenimiento.jsp?reun=1">Reservar Sala</a></li>
-
                     <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
                         <ul>
+                            <%
+                                ResultSet rset = null;
+                                basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                                basico.crearStatement();
+                                String cad = "select * from ateam_sms where upper(destinatario)=upper('" + (String) session.getAttribute("Usuario") + "')";
+                                
+                                rset = basico.crearResultSet(cad);
+                                if (rset.isBeforeFirst()) {
+                                    while (rset.next()) {
+                            %>
+                            <li>
+                                <div class="sidebar-item"><a href="?noti=<%=rset.getString(6)%>">
+                                        <div class="sidebar-item-pic"></div>
+                                        <div class="sidebar-item-content">
+                                            <strong><%=rset.getString(1)%></strong><p class="myhour"><%=rset.getString(5)%></p>
+                                            <div class="mypill"><%=rset.getString(3)%></div>
+
+                                        </div> </a>  
+                                </div> 
+                            </li>   
+                            <%
+                                }
+                                } else {
+                            %>  
                             <li>
                                 <div class="sidebar-item"><a href="#">
                                         <div class="sidebar-item-pic"></div>
                                         <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
+                                            <strong>No tiene notificaciones nuevas</strong>
 
                                         </div> </a>  
                                 </div>
                             </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Candidato</div>
-                                        </div> </a>  
-                                </div>
-                            </li>
+                            <%
+                                }
+                            basico.finConectar();
+                            %>
                         </ul>
                     <li class="boton"><a href="index.jsp">Log Out</a></li>
                 </ul>
             </nav>
         </header>
                     <%
-            String user = (String) session.getAttribute("Usuario");
-            String pass = (String) session.getAttribute("Contraseña");
+            String user = (String)session.getAttribute("Usuario");
+            String pass = (String)session.getAttribute("Contraseña");
             basico.Conectar(user, pass);
             ResultSet empleado = null;
-            empleado = basico.crearResultSet("select n_emp from ateam_emp where upper(nombre) =upper('" + (String) session.getAttribute("Usuario") + "')");
+            
+            basico.crearStatement();
+            empleado = basico.crearResultSet("select n_emp from ateam_emp where upper(nombre) =upper('" + user + "')");
             empleado.next();
             int userNum = Integer.parseInt(empleado.getString(1));
 
@@ -190,6 +180,10 @@
         <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
         <jsp:include page="FormularioReservaSR.jsp"/> 
         <%
+        } else if (request.getParameter("noti") != null) {
+        %>
+        <jsp:include page="verNotificaciones.jsp"/>
+        <%
         } else if (request.getParameter("emp") != null) {
         %>
         <jsp:include page="jerarquia_1.jsp"/>  
@@ -231,7 +225,6 @@
                 </div>
             </div>
         </div>
-        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>

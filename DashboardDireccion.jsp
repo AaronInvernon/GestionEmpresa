@@ -8,6 +8,7 @@
         <link href="src/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/ATIclass_Dashboard.css" rel="stylesheet" type="text/css"/>
         <link href="src/css/cuadroBienvenido.css" rel="stylesheet" type="text/css"/>
+        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Direccion</title>
 
@@ -33,56 +34,42 @@
 
                     <li class="mynotes" id="mynotes"><a href="#">Notificaciones</a>
                         <ul>
+                            <%
+                                ResultSet rset = null;
+                                basico.Conectar((String) session.getAttribute("Usuario"), (String) session.getAttribute("Contraseña"));
+                                basico.crearStatement();
+                                String cad = "select * from ateam_sms where upper(destinatario)=upper('" + (String) session.getAttribute("Usuario") + "')";
+                                
+                                rset = basico.crearResultSet(cad);
+                                if (rset.isBeforeFirst()) {
+                                    while (rset.next()) {
+                            %>
+                            <li>
+                                <div class="sidebar-item"><a href="?noti=<%=rset.getString(6)%>">
+                                        <div class="sidebar-item-pic"></div>
+                                        <div class="sidebar-item-content">
+                                            <strong><%=rset.getString(1)%></strong><p class="myhour"><%=rset.getString(5)%></p>
+                                            <div class="mypill"><%=rset.getString(3)%></div>
+
+                                        </div> </a>  
+                                </div> 
+                            </li>   
+                            <%
+                                }
+                            } else {
+                            %>  
                             <li>
                                 <div class="sidebar-item"><a href="#">
                                         <div class="sidebar-item-pic"></div>
                                         <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
+                                            <strong>No tiene notificaciones nuevas</strong>
 
                                         </div> </a>  
                                 </div>
                             </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Solicitud</div>
-
-
-
-                                        </div> </a>  
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="sidebar-item"><a href="#">
-                                        <div class="sidebar-item-pic"></div>
-                                        <div class="sidebar-item-content">
-
-                                            <strong>David Miller</strong><p class="myhour">11:21 AM</p>
-                                            <div class="mypill">Nueva Candidato</div>
-                                        </div> </a>  
-                                </div>
-                            </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     <li class="boton"><a href="index.jsp">Log Out</a></li>
                 </ul>
@@ -91,7 +78,7 @@
         <%
             String user = (String) session.getAttribute("Usuario");
             String pass = (String) session.getAttribute("Contraseña");
-            basico.Conectar(user, pass);
+            basico.Conectar(user,pass);
             ResultSet empleado = null;
             empleado = basico.crearResultSet("select n_emp from ateam_emp where upper(nombre) =upper('" + (String) session.getAttribute("Usuario") + "')");
             empleado.next();
@@ -193,6 +180,10 @@
         <h4 align="center"> Debe comprobar la disponibilidad de la sala antes de poder reservarla </h4>
         <jsp:include page="FormularioReservaSR.jsp"/>  
         <%
+        } else if (request.getParameter("noti") != null) {
+        %>
+        <jsp:include page="verNotificaciones.jsp"/>
+        <%
         } else if (request.getParameter("emp") != null) {
         %>
         <jsp:include page="jerarquia_1.jsp"/>  
@@ -215,7 +206,7 @@
             String numero = "BarsInOut_2.jsp?n_emp=" + empleado.getString(1);
         %>
         <section id="section">
-            <h1>>Dirección</h1>
+            <h1>Dirección</h1>
 
             <p>Bienvenido <%=(String) session.getAttribute("Usuario")%></p>
         </section>
@@ -238,7 +229,6 @@
                 </div>
             </div>
         </div>
-        <script src="src/js/jquery-1.12.3.min.js" type="text/javascript"></script>
         <script src="src/js/Dashboards.js" type="text/javascript"></script>
     </body>
 </html>
