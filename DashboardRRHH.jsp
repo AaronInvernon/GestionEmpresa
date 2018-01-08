@@ -18,6 +18,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Tablero</title>
     </head>
+    <%
+        if(session.getAttribute("Usuario")== null && session.getAttribute("Contraseña")== null){
+            %>
+            <jsp:forward page="index.jsp" />
+            <%
+        }
+    %>
     <body onload="renderTime();">
         <header>
             <a href="DashboardRRHH.jsp" class="navbar-brand">[A_Team_Inc]</a>

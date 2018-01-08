@@ -12,6 +12,13 @@
         <title>Desarrollo</title>
 
     </head>
+    <%
+        if(session.getAttribute("Usuario")== null && session.getAttribute("Contraseña")== null){
+            %>
+            <jsp:forward page="index.jsp" />
+            <%
+        }
+    %>
     <body onload="renderTime();">
         <header>
             <a href="DashboardDesarrollo.jsp" class="navbar-brand">[A_Team_Inc]</a>
