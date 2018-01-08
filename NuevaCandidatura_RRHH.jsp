@@ -67,7 +67,7 @@
                 <div style="padding: 20px">
                     <form action="NuevaCandidatura_RRHH.jsp" method="post" name='form1'>  <!-- ATENCION!! DAR LA ACCION DEL FORMULARIO! -->
                         <%=varNom%> <%=varApe1%><br/>
-                        <strong>DNI/NIE:</strong> <%=varDniNie%><br/>
+                        <strong>DNI/NIE:</strong> <%=varDniNie%><br/> <input type="text" name="txtDniNie" value="<%=varDniNie%>" hidden>
                         <strong> NSS:</strong> <%=varNss%><br/>
                         <strong>Fecha Nac:</strong> <%=varFechaNac%> (<%=varEdad%>)<br/>
                         <strong>Sexo:</strong> <%=varSex%> <br/>
@@ -88,8 +88,8 @@
                         </div>
                         <hr/>
                             <div style="display:flex; justify-content: space-around;">
-                                <input class="btn btn-primary" type="submit" value="Aceptar" name="elSub" id="elSub"/>
-                                <input class="btn btn-primary" type="submit" value="Rechazar" name="elSub" id="elSub"/>
+                                <input class="btn btn-primary" type="submit" value="aceptar" name="elSub" id="elSub"/>
+                                <input class="btn btn-primary" type="submit" value="rechazar" name="elSub" id="elSub"/>
                                 
                             </div>
                     </form>
@@ -97,29 +97,32 @@
                       }  
                         if(request.getParameter("pass")!=null){
                             //HAY QUE SUSTITUIR ESTA VARIABLE POR LA DE SESSION CON EL NOMBRE DEL USUARIO session.getAttribute("Usuario");
-                            basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
+                            String pass = (String)session.getAttribute("Contraseña");
+                            String user = (String)session.getAttribute("Usuario");
+                            basico.Conectar(user, pass);
                             basico.crearStatement();
                             ResultSet prueba = basico.crearResultSet("select password from ateam_emp where lower(nombre)=lower('"+(String)session.getAttribute("Usuario")+"')");
                             prueba.next();
                             String test = prueba.getString(1);
+                            String dniCandi2 = request.getParameter("txtDniNie");
                             basico.finConectar();
                             
-                            if(test.equals(request.getParameter((String)session.getAttribute("Contraseña")))){
+                            if(test.equals(((String)session.getAttribute("Contraseña")))){
                                 
-                                if(request.getParameter("elSub").equals("Aceptar")){
+                                if(request.getParameter("elSub").equals("aceptar")){
 
                                     basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
-                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='ACEPTADO' where dni='"+(String)session.getAttribute("DNI")+"'");
+                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='ACEPTADO' where dni='"+dniCandi2+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
 
                                     response.sendRedirect("DashboardRRHH.jsp");
 
 
-                                }else if(request.getParameter("elSub").equals("Rechazar")){
+                                }else if(request.getParameter("elSub").equals("rechazar")){
 
                                     basico.Conectar((String)session.getAttribute("Usuario"), (String)session.getAttribute("Contraseña"));
-                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='RECHAZADO' where dni='"+(String)session.getAttribute("DNI")+"'");
+                                    basico.crearPreparedStatement("update ateam_candi set estado_candidatura='RECHAZADO' where dni='"+dniCandi2+"'");
                                     basico.ejUpdatePrepStat();
                                     basico.finConectar();
 
