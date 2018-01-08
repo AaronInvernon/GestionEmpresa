@@ -10,7 +10,10 @@
         <title>INICIO</title>
     </head>
     <body class="purplebody"><!--Purple body esta en ATIclass.css, lo invente para hacerlo morado-->
-
+<%
+                    session.setAttribute("Usuario", null);
+                    session.setAttribute("Contraseña", null);
+%>
         <!--Div container-fluid abarca todo el ancho de pantalla-->
         <div id="Barriba">
 
